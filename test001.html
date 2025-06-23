@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Addition App</title>
+    <style>
+        /* --- Basic Styling & Layout --- */
+        :root {
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --background-color: #f0f2f5;
+            --container-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #ccc;
+            --result-color: #28a745;
+            --error-color: #dc3545;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* --- App Container --- */
+        .app-container {
+            background-color: var(--container-bg);
+            padding: 2rem 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: var(--text-color);
+            font-size: 1.8rem;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* --- Form Elements --- */
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plus-sign {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 0.75rem;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-sizing: border-box;
+            -moz-appearance: textfield; /* Firefox */
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
+            margin: 0;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* --- Result Display --- */
+        #result-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            min-height: 50px; /* Reserve space */
+            border-radius: 5px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .success {
+             background-color: #e9f5ec;
+             color: var(--result-color);
+        }
+        
+        .error {
+             background-color: #fbebee;
+             color: var(--error-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <h1>Simple Adder</h1>
+        <p>Enter two numbers to find their sum.</p>
+
+        <form id="calculatorForm">
+            <div class="input-group">
+                <input type="number" id="num1" placeholder="Number 1" required>
+                <span class="plus-sign">+</span>
+                <input type="number" id="num2" placeholder="Number 2" required>
+            </div>
+            <button type="submit">Calculate Sum</button>
+        </form>
+
+        <div id="result-container">
+            <!-- The result will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Wait for the DOM to be fully loaded before running the script
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // Get references to the HTML elements we need to interact with
+            const calculatorForm = document.getElementById('calculatorForm');
+            const num1Input = document.getElementById('num1');
+            const num2Input = document.getElementById('num2');
+            const resultContainer = document.getElementById('result-container');
+
+            // Add an event listener for the form's 'submit' event
+            calculatorForm.addEventListener('submit', function (event) {
+                // Prevent the form from submitting in the traditional way (which would reload the page)
+                event.preventDefault();
+
+                // Get the values from the input fields
+                const val1 = num1Input.value;
+                const val2 = num2Input.value;
+                
+                // Clear previous classes
+                resultContainer.classList.remove('success', 'error');
+
+                // Convert the input string values to floating-point numbers
+                const number1 = parseFloat(val1);
+                const number2 = parseFloat(val2);
+
+                // Check if the inputs are valid numbers.
+                // isNaN() returns true if a value is "Not-a-Number"
+                if (isNaN(number1) || isNaN(number2)) {
+                    resultContainer.textContent = 'Please enter valid numbers.';
+                    resultContainer.classList.add('error');
+                } else {
+                    // If the numbers are valid, perform the addition
+                    const sum = number1 + number2;
+
+                    // Display the result in the result container
+                    resultContainer.textContent = `Result: ${sum}`;
+                    resultContainer.classList.add('success');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
