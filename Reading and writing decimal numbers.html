@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading and Writing Decimal Numbers | Magaby Mathematics</title>
+    
+    <!-- Google Fonts: Poppins for body, Nunito for headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- CSS Reset & Core Styles --- */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+
+            /* Neon Glow Palette */
+            --bg-dark: #0d0d1a;
+            --surface-dark: #1a1a2e;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-green: #39FF14;
+            --neon-blue: #4285F4;
+            --text-light: #e0e0e0;
+            --text-dim: #a0a0b0;
+            
+            font-size: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* --- Content Protection --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard */
+            -webkit-touch-callout: none; /* iOS Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-25px) rotate(180deg); opacity: 0.7; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
+        }
+        
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px var(--neon-cyan),
+                    0 0 40px var(--neon-cyan),
+                    0 0 80px var(--neon-cyan),
+                    0 0 90px var(--neon-cyan),
+                    0 0 100px var(--neon-cyan),
+                    0 0 150px var(--neon-cyan);
+                color: #fff;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                color: #e0e0e0;
+            }
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100%) rotateZ(0deg); }
+            100% { transform: translateY(100vh) rotateZ(720deg); }
+        }
+
+        /* --- General Layout & Typography --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+        }
+        
+        section {
+            padding: 3rem 0;
+            border-bottom: 2px solid var(--surface-dark);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--surface-dark), #2a2a3e);
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        
+        .section-header i {
+            font-size: 3rem;
+            padding: 1rem;
+            border-radius: 50%;
+            background-color: var(--surface-dark);
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .section-header .emoji {
+            font-size: 2.5rem;
+            vertical-align: middle;
+        }
+        
+        .pink-glow { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
+        .cyan-glow { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
+        .green-glow { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
+        .yellow-glow { color: var(--highlight-yellow); text-shadow: 0 0 8px var(--highlight-yellow); }
+        .blue-glow { color: var(--primary-blue); text-shadow: 0 0 8px var(--primary-blue); }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        p i, p .emoji {
+            font-size: 1.3em;
+            vertical-align: -0.2em;
+            margin: 0 0.2em;
+        }
+
+        strong, .highlight {
+            font-weight: 600;
+        }
+        
+        .highlight-yellow { color: var(--highlight-yellow); font-weight: bold; font-size: 1.1em; }
+        .highlight-green { color: var(--neon-green); font-weight: bold; font-size: 1.1em; }
+        .highlight-cyan { color: var(--neon-cyan); font-weight: bold; font-size: 1.1em; }
+        .highlight-red { color: var(--warning-red); font-weight: bold; font-size: 1.1em; }
+
+        /* --- Header --- */
+        header {
+            position: relative;
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, #000 100%);
+            border-bottom: 3px solid var(--neon-cyan);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            animation: neon-flicker 5s infinite alternate;
+        }
+
+        .subtitle-box {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        header h2.subtitle {
+            font-size: 2rem;
+            color: var(--neon-pink);
+            font-weight: 700;
+        }
+
+        /* --- Card & Content Styling --- */
+        .card {
+            background-color: var(--surface-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--deep-purple);
+            box-shadow: 0 0 10px rgba(103, 58, 183, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(103, 58, 183, 0.6);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--deep-purple));
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5);
+        }
+        
+        .btn:disabled {
+            background: #555;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .solution-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 2px dashed var(--accent-green);
+            background-color: rgba(15, 157, 88, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .solution-box p { margin-bottom: 0.5rem; }
+
+        /* --- Specific Section Styles --- */
+        /* #introduction */
+        .problem-box {
+            background-color: var(--surface-dark);
+            border: 2px dashed var(--highlight-yellow);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+        .problem-box h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--highlight-yellow);
+            text-shadow: 0 0 8px var(--highlight-yellow);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .problem-box .emoji {
+            font-size: 1.3rem;
+            vertical-align: baseline;
+        }
+        
+        /* Place Value Chart */
+        .place-value-chart {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+        table.pv-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .pv-table th, .pv-table td {
+            border: 1px solid var(--deep-purple);
+            padding: 0.8rem;
+        }
+        .pv-table th {
+            background-color: var(--deep-purple);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+        }
+        .pv-table td {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+        }
+        .pv-table .decimal-point-col {
+            border: none;
+            font-size: 3rem;
+            vertical-align: middle;
+            padding: 0 0.5rem;
+            color: var(--neon-pink);
+        }
+
+        /* #daily-life */
+        details {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--highlight-yellow);
+        }
+        details summary {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            list-style-type: '👉';
+            color: var(--highlight-yellow);
+        }
+        details summary::marker { color: var(--highlight-yellow); }
+        details div { padding: 0 1.5rem 1rem 1.5rem; }
+
+        /* #key-terms */
+        .term-card { display: flex; align-items: center; gap: 1.5rem; }
+        .term-card i { font-size: 2.5rem; color: var(--neon-pink); min-width: 50px; text-align: center; }
+        
+        /* #step-by-step */
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            background: var(--surface-dark);
+            border-left: 5px solid var(--neon-cyan);
+        }
+        .step-number { font-family: 'Nunito', sans-serif; font-size: 3rem; font-weight: 900; color: var(--neon-cyan); line-height: 1; }
+        .step-content h3 { color: var(--neon-cyan); margin-bottom: 0.5rem; }
+        .step-content .why { font-style: italic; color: var(--text-dim); border-left: 3px solid var(--deep-purple); padding-left: 1rem; margin-top: 0.5rem; }
+        
+        /* #common-mistakes */
+        .mistake-box {
+            border-radius: 10px; padding: 1.5rem; border: 2px solid var(--warning-red); background: rgba(219, 68, 55, 0.1);
+        }
+        .mistake-box h3 { color: var(--warning-red); margin-bottom: 1rem; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .wrong-way, .right-way { padding: 1rem; border-radius: 8px; }
+        .wrong-way { background-color: rgba(219, 68, 55, 0.2); }
+        .right-way { background-color: rgba(15, 157, 88, 0.2); }
+        .wrong-way h4::before { content: '❌ '; }
+        .right-way h4::before { content: '✅ '; }
+
+        /* #practice */
+        .challenge-problem { border: 2px solid var(--neon-pink); background-color: rgba(255, 0, 255, 0.05); }
+        .hint-box {
+            display: none; background-color: rgba(244, 180, 0, 0.1); border: 1px dashed var(--highlight-yellow); padding: 1rem; margin-top: 1rem; border-radius: 5px; animation: fadeIn 0.5s ease;
+        }
+
+        /* #summary */
+        .summary-list { list-style: none; padding-left: 0; }
+        .summary-list li { position: relative; padding: 1.2rem 1.2rem 1.2rem 3.5rem; margin-bottom: 1rem; background: var(--surface-dark); border-radius: 10px; border-left: 5px solid var(--neon-green); }
+        .summary-list li::before {
+            content: attr(data-step); position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--neon-green); background-color: rgba(57, 255, 20, 0.2); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+        }
+
+        /* --- Quiz Section --- */
+        #quiz-container { background-color: var(--surface-dark); padding: 2rem; border-radius: 20px; border: 1px solid var(--deep-purple); box-shadow: 0 0 20px rgba(103, 58, 183, 0.5); }
+        #quiz-start-screen h3, #quiz-results-screen h3 { font-size: 2rem; text-align: center; margin-bottom: 1.5rem; color: var(--neon-pink); }
+        #quiz-question-screen { display: none; }
+        #question-text { font-size: 1.4rem; margin-bottom: 2rem; line-height: 1.6; }
+        #options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .option-btn { width: 100%; padding: 1.2rem; font-size: 1.1rem; background-color: rgba(255,255,255,0.05); border: 2px solid var(--primary-blue); color: var(--text-light); border-radius: 10px; cursor: pointer; transition: all 0.3s ease; text-align: left; }
+        .option-btn:hover:not(:disabled) { background-color: rgba(66, 133, 244, 0.3); transform: translateY(-3px); }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background-color: rgba(15, 157, 88, 0.3); border-color: var(--neon-green); color: #fff; transform: scale(1.02); }
+        .option-btn.incorrect { background-color: rgba(219, 68, 55, 0.3); border-color: var(--warning-red); color: #fff; }
+        #explanation-box { display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: 10px; background-color: rgba(0,0,0,0.2); animation: fadeIn 0.5s ease; }
+        #explanation-text { color: var(--text-dim); line-height: 1.6; }
+        #explanation-text .step-explanation { display: block; margin-bottom: 0.75em; }
+        #quiz-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
+        #quiz-results-screen { display: none; text-align: center; position: relative; }
+        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+        .confetti { position: absolute; width: 10px; height: 20px; opacity: 0.8; animation: confetti-fall 4s linear infinite; }
+        #final-score { font-size: 5rem; font-weight: 900; color: var(--neon-green); margin: 1rem 0; text-shadow: 0 0 20px var(--neon-green); }
+        #score-message { font-size: 1.5rem; color: var(--highlight-yellow); }
+        #preview-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background: var(--surface-dark); padding: 2rem; border-radius: 15px; border: 1px solid var(--neon-cyan); width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--neon-cyan); padding-bottom: 1rem; margin-bottom: 1rem; }
+        #close-modal { font-size: 2rem; cursor: pointer; color: var(--warning-red); }
+        .preview-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #333; }
+        .preview-item p { margin-bottom: 0.5rem; }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 2rem; margin-top: 2rem; background-color: var(--surface-dark); color: var(--text-dim); border-top: 2px solid var(--deep-purple); }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            :root { font-size: 14px; }
+            .container { padding: 1rem; }
+            header h1 { font-size: 3rem; }
+            header h2.subtitle { font-size: 1.5rem; }
+            .section-header { flex-direction: column; text-align: center; }
+            .section-header h2 { font-size: 2rem; }
+            .comparison-grid, #options-grid { grid-template-columns: 1fr; }
+            .step { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;" onselectstart="return false;" onkeydown="return false;">
+    
+    <!-- Dynamic Header -->
+    <header>
+        <div class="particles"></div>
+        <div class="header-content">
+            <h1>Maths Universe</h1>
+            <div class="subtitle-box">
+                <h2 class="subtitle">Reading and Writing Decimal Numbers</h2>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Section 1: The Hook -->
+        <section id="introduction">
+            <div class="section-header">
+                <i class="fas fa-tags yellow-glow"></i>
+                <h2>1. The Price Tag Panic! (Problem to Solve) 🏷️</h2>
+            </div>
+            <div class="problem-box">
+                <h4>PROBLEM SITUATION <span class="emoji">😳</span></h4>
+                <p>
+                    <strong class="highlight-yellow">Ada</strong> goes to a supermarket in Lagos and sees a box of biscuits with a price tag that says <strong class="highlight-yellow">₦450.75</strong>. The cashier asks her, "How much is that?" Ada freezes. She knows it's "four hundred and fifty Naira," but what about the ".75" part? How do you say that correctly? 🤔
+                </p>
+            </div>
+            <p>
+                Have you ever felt like Ada? That little dot, the <strong class="highlight-cyan">decimal point</strong>, can be tricky. But by the end of this lesson, you'll be able to read and write any decimal number with confidence, from prices in a shop to measurements in a science lab! Let's decode the dot! 🔍
+            </p>
+        </section>
+
+        <!-- Section 2: Real-World Relevance -->
+        <section id="daily-life">
+            <div class="section-header">
+                <i class="fas fa-globe-africa green-glow"></i>
+                <h2>2. Decimals All Around You in Nigeria 🇳🇬</h2>
+            </div>
+            <p>Decimals are not just in your maths textbook; they are everywhere! Here are a few places you'll see them every day.</p>
+            <details>
+                <summary>Money, Money, Money! 💰</summary>
+                <div>
+                    <p>This is the most common one! Prices like <strong class="highlight-yellow">₦500.50</strong> (Five hundred Naira, fifty kobo) or a bank balance of <strong class="highlight-yellow">₦10,254.25</strong> are decimal numbers.</p>
+                </div>
+            </details>
+            <details>
+                <summary>At the Petrol Station ⛽</summary>
+                <div>
+                    <p>When your parents buy fuel, the pump shows the price per litre, like <strong class="highlight-yellow">₦617.70</strong>, and the amount of fuel pumped, like <strong class="highlight-yellow">35.5</strong> litres. Both are decimal numbers!</p>
+                </div>
+            </details>
+            <details>
+                <summary>Sports and Athletics 🏃‍♀️</summary>
+                <div>
+                    <p>When watching the Olympics, a sprinter's time might be <strong class="highlight-yellow">9.58</strong> seconds. That decimal shows a fraction of a second, which makes the difference between gold and silver!</p>
+                </div>
+            </details>
+            <details>
+                <summary>Science and Measurement 🔬</summary>
+                <div>
+                    <p>In your science class, you might measure the length of a leaf as <strong class="highlight-yellow">7.5 cm</strong> or the weight of a chemical as <strong class="highlight-yellow">12.25 grams</strong>. Decimals allow for precise measurements.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Technology (Radio & Phones) 📻</summary>
+                <div>
+                    <p>When you tune a radio to a station like <strong class="highlight-yellow">96.9 FM</strong>, you are using a decimal. Even the version of software on a phone can be something like <strong class="highlight-yellow">Android 13.1</strong>.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Section 3: Key Terms & Definitions -->
+        <section id="key-terms">
+            <div class="section-header">
+                <i class="fas fa-key cyan-glow"></i>
+                <h2>3. Your Decimal Dictionary 📖</h2>
+            </div>
+            <p>To master decimals, we need to know these four important terms. They are the keys to understanding everything!</p>
+            <div class="card term-card">
+                <i class="fas fa-circle-dot"></i>
+                <div>
+                    <h3>Decimal Point</h3>
+                    <p>The dot (<strong class="highlight-yellow">.</strong>) in a decimal number. Its job is to be the great separator! It separates the <strong class="highlight-green">whole numbers</strong> on the left from the <strong class="highlight-cyan">fractional parts</strong> on the right.</p>
+                </div>
+            </div>
+            <div class="card term-card">
+                <i class="fas fa-map-location-dot"></i>
+                <div>
+                    <h3>Place Value</h3>
+                    <p>The value of a digit based on its position in the number. In decimals, the positions to the <strong class="highlight-red">right</strong> of the decimal point have special names that end in "<strong class="highlight-red">-ths</strong>".</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-chart-pie"></i>
+                <div>
+                    <h3>Tenths</h3>
+                    <p>The <strong class="highlight-green">first</strong> place to the right of the decimal point. It represents a fraction out of 10. For example, in 0.<strong>7</strong>, the 7 is in the tenths place (⁷/₁₀).</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-th"></i>
+                <div>
+                    <h3>Hundredths</h3>
+                    <p>The <strong class="highlight-green">second</strong> place to the right of the decimal point. It represents a fraction out of 100. For example, in 0.0<strong>3</strong>, the 3 is in the hundredths place (³/₁₀₀).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Step-by-Step Explanation -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <i class="fas fa-list-ol green-glow"></i>
+                <h2>4. The Golden Rules for Reading Decimals 🏆</h2>
+            </div>
+            <p>Let's learn how to read the number <strong class="highlight-yellow">24.38</strong> using a place value chart. It's easy when you follow these rules!</p>
+
+            <div class="place-value-chart">
+                <table class="pv-table">
+                    <thead>
+                        <tr>
+                            <th>Tens</th>
+                            <th>Ones</th>
+                            <th class="decimal-point-col">.</th>
+                            <th>Tenths</th>
+                            <th>Hundredths</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2</td>
+                            <td>4</td>
+                            <td class="decimal-point-col">.</td>
+                            <td>3</td>
+                            <td>8</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Read the Whole Number Part</h3>
+                    <p>Read the number to the <strong class="highlight-green">left</strong> of the decimal point just like a normal number.</p>
+                    <p>For <strong>24</strong>.38, we say "<strong class="highlight-green">Twenty-four</strong>".</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Say "and" for the Decimal Point</h3>
+                    <p>When you get to the decimal point (<strong class="highlight-pink">.</strong>), you say the word "<strong class="highlight-pink">and</strong>".</p>
+                    <p>So far, we have "Twenty-four <strong class="highlight-pink">and</strong>..."</p>
+                    <p class="why"><strong>Why "and"?</strong> This is the proper mathematical way. It clearly separates the whole part from the fraction part.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Read the Part After the Point</h3>
+                    <p>Read the number to the <strong class="highlight-cyan">right</strong> of the decimal point as if it were a whole number.</p>
+                    <p>For 24.<strong>38</strong>, we say "<strong class="highlight-cyan">thirty-eight</strong>".</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Say the Place Value of the LAST Digit</h3>
+                    <p>Look at the very last digit (<strong class="highlight-red">8</strong>). What place value is it in? It's in the <strong class="highlight-red">Hundredths</strong> place. So, you end by saying that place value name.</p>
+                    <p>So we have "...thirty-eight <strong class="highlight-red">hundredths</strong>".</p>
+                    <p class="why"><strong>Why the last digit?</strong> The place of the last digit names the entire fractional part. Because the 8 is in the hundredths place, it means we have 38 out of 100 parts (³⁸/₁₀₀).</p>
+                </div>
+            </div>
+             <p style="text-align: center; font-size: 1.5rem; margin-top: 2rem;">
+                Put it all together: <strong class="highlight-green">Twenty-four</strong> <strong class="pink-glow">and</strong> <strong class="highlight-cyan">thirty-eight</strong> <strong class="highlight-red">hundredths</strong>.
+            </p>
+        </section>
+
+        <!-- Section 5: Real-Life Application -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <i class="fas-solid fa-ruler-combined blue-glow"></i>
+                <h2>5. Case Study: Kunle's Science Project 🌿</h2>
+            </div>
+            <div class="card">
+                <p>
+                    <strong class="highlight-yellow">Kunle</strong> is doing a project on plant growth for his JSS 1 science class. He measures the length of a new leaf with a very precise ruler. The ruler shows the length is <strong class="highlight-cyan">5.4</strong> cm. He needs to write this measurement down in words for his report.
+                </p>
+                <p>
+                    How should Kunle write <strong class="highlight-cyan">5.4</strong> in words?
+                </p>
+                <button class="btn" onclick="showElement('solution1', this)">Show Solution</button>
+                <div id="solution1" class="solution-box">
+                    <h4>Here's how Kunle writes it:</h4>
+                    <p><strong>Step 1: Whole Number Part.</strong> The number to the left of the dot is 5. He writes "<strong class="highlight-green">Five</strong>".</p>
+                    <p><strong>Step 2: Decimal Point.</strong> The dot means he writes "<strong class="pink-glow">and</strong>".</p>
+                    <p><strong>Step 3: Part After Point.</strong> The number to the right of the dot is 4. He thinks of the word "<strong class="highlight-cyan">four</strong>".</p>
+                    <p><strong>Step 4: Place Value of Last Digit.</strong> The digit 4 is the last (and only) digit after the point. It is in the <strong class="highlight-red">Tenths</strong> place.</p>
+                    <p><strong>✅ Final Answer:</strong> Kunle writes down "<strong class="highlight-green">Five</strong> <strong class="pink-glow">and</strong> <strong class="highlight-cyan">four</strong> <strong class="highlight-red">tenths</strong>".</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Financial Literacy -->
+        <section id="financial-lit">
+             <div class="section-header">
+                <i class="fas fa-naira-sign green-glow"></i>
+                <h2>6. Financial Focus: Reading a Receipt 🧾</h2>
+            </div>
+            <div class="card">
+                <p>
+                    <strong class="highlight-yellow">Folake</strong>'s mum sends her to a local supermarket to buy three items. The receipt shows the following prices:
+                </p>
+                <ul>
+                    <li>Bread: <strong class="highlight-cyan">₦950.50</strong></li>
+                    <li>Milk: <strong class="highlight-cyan">₦1240.25</strong></li>
+                    <li>Sugar: <strong class="highlight-cyan">₦800.75</strong></li>
+                </ul>
+                <p>
+                   To practise her maths, Folake decides to write the price of the Milk in words on the back of the receipt. How should she write <strong class="highlight-yellow">₦1240.25</strong>?
+                </p>
+                <button class="btn" onclick="showElement('solution2', this)">Show Solution</button>
+                <div id="solution2" class="solution-box">
+                    <h4>Let's write out the price:</h4>
+                     <p><strong>1. The Whole Number (Naira):</strong> The number to the left is 1240. We write "<strong class="highlight-green">One thousand, two hundred and forty Naira</strong>".</p>
+                     <p><strong>2. The Decimal Point:</strong> We say "<strong class="pink-glow">and</strong>".</p>
+                     <p><strong>3. The Part After (Kobo):</strong> The number to the right is 25. We think of "<strong class="highlight-cyan">twenty-five</strong>".</p>
+                     <p><strong>4. The Place Value:</strong> The last digit, 5, is in the <strong class="highlight-red">hundredths</strong> place. So we say "<strong class="highlight-red">hundredths</strong>". (In money, this represents kobo!)</p>
+                    <p><strong>✅ Final Answer:</strong> "<strong class="highlight-green">One thousand, two hundred and forty</strong> <strong class="pink-glow">and</strong> <strong class="highlight-cyan">twenty-five</strong> <strong class="highlight-red">hundredths</strong>". Or, when speaking about money, we would simply say, "One thousand, two hundred and forty Naira, twenty-five kobo."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Pro-Tips & Tricks -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <i class="fas fa-money-bill-wave yellow-glow"></i>
+                <h2>7. Maths Magic: The Money Trick! 💰</h2>
+            </div>
+            <div class="card">
+                <h3>Think in Naira and Kobo</h3>
+                <p>
+                    Having trouble with tenths and hundredths? Think about money! 🇳🇬
+                </p>
+                <p>
+                    Imagine the number is a price in Naira. The first two places after the decimal point are just like <strong class="highlight-green">Kobo</strong>.
+                </p>
+                <ul>
+                    <li><strong class="highlight-cyan">0.1</strong> is like 10 Kobo. It's one-<strong>tenth</strong> of a Naira.</li>
+                     <li><strong class="highlight-cyan">0.7</strong> is like 70 Kobo. It's seven-<strong>tenths</strong> of a Naira.</li>
+                    <li><strong class="highlight-cyan">0.01</strong> is like 1 Kobo. It's one-<strong>hundredth</strong> of a Naira.</li>
+                    <li><strong class="highlight-cyan">0.45</strong> is like 45 Kobo. It's forty-five-<strong>hundredths</strong> of a Naira.</li>
+                </ul>
+                <p>This trick makes it easy to remember that the first place is tenths and the second is hundredths!</p>
+                <div class="mistake-box" style="margin-top: 2rem; border-color: var(--warning-red);">
+                    <h4 style="color: var(--warning-red);"><i class="fas fa-exclamation-triangle"></i> Quick Warning!</h4>
+                    <p>This trick is great for the first two decimal places. Remember that decimals can keep going! The third place is "<strong class="highlight-red">thousandths</strong>," the fourth is "<strong class="highlight-red">ten-thousandths</strong>," and so on. The money trick won't help you there, but it's perfect for most everyday numbers!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Common Mistakes -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <i class="fas fa-user-shield warning-red"></i>
+                <h2>8. Watch Out! Avoid These Decimal Traps! ⚠️</h2>
+            </div>
+            <div class="mistake-box">
+                <h3>Mistake: Saying "Point" Instead of "And"</h3>
+                <p>While people might understand you if you say "two point five," the correct mathematical way to read it is using "and."</p>
+                <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>Reading 2.5 as "<strong class="highlight-red">Two point five</strong>".</p>
+                        <p>Reading 10.12 as "<strong class="highlight-red">Ten point one two</strong>".</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Reading 2.5 as "<strong class="highlight-green">Two and five tenths</strong>".</p>
+                        <p>Reading 10.12 as "<strong class="highlight-green">Ten and twelve hundredths</strong>".</p>
+                    </div>
+                </div>
+            </div>
+             <div class="mistake-box" style="margin-top: 1.5rem;">
+                <h3>Mistake: Forgetting the "-ths" Suffix</h3>
+                <p>The places after the decimal point sound similar to whole numbers, but they MUST end in "-ths" to show they are fractions.</p>
+                 <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                         <p>Reading 0.04 as "<strong class="highlight-red">Four hundred</strong>". This is a big number!</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Reading 0.04 as "<strong class="highlight-green">Four hundredths</strong>". This is a tiny fraction!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Practice & Challenge Zone -->
+        <section id="practice">
+            <div class="section-header">
+                <i class="fas fa-pencil-alt deep-purple"></i>
+                <h2>9. Practice & Challenge Zone 🧠</h2>
+            </div>
+            
+            <div class="card">
+                <h3>Standard Practice Problem</h3>
+                <p>Write the decimal number <strong class="highlight-cyan">152.09</strong> in words.</p>
+                <button class="btn" onclick="showElement('hint1', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution3', this)">Show Solution</button>
+                <div id="hint1" class="hint-box">
+                    <p><strong>Hint:</strong> Follow the 4 Golden Rules. Remember to say "and" for the dot. The last digit, 9, is in which place value? Tenths or Hundredths?</p>
+                </div>
+                <div id="solution3" class="solution-box">
+                    <p><strong>Step 1 (Whole):</strong> One hundred fifty-two</p>
+                    <p><strong>Step 2 (Dot):</strong> and</p>
+                    <p><strong>Step 3 (Part):</strong> nine</p>
+                    <p><strong>Step 4 (Place Value):</strong> The 9 is in the hundredths place.</p>
+                    <p><strong>✅ Final Answer:</strong> <strong class="highlight-green">One hundred fifty-two and nine hundredths.</strong></p>
+                </div>
+            </div>
+
+            <div class="card challenge-problem">
+                <h3>⭐ Challenge Problem ⭐</h3>
+                <p>
+                    Write the following number in numerals (digits):
+                </p>
+                <p>
+                    "<strong class="highlight-cyan">Four hundred six and seventy-three thousandths</strong>"
+                </p>
+                <button class="btn" onclick="showElement('hint2', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution4', this)">Show Solution</button>
+                <div id="hint2" class="hint-box">
+                    <p><strong>Hint:</strong> Work backwards. "Four hundred six" is the whole part. "Seventy-three" is the number after the dot. The word "<strong class="highlight-red">thousandths</strong>" means the very last digit (the 3) must be in the third decimal place. What do you need to put in the tenths place?</p>
+                </div>
+                <div id="solution4" class="solution-box">
+                    <p><strong>1. Whole Part:</strong> "Four hundred six" is <strong class="highlight-green">406</strong>.</p>
+                    <p><strong>2. "And":</strong> This means we put a decimal point: <strong class="highlight-green">406.</strong></p>
+                    <p><strong>3. The Fractional Part:</strong> We need to write "seventy-three thousandths". The word "thousandths" tells us the number must end in the 3rd decimal place.</p>
+                    <p>To make the digit '3' of '73' end in the 3rd place, we must write <strong class="highlight-cyan">073</strong> after the decimal point.</p>
+                    <p><strong>✅ Final Answer:</strong> <strong class="highlight-green">406.073</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Summary of Key Steps -->
+        <section id="summary">
+            <div class="section-header">
+                <i class="fas fa-list-check green-glow"></i>
+                <h2>10. Your Golden Rules for Reading Decimals 📜</h2>
+            </div>
+            <p>If you get stuck, just remember these four simple rules.</p>
+            <ol class="summary-list">
+                <li data-step="1"><strong>Read the Left:</strong> Read the whole number part to the left of the dot. ⬅️</li>
+                <li data-step="2"><strong>Say "AND":</strong> Say the word "and" for the decimal point. 🗣️</li>
+                <li data-step="3"><strong>Read the Right:</strong> Read the entire number part to the right of the dot. ➡️</li>
+                <li data-step="4"><strong>Name the Place:</strong> Say the place value name of the <strong class="highlight-red">very last digit</strong> (e.g., tenths, hundredths, thousandths). 📍</li>
+            </ol>
+        </section>
+        
+        <!-- Section 11: Interactive Quiz -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <i class="fas fa-vial-circle-check neon-pink"></i>
+                <h2>11. Test Your Knowledge! 🧪</h2>
+            </div>
+            <div id="quiz-container">
+                <!-- Start Screen -->
+                <div id="quiz-start-screen">
+                    <h3>Ready to show what you've learned?</h3>
+                    <p style="text-align:center; margin-bottom: 2rem;">You'll get <span class="highlight-yellow">5</span> random questions. Give it your best shot! Good luck! 👍</p>
+                    <div style="text-align:center;">
+                        <button class="btn" id="start-quiz-btn">Start Quiz Now!</button>
+                    </div>
+                </div>
+
+                <!-- Question Screen -->
+                <div id="quiz-question-screen">
+                    <p id="question-counter"></p>
+                    <p id="question-text">This is where the question will appear.</p>
+                    <div id="options-grid">
+                        <!-- Options will be generated by JS -->
+                    </div>
+                    <div id="explanation-box">
+                        <h3>Explanation:</h3>
+                        <div id="explanation-text">The reason for the answer will show up here.</div>
+                    </div>
+                    <div id="quiz-navigation">
+                        <p id="score-tracker">Score: 0/5</p>
+                        <button class="btn" id="next-question-btn" style="display:none;">Next Question</button>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div id="quiz-results-screen">
+                    <div class="confetti-container"></div>
+                    <h3>Quiz Complete! 🎉</h3>
+                    <p>Here's how you did:</p>
+                    <div id="final-score">5/5</div>
+                    <p id="score-message">Fantastic work!</p>
+                    <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                        <button class="btn" id="reset-quiz-btn">Try Another Set!</button>
+                        <button class="btn" id="preview-answers-btn">Review Answers</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview Answers Modal -->
+        <div id="preview-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Your Quiz Review</h2>
+                    <span id="close-modal">&times;</span>
+                </div>
+                <div id="preview-body">
+                    <!-- Review items will be generated by JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+        <p>All rights reserved. Designed for an engaging learning experience.</p>
+    </footer>
+
+<script>
+// --- Content Protection Script ---
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'PrintScreen' || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
+    e.preventDefault();
+  }
+});
+
+
+// --- Header Particles ---
+const particlesContainer = document.querySelector('.particles');
+const numParticles = 50;
+for (let i = 0; i < numParticles; i++) {
+    let particle = document.createElement('span');
+    particle.className = 'particle';
+    const size = Math.random() * 8 + 2;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.left = `${Math.random() * 100}%`;
+    const duration = Math.random() * 10 + 10;
+    particle.style.animationDuration = `${duration}s`;
+    const delay = Math.random() * 5;
+    particle.style.animationDelay = `${delay}s`;
+    const colors = ['var(--neon-cyan)', 'var(--neon-pink)', 'var(--neon-green)', '#fff'];
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    particlesContainer.appendChild(particle);
+}
+
+// --- Show Element Function (One-way click) ---
+function showElement(elementId, buttonElement) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.display = 'block';
+    }
+    if (buttonElement) {
+        buttonElement.disabled = true;
+        if (buttonElement.textContent.includes('Hint')) {
+            buttonElement.textContent = 'Hint Shown';
+        } else {
+            buttonElement.textContent = 'Solution Shown';
+        }
+    }
+}
+
+
+// --- Quiz Logic ---
+const quizData = [
+    { question: "How do you correctly read the number 7.4?", options: ["Seven point four", "Seven and four tenths", "Seven and four hundredths", "Seven four"], correctAnswer: 1, explanation: "<p class='step-explanation'>1. Read the whole number: <span class='highlight-green'>Seven</span>.</p><p class='step-explanation'>2. Say 'and' for the dot: <span class='pink-glow'>and</span>.</p><p class='step-explanation'>3. Read the part after: <span class='highlight-cyan'>four</span>.</p><p class='step-explanation'>4. Name the place of the last digit (4): <span class='highlight-red'>tenths</span>.</p><p class='step-explanation'>Result: Seven and four tenths.</p>" },
+    { question: "How would you write 'Fifty-three and nine hundredths' in numerals?", options: ["53.9", "53.09", "53.90", "539"], correctAnswer: 1, explanation: "<p class='step-explanation'>1. 'Fifty-three' is <span class='highlight-green'>53</span>.</p><p class='step-explanation'>2. 'and' is the decimal point <span class='pink-glow'>.</span></p><p class='step-explanation'>3. 'nine hundredths' means the 9 must be in the second decimal place. We need a zero as a placeholder in the tenths place. So we write <span class='highlight-red'>09</span>.</p><p class='step-explanation'>Result: <strong class='highlight-green'>53.09</strong></p>" },
+    { question: "What is the place value of the digit 6 in the number 12.56?", options: ["Tenths", "Hundredths", "Tens", "Ones"], correctAnswer: 1, explanation: "<p class='step-explanation'>The first place after the decimal point is tenths (5).</p><p class='step-explanation'>The second place is <strong class='highlight-green'>hundredths</strong> (6).</p>" },
+    { question: "A runner's time is 10.82 seconds. How would you read this?", options: ["Ten point eight two", "Ten and eighty-two tens", "Ten and eighty-two hundredths", "Ten eighty-two"], correctAnswer: 2, explanation: "<p class='step-explanation'>1. Whole number: <span class='highlight-green'>Ten</span>.</p><p class='step-explanation'>2. Decimal point: <span class='pink-glow'>and</span>.</p><p class='step-explanation'>3. Part after: <span class='highlight-cyan'>eighty-two</span>.</p><p class='step-explanation'>4. Place value of the last digit (2): <span class='highlight-red'>hundredths</span>.</p><p class='step-explanation'>Result: Ten and eighty-two hundredths.</p>" },
+    { question: "Write 'sixteen and five tenths' using digits.", options: ["16.5", "16.05", "1.65", "165"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Sixteen' is <span class='highlight-green'>16</span>.</p><p class='step-explanation'>'and' is the decimal point <span class='pink-glow'>.</span></p><p class='step-explanation'>'five tenths' means the 5 is in the first decimal place.</p><p class='step-explanation'>Result: <strong class='highlight-green'>16.5</strong></p>" },
+    { question: "In the number 3.14, what does the '1' represent?", options: ["One", "One hundredth", "One tenth", "One thousandth"], correctAnswer: 2, explanation: "<p class='step-explanation'>The digit '1' is in the first position to the right of the decimal point. This is the <strong class='highlight-green'>tenths</strong> place.</p>" },
+    { question: "How do you write the price ₦400.25 in words?", options: ["Four hundred Naira and twenty-five hundredths", "Four hundred and twenty-five tenths", "Four hundred point two five", "Four hundred twenty-five"], correctAnswer: 0, explanation: "<p class='step-explanation'>The whole part is 'Four hundred Naira'. The dot is 'and'. The '25' ends in the hundredths place, so it's 'twenty-five hundredths' (which we know as 25 kobo).</p>" },
+    { question: "Which number is 'one hundred two and three hundredths'?", options: ["102.3", "123.00", "102.03", "102.300"], correctAnswer: 2, explanation: "<p class='step-explanation'>'One hundred two' is <span class='highlight-green'>102</span>.</p><p class='step-explanation'>'and' gives us the point: 102.</p><p class='step-explanation'>'three hundredths' means the 3 is in the second decimal place, requiring a zero placeholder: <span class='highlight-red'>.03</span>.</p><p class='step-explanation'>Result: <strong class='highlight-green'>102.03</strong></p>" },
+    { question: "How do you read 0.07?", options: ["Seven", "Seven tenths", "Seven hundredths", "Point zero seven"], correctAnswer: 2, explanation: "<p class='step-explanation'>There is no whole number. We read the part after the point: <span class='highlight-cyan'>seven</span>.</p><p class='step-explanation'>The last digit (7) is in the second decimal place, which is the <strong class='highlight-red'>hundredths</strong> place.</p><p class='step-explanation'>Result: Seven hundredths.</p>" },
+    { question: "Write 'two and sixty-four hundredths' in numerals.", options: ["2.64", "26.4", "2.064", "264"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Two' is <span class='highlight-green'>2</span>.</p><p class='step-explanation'>'and' is the point <span class='pink-glow'>.</span></p><p class='step-explanation'>'sixty-four hundredths' means the number 64 ends in the hundredths (2nd) place, so we write <span class='highlight-red'>64</span>.</p><p class='step-explanation'>Result: <strong class='highlight-green'>2.64</strong></p>" },
+    { question: "What is the value of the 9 in 45.92?", options: ["Nine hundredths", "Nine", "Nine tenths", "Ninety"], correctAnswer: 2, explanation: "<p class='step-explanation'>The digit 9 is in the first place after the decimal point, which is the <strong class='highlight-green'>tenths</strong> place.</p>" },
+    { question: "How is 89.1 read correctly?", options: ["Eighty-nine point one", "Eighty-nine and one hundredth", "Eighty and nine tenths", "Eighty-nine and one tenth"], correctAnswer: 3, explanation: "<p class='step-explanation'>The whole part is <span class='highlight-green'>Eighty-nine</span>. The dot is <span class='pink-glow'>and</span>. The part after is <span class='highlight-cyan'>one</span>, and its place value is <span class='highlight-red'>tenth</span>.</p>" },
+    { question: "Which number is 'fourteen thousandths'?", options: ["14.000", "0.14", "0.014", "0.0014"], correctAnswer: 2, explanation: "<p class='step-explanation'>There is no whole number part. 'fourteen thousandths' means the number 14 must end in the third decimal place. To do this, we write <strong class='highlight-green'>.014</strong></p>" },
+    { question: "How would you write 345.6 in words?", options: ["Three hundred forty-five and six tenths", "Three hundred forty-five point six", "Three four five and six", "Three hundred forty-five and six hundredths"], correctAnswer: 0, explanation: "<p class='step-explanation'>Follow the rules: 'Three hundred forty-five' <span class='pink-glow'>and</span> 'six' <span class='highlight-red'>tenths</span>.</p>" },
+    { question: "What does 'and' signify when reading a number?", options: ["The start of a number", "Multiplication", "The whole number part", "The decimal point"], correctAnswer: 3, explanation: "<p class='step-explanation'>In the proper mathematical way of reading numbers, the word 'and' is reserved specifically for the <strong class='highlight-green'>decimal point</strong>.</p>" },
+    { question: "Write 'nine and two thousandths' in numerals.", options: ["9.2", "9.02", "9.002", "9.2000"], correctAnswer: 2, explanation: "<p class='step-explanation'>'Nine' is 9. 'and' is the dot. 'two thousandths' means the 2 must be in the third decimal place, so we need two zero placeholders: <strong class='highlight-green'>.002</strong></p>" },
+    { question: "How do you read 1.05?", options: ["One and five tenths", "One point five", "One and five hundredths", "One o five"], correctAnswer: 2, explanation: "<p class='step-explanation'>'One' <span class='pink-glow'>and</span> 'five' <span class='highlight-red'>hundredths</span>. The 5 is in the second decimal place.</p>" },
+    { question: "The number 7.77 contains the digit 7 in three places. Which value is NOT present?", options: ["Seven tenths", "Seven hundredths", "Seven thousandths", "Seven ones"], correctAnswer: 2, explanation: "<p class='step-explanation'>The number is 'seven and seventy-seven hundredths'. It has a 7 in the <strong class='highlight-green'>ones</strong> place, a 7 in the <strong class='highlight-green'>tenths</strong> place, and a 7 in the <strong class='highlight-green'>hundredths</strong> place. There is no digit in the thousandths place.</p>" },
+    { question: "Write 'eighty and eighty hundredths' in numerals.", options: ["80.80", "80.08", "80.8", "8.80"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Eighty' is 80. 'and' is the dot. 'eighty hundredths' is .80. Note that 80.80 is the same value as 80.8, but the wording 'eighty hundredths' specifically points to two decimal places.</p>" },
+    { question: "How do you read the number 23.40?", options: ["Twenty-three and four tenths", "Twenty-three and forty hundredths", "Both are correct", "Neither is correct"], correctAnswer: 2, explanation: "<p class='step-explanation'>23.40 can be read as 'Twenty-three and forty hundredths'. However, the trailing zero has no value, so 23.40 is the same as 23.4, which is read 'Twenty-three and four tenths'. <strong class='highlight-green'>Both are technically correct ways to read the same value.</strong></p>" },
+    // Adding more questions
+    { question: "What is the place value of the 5 in 0.5?", options: ["Ones", "Tenths", "Hundredths", "Halves"], correctAnswer: 1, explanation: "<p class='step-explanation'>The digit 5 is in the first position to the right of the decimal point, which is the <strong class='highlight-green'>tenths</strong> place.</p>" },
+    { question: "How do you write 'twenty and seven tenths'?", options: ["20.7", "20.07", "27.0", "2.07"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Twenty' is 20. 'and' is the dot. 'seven tenths' means 7 is in the first decimal place. Result: <strong class='highlight-green'>20.7</strong>.</p>" },
+    { question: "How do you read 100.01?", options: ["One hundred point one", "One hundred and one tenth", "One hundred and one hundredth", "One hundred one"], correctAnswer: 2, explanation: "<p class='step-explanation'>'One hundred' <span class='pink-glow'>and</span> 'one' <span class='highlight-red'>hundredth</span>. The 1 is in the second decimal place.</p>" },
+    { question: "Write 'four hundredths' in numerals.", options: ["0.4", "400", "0.04", "0.40"], correctAnswer: 2, explanation: "<p class='step-explanation'>'Four hundredths' means the 4 must be in the second decimal place. We need a zero in the tenths place as a placeholder. Result: <strong class='highlight-green'>0.04</strong>.</p>" },
+    { question: "In 98.76, the digit 6 has what value?", options: ["Six tenths", "Sixty", "Six hundredths", "Six"], correctAnswer: 2, explanation: "<p class='step-explanation'>The digit 6 is in the second position to the right of the decimal point, which is the <strong class='highlight-green'>hundredths</strong> place.</p>" },
+    { question: "Which number is 'five and five thousandths'?", options: ["5.5", "5.05", "5.005", "5.500"], correctAnswer: 2, explanation: "<p class='step-explanation'>'Five' is 5. 'and' is the dot. 'five thousandths' means the 5 must be in the third decimal place. Result: <strong class='highlight-green'>5.005</strong>.</p>" },
+    { question: "How do you read 0.8?", options: ["Eight", "Eight tenths", "Eight hundredths", "Point eight"], correctAnswer: 1, explanation: "<p class='step-explanation'>There is no whole number. The digit is 'eight' and its place value is <strong class='highlight-green'>tenths</strong>.</p>" },
+    { question: "Write 'seventy-two and fifteen hundredths'.", options: ["72.15", "72.015", "7.215", "7215"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Seventy-two' is 72. 'and' is the dot. 'fifteen hundredths' ends in the second decimal place, so we write .15. Result: <strong class='highlight-green'>72.15</strong>.</p>" },
+    { question: "What is the value of the first 3 in 3.3?", options: ["Three tenths", "Three hundredths", "Three ones", "Thirty"], correctAnswer: 2, explanation: "<p class='step-explanation'>The first 3 is to the left of the decimal point, which is the <strong class='highlight-green'>ones</strong> place.</p>" },
+    { question: "How is 4.50 read correctly?", options: ["Four and fifty tenths", "Four and five hundredths", "Four and fifty hundredths", "Four point five zero"], correctAnswer: 2, explanation: "<p class='step-explanation'>We read the whole number 'four', say 'and' for the dot, read the part after as 'fifty', and name the place of the last digit (0), which is <strong class='highlight-green'>hundredths</strong>.</p>" },
+    { question: "Which number is 'nine hundred and nine hundredths'?", options: ["900.09", "909.00", "900.9", "9.09"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Nine hundred' is 900. 'and' is the dot. 'nine hundredths' is .09. Result: <strong class='highlight-green'>900.09</strong>.</p>" },
+    { question: "How do you read 0.11?", options: ["Eleven", "One and one", "Eleven hundredths", "Eleven tenths"], correctAnswer: 2, explanation: "<p class='step-explanation'>Read the number after the dot: 'eleven'. The last digit (1) is in the hundredths place. Result: <strong class='highlight-green'>Eleven hundredths</strong>.</p>" },
+    { question: "Write 'one and one thousandth'.", options: ["1.1", "1.01", "1.001", "1.1000"], correctAnswer: 2, explanation: "<p class='step-explanation'>'One' is 1. 'and' is the dot. 'one thousandth' means 1 must be in the third decimal place. Result: <strong class='highlight-green'>1.001</strong>.</p>" },
+    { question: "A measurement is 15.2 cm. How is this read?", options: ["Fifteen point two", "Fifteen and two hundredths", "One and fifty-two tenths", "Fifteen and two tenths"], correctAnswer: 3, explanation: "<p class='step-explanation'>'Fifteen' <span class='pink-glow'>and</span> 'two' <span class='highlight-red'>tenths</span>.</p>" },
+    { question: "What place is the 0 in 1.08?", options: ["Ones", "Hundredths", "Placeholder", "Tenths"], correctAnswer: 3, explanation: "<p class='step-explanation'>The zero is holding the first place after the decimal point, which is the <strong class='highlight-green'>tenths</strong> place. Its role is as a placeholder, but its place value is still 'tenths'.</p>" },
+    { question: "How do you write 'fifty and fifty-five hundredths'?", options: ["50.55", "55.50", "50.055", "5055"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Fifty' is 50. 'and' is the dot. 'fifty-five hundredths' is .55. Result: <strong class='highlight-green'>50.55</strong>.</p>" },
+    { question: "How do you read 6.0?", options: ["Six", "Six and zero tenths", "Both are correct", "Six point zero"], correctAnswer: 2, explanation: "<p class='step-explanation'>Formally, it is 'six and zero tenths'. However, since the decimal part is zero, it represents the exact same value as the whole number 'six'. <strong class='highlight-green'>Both are correct interpretations of the value.</strong></p>" },
+    { question: "Write 'thirty-four thousandths' in numerals.", options: ["0.34", "0.034", "34.000", "3.400"], correctAnswer: 1, explanation: "<p class='step-explanation'>'Thirty-four thousandths' means the number 34 must end in the third decimal place. This requires a zero placeholder: <strong class='highlight-green'>.034</strong>.</p>" },
+    { question: "What is the value of the 2 in 20.02?", options: ["Two tens and two hundredths", "Two ones and two hundredths", "Two tens and two tenths", "Twenty and two"], correctAnswer: 0, explanation: "<p class='step-explanation'>The first 2 is in the <strong class='highlight-green'>tens</strong> place (value of 20). The second 2 is in the <strong class='highlight-green'>hundredths</strong> place (value of 0.02).</p>" },
+    { question: "How is 1.23 read?", options: ["One and twenty-three hundredths", "One point two three", "One and twenty-three tenths", "One hundred twenty-three"], correctAnswer: 0, explanation: "<p class='step-explanation'>'One' <span class='pink-glow'>and</span> 'twenty-three' <span class='highlight-red'>hundredths</span>.</p>" },
+    { question: "Write 'four and four hundredths'.", options: ["4.4", "4.40", "4.04", "404"], correctAnswer: 2, explanation: "<p class='step-explanation'>'Four' is 4. 'and' is the dot. 'four hundredths' requires the 4 to be in the second decimal place: <strong class='highlight-green'>.04</strong>.</p>" },
+    { question: "How do you read 0.99?", options: ["Ninety-nine", "Point ninety-nine", "Ninety-nine tenths", "Ninety-nine hundredths"], correctAnswer: 3, explanation: "<p class='step-explanation'>Read the number 'ninety-nine'. The last digit is in the hundredths place. Result: <strong class='highlight-green'>Ninety-nine hundredths</strong>.</p>" },
+    { question: "The number 5.5 means...", options: ["Five and five hundredths", "Five and five tenths", "Fifty-five", "Five point five tenths"], correctAnswer: 1, explanation: "<p class='step-explanation'>The 5 after the dot is in the first decimal place, the <strong class='highlight-green'>tenths</strong> place.</p>" },
+    { question: "Which number has a 7 in the thousandths place?", options: ["7000", "0.07", "0.7", "0.007"], correctAnswer: 3, explanation: "<p class='step-explanation'>The thousandths place is the third position after the decimal point. <strong class='highlight-green'>0.007</strong> is the only option where 7 is in that position.</p>" },
+    { question: "Write 'ten and one tenth'.", options: ["10.1", "10.01", "1.01", "101"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Ten' is 10. 'and' is the dot. 'one tenth' is .1. Result: <strong class='highlight-green'>10.1</strong>.</p>" },
+    { question: "How do you read 12.12?", options: ["Twelve and twelve hundredths", "Twelve and twelve tenths", "Twelve point twelve", "One two one two"], correctAnswer: 0, explanation: "<p class='step-explanation'>'Twelve' <span class='pink-glow'>and</span> 'twelve' <span class='highlight-red'>hundredths</span>.</p>" },
+    { question: "Write 'one hundred and one hundredth'.", options: ["101.00", "100.1", "100.01", "101.100"], correctAnswer: 2, explanation: "<p class='step-explanation'>'One hundred' is 100. 'and' is the dot. 'one hundredth' is .01. Result: <strong class='highlight-green'>100.01</strong>.</p>" },
+    { question: "What is the place value of the final digit in 1.234?", options: ["Hundredths", "Tenths", "Thousandths", "Ten-thousandths"], correctAnswer: 2, explanation: "<p class='step-explanation'>The places are Tenths, Hundredths, <strong class='highlight-green'>Thousandths</strong>. The final digit, 4, is in the thousandths place.</p>" },
+    { question: "How is 0.50 read?", options: ["Fifty tenths", "Five hundredths", "Fifty hundredths", "Point five zero"], correctAnswer: 2, explanation: "<p class='step-explanation'>Read the number 'fifty'. The last digit (0) is in the hundredths place. Result: <strong class='highlight-green'>Fifty hundredths</strong>. This has the same value as 'five tenths' (0.5).</p>" },
+    { question: "Write 'zero and seven hundredths'.", options: ["0.7", "0.07", "0.70", "700"], correctAnswer: 1, explanation: "<p class='step-explanation'>'Seven hundredths' means the 7 must be in the second decimal place. Result: <strong class='highlight-green'>0.07</strong>.</p>" }
+];
+
+// Quiz state
+let currentQuizQuestions = [];
+let score = 0;
+let currentQuestionIndex = 0;
+let userAnswers = [];
+
+// DOM elements
+const startScreen = document.getElementById('quiz-start-screen');
+const questionScreen = document.getElementById('quiz-question-screen');
+const resultsScreen = document.getElementById('quiz-results-screen');
+const startBtn = document.getElementById('start-quiz-btn');
+const questionCounter = document.getElementById('question-counter');
+const questionText = document.getElementById('question-text');
+const optionsGrid = document.getElementById('options-grid');
+const explanationBox = document.getElementById('explanation-box');
+const explanationText = document.getElementById('explanation-text');
+const scoreTracker = document.getElementById('score-tracker');
+const nextBtn = document.getElementById('next-question-btn');
+const finalScore = document.getElementById('final-score');
+const scoreMessage = document.getElementById('score-message');
+const resetBtn = document.getElementById('reset-quiz-btn');
+const previewBtn = document.getElementById('preview-answers-btn');
+const previewModal = document.getElementById('preview-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const previewBody = document.getElementById('preview-body');
+
+// --- Helper Functions ---
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// --- Quiz Core Functions ---
+function startQuiz() {
+    startScreen.style.display = 'none';
+    resultsScreen.style.display = 'none';
+    questionScreen.style.display = 'block';
+
+    shuffleArray(quizData);
+    currentQuizQuestions = quizData.slice(0, 5);
+    score = 0;
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    
+    displayQuestion();
+}
+
+function displayQuestion() {
+    // Reset state
+    explanationBox.style.display = 'none';
+    nextBtn.style.display = 'none';
+    optionsGrid.innerHTML = '';
+    
+    const question = currentQuizQuestions[currentQuestionIndex];
+    
+    questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuizQuestions.length}`;
+    questionText.innerHTML = question.question;
+    
+    question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = option;
+        button.onclick = () => selectAnswer(index, button);
+        optionsGrid.appendChild(button);
+    });
+    
+    updateScoreTracker();
+}
+
+function selectAnswer(selectedIndex, button) {
+    const question = currentQuizQuestions[currentQuestionIndex];
+    const isCorrect = selectedIndex === question.correctAnswer;
+    
+    userAnswers[currentQuestionIndex] = selectedIndex;
+
+    if (isCorrect) {
+        score++;
+        button.classList.add('correct');
+    } else {
+        button.classList.add('incorrect');
+        // Also highlight the correct answer
+        optionsGrid.children[question.correctAnswer].classList.add('correct');
+    }
+    
+    // Disable all buttons
+    Array.from(optionsGrid.children).forEach(btn => btn.disabled = true);
+    
+    // Show explanation
+    explanationText.innerHTML = question.explanation;
+    explanationBox.style.display = 'block';
+    
+    // Show next button
+    nextBtn.style.display = 'inline-block';
+    
+    updateScoreTracker();
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuizQuestions.length) {
+        displayQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    questionScreen.style.display = 'none';
+    resultsScreen.style.display = 'block';
+    
+    finalScore.textContent = `${score}/${currentQuizQuestions.length}`;
+    
+    const percentage = (score / currentQuizQuestions.length) * 100;
+    if (percentage === 100) {
+        scoreMessage.textContent = "Perfect Score! You are a decimal master! 🏆";
+        triggerConfetti();
+    } else if (percentage >= 80) {
+        scoreMessage.textContent = "Excellent work! You really know your stuff! 👍";
+        triggerConfetti();
+    } else if (percentage >= 60) {
+        scoreMessage.textContent = "Good job! A little more practice and you'll be an expert! 😊";
+    } else {
+        scoreMessage.textContent = "Nice try! Review the steps and try again. You can do it! 💪";
+    }
+}
+
+function updateScoreTracker() {
+    scoreTracker.textContent = `Score: ${score}/${currentQuizQuestions.length}`;
+}
+
+function triggerConfetti() {
+    const container = document.querySelector('.confetti-container');
+    container.innerHTML = '';
+    for(let i=0; i < 50; i++){
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+        const colors = ['var(--neon-pink)', 'var(--neon-cyan)', 'var(--neon-green)', 'var(--highlight-yellow)'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        container.appendChild(confetti);
+    }
+}
+
+function showPreview() {
+    previewBody.innerHTML = '';
+    currentQuizQuestions.forEach((q, index) => {
+        const userAnswerIndex = userAnswers[index];
+        const isCorrect = userAnswerIndex === q.correctAnswer;
+        
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        
+        let html = `<p><strong>Q${index+1}: ${q.question}</strong></p>`;
+        html += `<p>Your Answer: <span class="${isCorrect ? 'highlight-green' : 'highlight-red'}">${q.options[userAnswerIndex] || 'Not Answered'}</span></p>`;
+        if (!isCorrect) {
+            html += `<p>Correct Answer: <span class="highlight-green">${q.options[q.correctAnswer]}</span></p>`;
+        }
+        item.innerHTML = html.replace(/(\d+)\/(\d+)/g, '<span class="fraction"><span class="numerator">$1</span><span class="denominator">$2</span></span>');
+        previewBody.appendChild(item);
+    });
+    previewModal.style.display = 'flex';
+}
+
+// Event Listeners
+startBtn.addEventListener('click', startQuiz);
+nextBtn.addEventListener('click', nextQuestion);
+resetBtn.addEventListener('click', startQuiz);
+previewBtn.addEventListener('click', showPreview);
+closeModalBtn.addEventListener('click', () => previewModal.style.display = 'none');
+window.addEventListener('click', (e) => {
+    if (e.target === previewModal) {
+        previewModal.style.display = 'none';
+    }
+});
+
+</script>
+
+</body>
+</html>

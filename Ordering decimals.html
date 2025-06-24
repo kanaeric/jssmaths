@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordering Decimals | Magaby Mathematics</title>
+    
+    <!-- Google Fonts: Poppins for body, Nunito for headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- CSS Reset & Core Styles --- */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+
+            /* Neon Glow Palette */
+            --bg-dark: #0d0d1a;
+            --surface-dark: #1a1a2e;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-green: #39FF14;
+            --neon-blue: #4285F4;
+            --text-light: #e0e0e0;
+            --text-dim: #a0a0b0;
+            
+            font-size: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* --- Content Protection --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard */
+            -webkit-touch-callout: none; /* iOS Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-25px) rotate(180deg); opacity: 0.7; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
+        }
+        
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px var(--neon-cyan),
+                    0 0 40px var(--neon-cyan),
+                    0 0 80px var(--neon-cyan),
+                    0 0 90px var(--neon-cyan),
+                    0 0 100px var(--neon-cyan),
+                    0 0 150px var(--neon-cyan);
+                color: #fff;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                color: #e0e0e0;
+            }
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100%) rotateZ(0deg); }
+            100% { transform: translateY(100vh) rotateZ(720deg); }
+        }
+
+        /* --- General Layout & Typography --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+        }
+        
+        section {
+            padding: 3rem 0;
+            border-bottom: 2px solid var(--surface-dark);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--surface-dark), #2a2a3e);
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        
+        .section-header i {
+            font-size: 3rem;
+            padding: 1rem;
+            border-radius: 50%;
+            background-color: var(--surface-dark);
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .section-header .emoji {
+            font-size: 2.5rem;
+            vertical-align: middle;
+        }
+        
+        .pink-glow { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
+        .cyan-glow { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
+        .green-glow { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
+        .yellow-glow { color: var(--highlight-yellow); text-shadow: 0 0 8px var(--highlight-yellow); }
+        .blue-glow { color: var(--primary-blue); text-shadow: 0 0 8px var(--primary-blue); }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        p i, p .emoji {
+            font-size: 1.3em;
+            vertical-align: -0.2em;
+            margin: 0 0.2em;
+        }
+
+        strong, .highlight {
+            font-weight: 600;
+        }
+        
+        .highlight-yellow { color: var(--highlight-yellow); font-weight: bold; font-size: 1.1em; }
+        .highlight-green { color: var(--neon-green); font-weight: bold; font-size: 1.1em; }
+        .highlight-cyan { color: var(--neon-cyan); font-weight: bold; font-size: 1.1em; }
+        .highlight-red { color: var(--warning-red); font-weight: bold; font-size: 1.1em; }
+
+        /* --- Header --- */
+        header {
+            position: relative;
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, #000 100%);
+            border-bottom: 3px solid var(--neon-cyan);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            animation: neon-flicker 5s infinite alternate;
+        }
+
+        .subtitle-box {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        header h2.subtitle {
+            font-size: 2rem;
+            color: var(--neon-pink);
+            font-weight: 700;
+        }
+
+        /* --- Card & Content Styling --- */
+        .card {
+            background-color: var(--surface-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--deep-purple);
+            box-shadow: 0 0 10px rgba(103, 58, 183, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(103, 58, 183, 0.6);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--deep-purple));
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5);
+        }
+        
+        .btn:disabled {
+            background: #555;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .solution-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 2px dashed var(--accent-green);
+            background-color: rgba(15, 157, 88, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .solution-box p { margin-bottom: 0.5rem; }
+
+        /* --- Specific Section Styles --- */
+        /* #introduction */
+        .problem-box {
+            background-color: var(--surface-dark);
+            border: 2px dashed var(--highlight-yellow);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+        .problem-box h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--highlight-yellow);
+            text-shadow: 0 0 8px var(--highlight-yellow);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .problem-box .emoji {
+            font-size: 1.3rem;
+            vertical-align: baseline;
+        }
+        
+        /* Comparison Table for ordering */
+        .ordering-table {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            text-align: right;
+            line-height: 1.5;
+            background: rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            width: fit-content;
+            margin: 1.5rem auto;
+            color: var(--neon-cyan);
+        }
+        .ordering-table .placeholder {
+            color: var(--text-dim);
+            opacity: 0.7;
+        }
+        .ordering-table .highlighted-digit {
+            background-color: rgba(57, 255, 20, 0.2);
+            border-radius: 5px;
+            padding: 0 0.2rem;
+            font-weight: bold;
+        }
+
+        /* #daily-life */
+        details {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--highlight-yellow);
+        }
+        details summary {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            list-style-type: '👉';
+            color: var(--highlight-yellow);
+        }
+        details summary::marker { color: var(--highlight-yellow); }
+        details div { padding: 0 1.5rem 1rem 1.5rem; }
+
+        /* #key-terms */
+        .term-card { display: flex; align-items: center; gap: 1.5rem; }
+        .term-card i { font-size: 2.5rem; color: var(--neon-pink); min-width: 50px; text-align: center; }
+        
+        /* #step-by-step */
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            background: var(--surface-dark);
+            border-left: 5px solid var(--neon-cyan);
+        }
+        .step-number { font-family: 'Nunito', sans-serif; font-size: 3rem; font-weight: 900; color: var(--neon-cyan); line-height: 1; }
+        .step-content h3 { color: var(--neon-cyan); margin-bottom: 0.5rem; }
+        .step-content .why { font-style: italic; color: var(--text-dim); border-left: 3px solid var(--deep-purple); padding-left: 1rem; margin-top: 0.5rem; }
+        
+        /* #common-mistakes */
+        .mistake-box {
+            border-radius: 10px; padding: 1.5rem; border: 2px solid var(--warning-red); background: rgba(219, 68, 55, 0.1);
+        }
+        .mistake-box h3 { color: var(--warning-red); margin-bottom: 1rem; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .wrong-way, .right-way { padding: 1rem; border-radius: 8px; }
+        .wrong-way { background-color: rgba(219, 68, 55, 0.2); }
+        .right-way { background-color: rgba(15, 157, 88, 0.2); }
+        .wrong-way h4::before { content: '❌ '; }
+        .right-way h4::before { content: '✅ '; }
+
+        /* #practice */
+        .challenge-problem { border: 2px solid var(--neon-pink); background-color: rgba(255, 0, 255, 0.05); }
+        .hint-box {
+            display: none; background-color: rgba(244, 180, 0, 0.1); border: 1px dashed var(--highlight-yellow); padding: 1rem; margin-top: 1rem; border-radius: 5px; animation: fadeIn 0.5s ease;
+        }
+
+        /* #summary */
+        .summary-list { list-style: none; padding-left: 0; }
+        .summary-list li { position: relative; padding: 1.2rem 1.2rem 1.2rem 3.5rem; margin-bottom: 1rem; background: var(--surface-dark); border-radius: 10px; border-left: 5px solid var(--neon-green); }
+        .summary-list li::before {
+            content: attr(data-step); position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--neon-green); background-color: rgba(57, 255, 20, 0.2); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+        }
+
+        /* --- Quiz Section --- */
+        #quiz-container { background-color: var(--surface-dark); padding: 2rem; border-radius: 20px; border: 1px solid var(--deep-purple); box-shadow: 0 0 20px rgba(103, 58, 183, 0.5); }
+        #quiz-start-screen h3, #quiz-results-screen h3 { font-size: 2rem; text-align: center; margin-bottom: 1.5rem; color: var(--neon-pink); }
+        #quiz-question-screen { display: none; }
+        #question-text { font-size: 1.4rem; margin-bottom: 2rem; line-height: 1.6; }
+        #options-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        .option-btn { width: 100%; padding: 1.2rem; font-size: 1.1rem; background-color: rgba(255,255,255,0.05); border: 2px solid var(--primary-blue); color: var(--text-light); border-radius: 10px; cursor: pointer; transition: all 0.3s ease; text-align: left; }
+        .option-btn:hover:not(:disabled) { background-color: rgba(66, 133, 244, 0.3); transform: translateY(-3px); }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background-color: rgba(15, 157, 88, 0.3); border-color: var(--neon-green); color: #fff; transform: scale(1.02); }
+        .option-btn.incorrect { background-color: rgba(219, 68, 55, 0.3); border-color: var(--warning-red); color: #fff; }
+        #explanation-box { display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: 10px; background-color: rgba(0,0,0,0.2); animation: fadeIn 0.5s ease; }
+        #explanation-text { color: var(--text-dim); line-height: 1.6; }
+        #explanation-text .step-explanation { display: block; margin-bottom: 0.75em; }
+        #quiz-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
+        #quiz-results-screen { display: none; text-align: center; position: relative; }
+        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+        .confetti { position: absolute; width: 10px; height: 20px; opacity: 0.8; animation: confetti-fall 4s linear infinite; }
+        #final-score { font-size: 5rem; font-weight: 900; color: var(--neon-green); margin: 1rem 0; text-shadow: 0 0 20px var(--neon-green); }
+        #score-message { font-size: 1.5rem; color: var(--highlight-yellow); }
+        #preview-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background: var(--surface-dark); padding: 2rem; border-radius: 15px; border: 1px solid var(--neon-cyan); width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--neon-cyan); padding-bottom: 1rem; margin-bottom: 1rem; }
+        #close-modal { font-size: 2rem; cursor: pointer; color: var(--warning-red); }
+        .preview-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #333; }
+        .preview-item p { margin-bottom: 0.5rem; }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 2rem; margin-top: 2rem; background-color: var(--surface-dark); color: var(--text-dim); border-top: 2px solid var(--deep-purple); }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            :root { font-size: 14px; }
+            .container { padding: 1rem; }
+            header h1 { font-size: 3rem; }
+            header h2.subtitle { font-size: 1.5rem; }
+            .section-header { flex-direction: column; text-align: center; }
+            .section-header h2 { font-size: 2rem; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .step { flex-direction: column; align-items: center; text-align: center; }
+            .ordering-table { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;" onselectstart="return false;" onkeydown="return false;">
+    
+    <!-- Dynamic Header -->
+    <header>
+        <div class="particles"></div>
+        <div class="header-content">
+            <h1>Maths Universe</h1>
+            <div class="subtitle-box">
+                <h2 class="subtitle">Ordering Decimals</h2>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Section 1: The Hook -->
+        <section id="introduction">
+            <div class="section-header">
+                <i class="fas fa-flag-checkered yellow-glow"></i>
+                <h2>1. The Race to the Finish Line! (Problem to Solve) 🏁</h2>
+            </div>
+            <div class="problem-box">
+                <h4>PROBLEM SITUATION <span class="emoji">😳</span></h4>
+                <p>
+                    It's the final of the 100-metre race at the school's Inter-House Sports! The times for the top three runners are in:
+                </p>
+                <ul>
+                    <li><strong class="highlight-yellow">Emeka:</strong> 12.1 seconds</li>
+                    <li><strong class="highlight-yellow">Bolu:</strong> 12.09 seconds</li>
+                    <li><strong class="highlight-yellow">Akin:</strong> 12.11 seconds</li>
+                </ul>
+                <p>Who came 1st, 2nd, and 3rd? They are so close! How can we put their times in order from <strong class="highlight-red">fastest to slowest</strong> to decide the winner? 🤔</p>
+            </div>
+            <p>
+                This is where ordering decimals becomes a gold-medal skill! It’s just like comparing, but with more numbers. Let's learn the method to sort out any list of decimals and find the true champion. 🏆
+            </p>
+        </section>
+
+        <!-- Section 2: Real-World Relevance -->
+        <section id="daily-life">
+            <div class="section-header">
+                <i class="fas fa-globe-africa green-glow"></i>
+                <h2>2. Putting Things in Order in Nigeria 🇳🇬</h2>
+            </div>
+            <p>From the market to the classroom, ordering decimals helps make sense of the world.</p>
+            <details>
+                <summary>Ranking Student Scores 🎓</summary>
+                <div>
+                    <p>Your teacher needs to rank the top students. If scores are <strong class="highlight-yellow">95.5</strong>, <strong class="highlight-yellow">95.8</strong>, and <strong class="highlight-yellow">95.45</strong>, ordering them from greatest to least tells you who came 1st, 2nd, and 3rd.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Sorting Prices in a Shop 🛍️</summary>
+                <div>
+                    <p>You want to find the cheapest bottle of Zobo. By ordering the prices (<strong class="highlight-yellow">₦150.50</strong>, <strong class="highlight-yellow">₦150.25</strong>, <strong class="highlight-yellow">₦155.00</strong>) from least to greatest, you can easily spot the best deal.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Listing Ingredients by Weight ⚖️</summary>
+                <div>
+                    <p>A complex recipe for Jollof rice might require you to add ingredients in a specific order based on their weight, like <strong class="highlight-yellow">0.25</strong> kg of onions before <strong class="highlight-yellow">0.5</strong> kg of tomatoes.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Analysing Football Team Stats ⚽</summary>
+                <div>
+                    <p>To see which Nigerian Professional Football League team is the best, you might order them by their average goals per game: Team A (<strong class="highlight-yellow">2.1</strong>), Team B (<strong class="highlight-yellow">2.05</strong>), and Team C (<strong class="highlight-yellow">2.15</strong>).</p>
+                </div>
+            </details>
+            <details>
+                <summary>Organising Computer Files 💻</summary>
+                <div>
+                    <p>When you sort files by size, your computer is ordering decimals! It arranges files like <strong class="highlight-yellow">1.2 MB</strong>, <strong class="highlight-yellow">1.15 MB</strong>, and <strong class="highlight-yellow">1.21 MB</strong> to help you see which is largest.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Section 3: Key Terms & Definitions -->
+        <section id="key-terms">
+            <div class="section-header">
+                <i class="fas fa-key cyan-glow"></i>
+                <h2>3. Your Ordering Dictionary 📖</h2>
+            </div>
+            <p>These two terms are the most important instructions in this topic! 🔑</p>
+            <div class="card term-card">
+                <i class="fas fa-arrow-up-1-9"></i>
+                <div>
+                    <h3>Ascending Order</h3>
+                    <p>This means arranging numbers from <strong class="highlight-green">smallest to largest</strong>. Think of a rocket <strong class="highlight-green">ascending</strong> or going up!</p>
+                </div>
+            </div>
+            <div class="card term-card">
+                <i class="fas fa-arrow-down-9-1"></i>
+                <div>
+                    <h3>Descending Order</h3>
+                    <p>This means arranging numbers from <strong class="highlight-red">largest to smallest</strong>. Think of a plane <strong class="highlight-red">descending</strong> or coming down for landing.</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-layer-group"></i>
+                <div>
+                    <h3>Line Up & Pad</h3>
+                    <p>This is your master technique! <strong class="highlight-yellow">Lining up</strong> the decimal points and <strong class="highlight-yellow">padding</strong> with zeros makes ordering simple and error-free.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Step-by-Step Explanation -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <i class="fas fa-sort-amount-down green-glow"></i>
+                <h2>4. The Golden Method: Line Up, Pad & Order! 🏆</h2>
+            </div>
+            <p>Let's use our method to put these numbers in <strong class="highlight-green">ascending order</strong> (smallest to largest): <strong class="highlight-yellow">7.8</strong>, <strong class="highlight-yellow">7.79</strong>, and <strong class="highlight-yellow">7.81</strong>.</p>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Line Up the Decimal Points</h3>
+                    <p>Write all the numbers in a column, making sure the decimal points are perfectly aligned, like buttons on a shirt.</p>
+                    <div class="ordering-table">
+                        <pre>7.8</pre>
+                        <pre>7.79</pre>
+                        <pre>7.81</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Pad with Zeros</h3>
+                    <p>Look for the number with the most decimal places (7.79 and 7.81 both have two). Add zeros to the end of all other numbers so they also have two decimal places.</p>
+                    <div class="ordering-table">
+                        <pre>7.8<span class="placeholder">0</span></pre>
+                        <pre>7.79</pre>
+                        <pre>7.81</pre>
+                    </div>
+                    <p class="why"><strong>Why?</strong> Now we can easily compare the decimal parts as if they were whole numbers: 80, 79, and 81.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Compare and Rank</h3>
+                    <p>Now, simply find the smallest number, then the next smallest, and so on. The whole number part (7) is the same for all, so we look at the decimal parts.</p>
+                    <div class="ordering-table">
+                        <pre>7.80</pre>
+                        <pre>7.<span class="highlighted-digit">7</span>9 &nbsp;  <i class="fas fa-trophy" style="color: gold;"></i> (Smallest)</pre>
+                        <pre>7.81</pre>
+                    </div>
+                    <p>Comparing 7.80 and 7.81, we see that 80 is smaller than 81.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Write the Final Ordered List</h3>
+                    <p>Write the numbers in their original form, from smallest to largest.</p>
+                    <p>The smallest is <strong class="highlight-green">7.79</strong>.</p>
+                    <p>The next is 7.80, which was originally <strong class="highlight-green">7.8</strong>.</p>
+                    <p>The largest is <strong class="highlight-green">7.81</strong>.</p>
+                    <p><strong>Ascending Order:</strong> <strong class="highlight-cyan">7.79, 7.8, 7.81</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Real-Life Application -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <i class="fas-solid fa-trophy blue-glow"></i>
+                <h2>5. Case Study: The Jollof Rice Competition 🍚</h2>
+            </div>
+            <div class="card">
+                <p>
+                    Three chefs competed in the Lagos Food Festival's Jollof Rice showdown. The judges' scores are in:
+                </p>
+                <ul>
+                    <li><strong>Chef Ade:</strong> <strong class="highlight-cyan">9.25</strong> points</li>
+                    <li><strong>Chef Funke:</strong> <strong class="highlight-cyan">9.3</strong> points</li>
+                    <li><strong>Chef Emeka:</strong> <strong class="highlight-cyan">9.05</strong> points</li>
+                </ul>
+                <p>
+                    Can you rank the chefs from 1st place to 3rd place? (This means putting the scores in <strong class="highlight-red">descending order</strong>).
+                </p>
+                <button class="btn" onclick="showElement('solution1', this)">Show Solution</button>
+                <div id="solution1" class="solution-box">
+                    <h4>Let's find the winner:</h4>
+                    <p><strong>1. Line Up & Pad:</strong></p>
+                    <div class="ordering-table">
+                        <pre>9.25</pre>
+                        <pre>9.3<span class="placeholder">0</span></pre>
+                        <pre>9.05</pre>
+                    </div>
+                    <p><strong>2. Compare and Rank (Largest to Smallest):</strong> The whole number (9) is the same for all. Let's look at the decimal parts: 25, 30, and 05.</p>
+                    <ul>
+                        <li>The largest is 30, which corresponds to <strong class="highlight-green">9.3</strong>.</li>
+                        <li>The next largest is 25, which is <strong class="highlight-green">9.25</strong>.</li>
+                        <li>The smallest is 05, which is <strong class="highlight-green">9.05</strong>.</li>
+                    </ul>
+                    <p><strong>✅ Final Ranking:</strong></p>
+                    <p>🥇 <strong>1st Place:</strong> Chef Funke (9.3)</p>
+                    <p>🥈 <strong>2nd Place:</strong> Chef Ade (9.25)</p>
+                    <p>🥉 <strong>3rd Place:</strong> Chef Emeka (9.05)</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Financial Literacy -->
+        <section id="financial-lit">
+             <div class="section-header">
+                <i class="fas fa-naira-sign green-glow"></i>
+                <h2>6. Financial Focus: Tracking Airtime Spending 📱</h2>
+            </div>
+            <div class="card">
+                <p>
+                    <strong class="highlight-yellow">Aisha</strong> tracks how much airtime she uses over four days:
+                </p>
+                <ul>
+                    <li>Monday: <strong class="highlight-cyan">₦150.5</strong></li>
+                    <li>Tuesday: <strong class="highlight-cyan">₦150.25</strong></li>
+                    <li>Wednesday: <strong class="highlight-cyan">₦155.0</strong></li>
+                    <li>Thursday: <strong class="highlight-cyan">₦150.55</strong></li>
+                </ul>
+                <p>
+                   Help Aisha list the days from the day she spent the <strong class="highlight-red">most</strong> airtime to the day she spent the <strong class="highlight-green">least</strong>. (Descending order)
+                </p>
+                <button class="btn" onclick="showElement('solution2', this)">Show Solution</button>
+                <div id="solution2" class="solution-box">
+                    <h4>Let's sort the spending:</h4>
+                     <p><strong>1. Line up the numbers and pad with zeros:</strong></p>
+                     <div class="ordering-table">
+                        <pre>150.50  (Mon)</pre>
+                        <pre>150.25  (Tue)</pre>
+                        <pre>155.00  (Wed)</pre>
+                        <pre>150.55  (Thu)</pre>
+                    </div>
+                     <p><strong>2. Compare and Rank (Largest to Smallest):</strong></p>
+                     <p>First, look at the whole numbers. <strong class="highlight-red">155</strong> is clearly the largest. So Wednesday is the day she spent the most.</p>
+                     <p>Now compare the other three: 150.50, 150.25, and 150.55. Look at the decimal parts: 50, 25, and 55. The largest is 55, then 50, then 25.</p>
+                    <p><strong>✅ Final Order (Most to Least Spent):</strong></p>
+                    <ol>
+                        <li><strong>Wednesday:</strong> ₦155.00</li>
+                        <li><strong>Thursday:</strong> ₦150.55</li>
+                        <li><strong>Monday:</strong> ₦150.50</li>
+                        <li><strong>Tuesday:</strong> ₦150.25</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Pro-Tips & Tricks -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <i class="fas fa-magic-wand-sparkles yellow-glow"></i>
+                <h2>7. Maths Magic: The "Ignore the Dot" Trick ✨</h2>
+            </div>
+            <div class="card">
+                <h3>(After You Line Up & Pad!)</h3>
+                <p>
+                    Here's a mental shortcut. Once you have correctly lined up the decimals and padded with zeros, you can <strong class="highlight-green">temporarily ignore the decimal point</strong> and just order the numbers you see.
+                </p>
+                <p>
+                    Let's order <strong class="highlight-cyan">12.09</strong>, <strong class="highlight-cyan">12.1</strong>, and <strong class="highlight-cyan">12.01</strong>.
+                </p>
+                <p>
+                    <strong>Step 1 (Pad):</strong> They become <strong class="highlight-yellow">12.09</strong>, <strong class="highlight-yellow">12.10</strong>, and <strong class="highlight-yellow">12.01</strong>.
+                </p>
+                 <p>
+                    <strong>Step 2 (The Trick):</strong> Now, just think about ordering the numbers <strong class="highlight-yellow">1209</strong>, <strong class="highlight-yellow">1210</strong>, and <strong class="highlight-yellow">1201</strong>. Easy! The order is 1201, 1209, 1210.
+                </p>
+                <p>
+                    So the correct decimal order is <strong class="highlight-green">12.01, 12.09, 12.1</strong>.
+                </p>
+                <div class="mistake-box" style="margin-top: 2rem; border-color: var(--warning-red);">
+                    <h4 style="color: var(--warning-red);"><i class="fas fa-exclamation-triangle"></i> CRITICAL WARNING!</h4>
+                    <p>This trick <strong class="highlight-red">ONLY</strong> works <strong class="highlight-red">AFTER</strong> you have padded with zeros to make all decimal parts the same length. If you try to order 12.1 and 12.09 by thinking of 121 and 1209, you will get the wrong answer! The padding step is essential!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Common Mistakes -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <i class="fas fa-user-shield warning-red"></i>
+                <h2>8. Watch Out! Ordering Pitfalls! ⚠️</h2>
+            </div>
+            <div class="mistake-box">
+                <h3>Mistake: Forgetting the Whole Number</h3>
+                <p>Students sometimes get so focused on the decimal part that they forget to check the whole number first. The whole number is ALWAYS more important.</p>
+                <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>When ordering <strong class="highlight-red">3.9</strong> and <strong class="highlight-red">4.1</strong>, a student might think "9 is bigger than 1, so 3.9 is bigger."</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Always check the whole number first! <strong class="highlight-green">4</strong> is greater than <strong class="highlight-green">3</strong>. It doesn't matter what comes after the decimal point. <strong class="highlight-green">4.1 is bigger than 3.9</strong>.</p>
+                    </div>
+                </div>
+            </div>
+             <div class="mistake-box" style="margin-top: 1.5rem;">
+                <h3>Mistake: Reading from Right to Left</h3>
+                <p>We read words from left to right, and we must do the same when comparing numbers.</p>
+                 <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                         <p>Comparing <strong class="highlight-red">0.25</strong> and <strong class="highlight-red">0.31</strong>. A student might start from the right and see "5 is bigger than 1," making a wrong conclusion.</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Start from the left. In the tenths place, <strong class="highlight-green">2</strong> is less than <strong class="highlight-green">3</strong>. Stop there! That's all the information you need. <strong class="highlight-green">0.31 is greater than 0.25</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Practice & Challenge Zone -->
+        <section id="practice">
+            <div class="section-header">
+                <i class="fas fa-pencil-alt deep-purple"></i>
+                <h2>9. Practice & Challenge Zone 🧠</h2>
+            </div>
+            
+            <div class="card">
+                <h3>Standard Practice Problem</h3>
+                <p>Arrange these numbers in <strong class="highlight-green">ascending order</strong> (least to greatest):</p>
+                <p><strong class="highlight-cyan">2.7, 2.73, 2.07</strong></p>
+                <button class="btn" onclick="showElement('hint1', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution3', this)">Show Solution</button>
+                <div id="hint1" class="hint-box">
+                    <p><strong>Hint:</strong> Line them up and pad 2.7 with a zero to make it 2.70. Now compare 2.70, 2.73, and 2.07. Which is smallest?</p>
+                </div>
+                <div id="solution3" class="solution-box">
+                    <p><strong>1. Line Up & Pad:</strong><br>2.70<br>2.73<br>2.07</p>
+                    <p><strong>2. Compare:</strong> The smallest is 2.07 (since 0 in the tenths place is smallest). Between 2.70 and 2.73, 2.70 is smaller.</p>
+                    <p><strong>✅ Final Answer:</strong> <strong class="highlight-green">2.07, 2.7, 2.73</strong></p>
+                </div>
+            </div>
+
+            <div class="card challenge-problem">
+                <h3>⭐ Challenge Problem ⭐</h3>
+                <p>
+                    Arrange these values from <strong class="highlight-red">greatest to least</strong> (descending order):
+                </p>
+                <p>
+                    <strong class="highlight-cyan">0.8, ⅘, 0.85, ⁸/₁₀₀</strong>
+                </p>
+                <button class="btn" onclick="showElement('hint2', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution4', this)">Show Solution</button>
+                <div id="hint2" class="hint-box">
+                    <p><strong>Hint:</strong> First, you must convert all the fractions into decimals. Remember that ⅘ is the same as ⁸/₁₀. Then you can use the Line Up & Pad method on all four numbers.</p>
+                </div>
+                <div id="solution4" class="solution-box">
+                    <p><strong>1. Convert Fractions to Decimals:</strong></p>
+                    <ul>
+                        <li>⅘ = ⁸/₁₀ = <strong class="highlight-yellow">0.8</strong></li>
+                        <li>⁸/₁₀₀ = <strong class="highlight-yellow">0.08</strong></li>
+                    </ul>
+                    <p><strong>2. List all decimals:</strong> 0.8, 0.8, 0.85, 0.08</p>
+                    <p><strong>3. Line Up & Pad:</strong><br>0.80<br>0.80<br>0.85<br>0.08</p>
+                    <p><strong>4. Order from Greatest to Least:</strong> The largest is 0.85. Next are the two 0.80s. The smallest is 0.08.</p>
+                    <p><strong>✅ Final Answer (using original forms):</strong> <strong class="highlight-green">0.85, 0.8 (or ⅘), ⁸/₁₀₀</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Summary of Key Steps -->
+        <section id="summary">
+            <div class="section-header">
+                <i class="fas fa-list-check green-glow"></i>
+                <h2>10. Your Golden Rules for Ordering 📜</h2>
+            </div>
+            <p>Remember these three steps and you'll never get a list in the wrong order again!</p>
+            <ol class="summary-list">
+                <li data-step="1"><strong>LINE UP:</strong> Write all numbers in a column, with the decimal points perfectly aligned. 📍</li>
+                <li data-step="2"><strong>PAD:</strong> Add zeros to the end of shorter decimals so all have the same number of decimal places. ✍️</li>
+                <li data-step="3"><strong>COMPARE & RANK:</strong> Starting from the left, compare the digits in each column to find the smallest (or largest), then the next, and so on. 🔍</li>
+            </ol>
+        </section>
+        
+        <!-- Section 11: Interactive Quiz -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <i class="fas fa-vial-circle-check neon-pink"></i>
+                <h2>11. Test Your Knowledge! 🧪</h2>
+            </div>
+            <div id="quiz-container">
+                <!-- Start Screen -->
+                <div id="quiz-start-screen">
+                    <h3>Ready to show what you've learned?</h3>
+                    <p style="text-align:center; margin-bottom: 2rem;">You'll get <span class="highlight-yellow">5</span> random questions. Give it your best shot! Good luck! 👍</p>
+                    <div style="text-align:center;">
+                        <button class="btn" id="start-quiz-btn">Start Quiz Now!</button>
+                    </div>
+                </div>
+
+                <!-- Question Screen -->
+                <div id="quiz-question-screen">
+                    <p id="question-counter"></p>
+                    <p id="question-text">This is where the question will appear.</p>
+                    <div id="options-grid">
+                        <!-- Options will be generated by JS -->
+                    </div>
+                    <div id="explanation-box">
+                        <h3>Explanation:</h3>
+                        <div id="explanation-text">The reason for the answer will show up here.</div>
+                    </div>
+                    <div id="quiz-navigation">
+                        <p id="score-tracker">Score: 0/5</p>
+                        <button class="btn" id="next-question-btn" style="display:none;">Next Question</button>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div id="quiz-results-screen">
+                    <div class="confetti-container"></div>
+                    <h3>Quiz Complete! 🎉</h3>
+                    <p>Here's how you did:</p>
+                    <div id="final-score">5/5</div>
+                    <p id="score-message">Fantastic work!</p>
+                    <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                        <button class="btn" id="reset-quiz-btn">Try Another Set!</button>
+                        <button class="btn" id="preview-answers-btn">Review Answers</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview Answers Modal -->
+        <div id="preview-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Your Quiz Review</h2>
+                    <span id="close-modal">&times;</span>
+                </div>
+                <div id="preview-body">
+                    <!-- Review items will be generated by JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+        <p>All rights reserved. Designed for an engaging learning experience.</p>
+    </footer>
+
+<script>
+// --- Content Protection Script ---
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'PrintScreen' || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
+    e.preventDefault();
+  }
+});
+
+
+// --- Header Particles ---
+const particlesContainer = document.querySelector('.particles');
+const numParticles = 50;
+for (let i = 0; i < numParticles; i++) {
+    let particle = document.createElement('span');
+    particle.className = 'particle';
+    const size = Math.random() * 8 + 2;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.left = `${Math.random() * 100}%`;
+    const duration = Math.random() * 10 + 10;
+    particle.style.animationDuration = `${duration}s`;
+    const delay = Math.random() * 5;
+    particle.style.animationDelay = `${delay}s`;
+    const colors = ['var(--neon-cyan)', 'var(--neon-pink)', 'var(--neon-green)', '#fff'];
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    particlesContainer.appendChild(particle);
+}
+
+// --- Show Element Function (One-way click) ---
+function showElement(elementId, buttonElement) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.display = 'block';
+    }
+    if (buttonElement) {
+        buttonElement.disabled = true;
+        if (buttonElement.textContent.includes('Hint')) {
+            buttonElement.textContent = 'Hint Shown';
+        } else {
+            buttonElement.textContent = 'Solution Shown';
+        }
+    }
+}
+
+
+// --- Quiz Logic ---
+const quizData = [
+    { question: "Which list is in ascending order (least to greatest)?", options: ["0.5, 0.45, 0.55", "0.45, 0.5, 0.55", "0.55, 0.5, 0.45"], correctAnswer: 1, explanation: "<p class='step-explanation'>1. Pad the numbers: 0.50, 0.45, 0.55.</p><p class='step-explanation'>2. The smallest is 0.45.</p><p class='step-explanation'>3. The next is 0.50 (which is 0.5).</p><p class='step-explanation'>4. The largest is 0.55. The correct order is <strong class='highlight-green'>0.45, 0.5, 0.55</strong>.</p>" },
+    { question: "Which number is the largest in this set: 3.1, 3.01, 3.11?", options: ["3.1", "3.01", "3.11"], correctAnswer: 2, explanation: "<p class='step-explanation'>1. Pad them: 3.10, 3.01, 3.11.</p><p class='step-explanation'>2. Compare the decimal parts: 10, 01, 11. The largest is 11.</p><p class='step-explanation'>So, <strong class='highlight-green'>3.11</strong> is the largest number.</p>" },
+    { question: "Arrange these race times from fastest to slowest (ascending order): 10.2s, 10.19s, 10.21s", options: ["10.2s, 10.19s, 10.21s", "10.19s, 10.21s, 10.2s", "10.19s, 10.2s, 10.21s"], correctAnswer: 2, explanation: "<p class='step-explanation'>1. Pad them: 10.20s, 10.19s, 10.21s.</p><p class='step-explanation'>2. The smallest (fastest) time is <strong class='highlight-green'>10.19s</strong>.</p><p class='step-explanation'>3. The next smallest is <strong class='highlight-green'>10.20s (10.2s)</strong>.</p><p class='step-explanation'>4. The largest (slowest) is <strong class='highlight-green'>10.21s</strong>.</p>" },
+    { question: "Which list is in descending order (greatest to least)?", options: ["2.5, 2.55, 2.05", "2.05, 2.5, 2.55", "2.55, 2.5, 2.05"], correctAnswer: 2, explanation: "<p class='step-explanation'>1. Pad them: 2.50, 2.55, 2.05.</p><p class='step-explanation'>2. The largest is <strong class='highlight-green'>2.55</strong>.</p><p class='step-explanation'>3. The next is <strong class='highlight-green'>2.50 (2.5)</strong>.</p><p class='step-explanation'>4. The smallest is <strong class='highlight-green'>2.05</strong>.</p>" },
+    { question: "What is the smallest number in this set: 0.9, 1.0, 0.99?", options: ["0.9", "1.0", "0.99"], correctAnswer: 0, explanation: "<p class='step-explanation'>1. Pad them: 0.90, 1.00, 0.99.</p><p class='step-explanation'>2. The number with the largest whole part (1.00) is the biggest. </p><p class='step-explanation'>3. Now compare 0.90 and 0.99. The smallest is <strong class='highlight-green'>0.90 (0.9)</strong>.</p>" },
+    { question: "Three items cost ₦45.5, ₦45.45, and ₦45.05. Which is the most expensive?", options: ["₦45.5", "₦45.45", "₦45.05"], correctAnswer: 0, explanation: "<p class='step-explanation'>1. Pad them: 45.50, 45.45, 45.05.</p><p class='step-explanation'>2. The largest decimal part is 50. So <strong class='highlight-green'>₦45.5</strong> is the most expensive.</p>" },
+    { question: "Arrange in ascending order: 4.8, 4.08, 0.48", options: ["0.48, 4.08, 4.8", "0.48, 4.8, 4.08", "4.8, 4.08, 0.48"], correctAnswer: 0, explanation: "<p class='step-explanation'>First, compare the whole numbers. <strong class='highlight-green'>0.48</strong> is clearly the smallest. Then compare 4.8 and 4.08. Since 0 is less than 8 in the tenths place, <strong class='highlight-green'>4.08</strong> comes next, and <strong class='highlight-green'>4.8</strong> is largest.</p>" },
+    { question: "Which of these numbers would come second if they were ordered from greatest to least: 6.7, 6.77, 6.07?", options: ["6.7", "6.77", "6.07"], correctAnswer: 0, explanation: "<p class='step-explanation'>1. Pad them: 6.70, 6.77, 6.07.</p><p class='step-explanation'>2. The greatest is <strong class='highlight-green'>6.77</strong>.</p><p class='step-explanation'>3. The second greatest is <strong class='highlight-green'>6.70 (6.7)</strong>.</p>" },
+    { question: "What is the largest number here: 1.1, 1.01, 1.101?", options: ["1.1", "1.01", "1.101"], correctAnswer: 2, explanation: "<p class='step-explanation'>1. Pad them: 1.100, 1.010, 1.101.</p><p class='step-explanation'>2. 1.010 is the smallest. Now compare 1.100 and 1.101. In the thousandths place, 1 is greater than 0. So <strong class='highlight-green'>1.101</strong> is the largest.</p>" },
+    { question: "Order from smallest to largest: 0.2, 0.12, 1.2", options: ["0.12, 0.2, 1.2", "0.2, 0.12, 1.2", "1.2, 0.2, 0.12"], correctAnswer: 0, explanation: "<p class='step-explanation'>1. The number with the largest whole part is <strong class='highlight-green'>1.2</strong>, so it's the biggest.</p><p class='step-explanation'>2. Compare 0.2 and 0.12. Pad to 0.20 and 0.12. The smaller is <strong class='highlight-green'>0.12</strong>.</p><p class='step-explanation'>3. The correct ascending order is <strong class='highlight-green'>0.12, 0.2, 1.2</strong>.</p>" },
+    // 40 more questions
+    { question: "Which list is in descending order?", options: ["1.9, 1.99, 1.09", "1.99, 1.9, 1.09", "1.09, 1.9, 1.99"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 1.90, 1.99, 1.09. The largest is 1.99, then 1.90, then 1.09. This matches the second option.</p>" },
+    { question: "What is the smallest number: 5.1, 5.01, 5.11?", options: ["5.1", "5.01", "5.11"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 5.10, 5.01, 5.11. The smallest decimal part is 01. So <strong class='highlight-green'>5.01</strong> is the smallest.</p>" },
+    { question: "Arrange in ascending order: 0.7, 0.07, 0.77", options: ["0.07, 0.7, 0.77", "0.7, 0.07, 0.77", "0.77, 0.7, 0.07"], correctAnswer: 0, explanation: "<p class='step-explanation'>Pad them: 0.70, 0.07, 0.77. The order from smallest to largest is 0.07, 0.70, 0.77.</p>" },
+    { question: "Which is the middle value when ordered: 2.3, 2.29, 2.31?", options: ["2.3", "2.29", "2.31"], correctAnswer: 0, explanation: "<p class='step-explanation'>Pad them: 2.30, 2.29, 2.31. The order is 2.29, 2.30, 2.31. The middle value is <strong class='highlight-green'>2.30 (2.3)</strong>.</p>" },
+    { question: "Which is the largest value: 4.4, 4.39, 4.41?", options: ["4.4", "4.39", "4.41"], correctAnswer: 2, explanation: "<p class='step-explanation'>Pad them: 4.40, 4.39, 4.41. The largest decimal part is 41. So <strong class='highlight-green'>4.41</strong> is the largest.</p>" },
+    { question: "Order from greatest to least: 0.5, 0.05, 5.0", options: ["5.0, 0.5, 0.05", "0.05, 0.5, 5.0", "0.5, 5.0, 0.05"], correctAnswer: 0, explanation: "<p class='step-explanation'>The number with the largest whole part (<strong class='highlight-green'>5.0</strong>) is the greatest. Between 0.5 and 0.05, 0.5 is larger.</p>" },
+    { question: "Three students' heights are 1.45m, 1.5m, 1.4m. Who is the tallest?", options: ["1.45m", "1.5m", "1.4m"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 1.45m, 1.50m, 1.40m. The largest decimal part is 50. The tallest is <strong class='highlight-green'>1.5m</strong>.</p>" },
+    { question: "Which list is NOT in ascending order?", options: ["0.1, 0.2, 0.3", "1.1, 1.11, 1.12", "2.5, 2.45, 2.6"], correctAnswer: 2, explanation: "<p class='step-explanation'>In the third list, 2.45 is smaller than 2.5. So the order is not consistently going up. This list is not in ascending order.</p>" },
+    { question: "Which number is the smallest: 8.8, 8.08, 8.88?", options: ["8.8", "8.08", "8.88"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 8.80, 8.08, 8.88. The smallest decimal part is 08. So <strong class='highlight-green'>8.08</strong> is the smallest.</p>" },
+    { question: "Arrange in descending order: 0.1, 0.01, 1.1", options: ["1.1, 0.1, 0.01", "0.01, 0.1, 1.1", "0.1, 1.1, 0.01"], correctAnswer: 0, explanation: "<p class='step-explanation'>The largest number is <strong class='highlight-green'>1.1</strong> because its whole number part is 1. Between 0.1 and 0.01, 0.1 is larger. The correct order is 1.1, 0.1, 0.01.</p>" },
+    { question: "What is the middle value when these are ordered: 9.9, 9.99, 9.09?", options: ["9.9", "9.99", "9.09"], correctAnswer: 0, explanation: "<p class='step-explanation'>Pad them: 9.90, 9.99, 9.09. The order is 9.09, 9.90, 9.99. The middle value is <strong class='highlight-green'>9.90 (9.9)</strong>.</p>" },
+    { question: "Which is the largest quantity: 0.75 L, 0.8 L, 0.7 L?", options: ["0.75 L", "0.8 L", "0.7 L"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 0.75, 0.80, 0.70. The largest decimal part is 80. So <strong class='highlight-green'>0.8 L</strong> is the largest.</p>" },
+    { question: "Order from smallest to largest: 6.5, 6.51, 6.15", options: ["6.15, 6.5, 6.51", "6.5, 6.15, 6.51", "6.51, 6.5, 6.15"], correctAnswer: 0, explanation: "<p class='step-explanation'>Pad them: 6.50, 6.51, 6.15. The smallest decimal part is 15, then 50, then 51. The order is 6.15, 6.50, 6.51.</p>" },
+    { question: "Which number would come last if ordered from least to greatest: 2.2, 2.02, 2.22?", options: ["2.2", "2.02", "2.22"], correctAnswer: 2, explanation: "<p class='step-explanation'>Pad them: 2.20, 2.02, 2.22. The order is 2.02, 2.20, 2.22. The last and largest number is <strong class='highlight-green'>2.22</strong>.</p>" },
+    { question: "Aisha read 0.5 of a book, Tunde read 0.55, and Zainab read 0.05. Who read the most?", options: ["Aisha", "Tunde", "Zainab"], correctAnswer: 1, explanation: "<p class='step-explanation'>Compare 0.50, 0.55, and 0.05. The largest number is 0.55. <strong class='highlight-green'>Tunde</strong> read the most.</p>" },
+    { question: "Which list is in ascending order?", options: ["3.14, 3.4, 3.04", "3.04, 3.14, 3.4", "3.4, 3.14, 3.04"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 3.14, 3.40, 3.04. The smallest is 3.04. Next is 3.14. The largest is 3.40. The correct order is 3.04, 3.14, 3.4.</p>" },
+    { question: "What is the second largest number in this set: 7.7, 7.77, 7.07, 7.707?", options: ["7.7", "7.77", "7.07", "7.707"], correctAnswer: 3, explanation: "<p class='step-explanation'>Pad them: 7.700, 7.770, 7.070, 7.707. The largest is 7.770. The second largest is <strong class='highlight-green'>7.707</strong>.</p>" },
+    { question: "Order from greatest to least: 1.2, 1.12, 1.21", options: ["1.2, 1.12, 1.21", "1.12, 1.2, 1.21", "1.21, 1.2, 1.12"], correctAnswer: 2, explanation: "<p class='step-explanation'>Pad them: 1.20, 1.12, 1.21. The largest is 1.21, then 1.20, then 1.12.</p>" },
+    { question: "Which weight is the lightest: 0.9 kg, 0.89 kg, 0.91 kg?", options: ["0.9 kg", "0.89 kg", "0.91 kg"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 0.90, 0.89, 0.91. The smallest number is 0.89. So <strong class='highlight-green'>0.89 kg</strong> is the lightest.</p>" },
+    { question: "Arrange in ascending order: 5.0, 0.5, 0.05", options: ["0.05, 0.5, 5.0", "5.0, 0.5, 0.05", "0.5, 0.05, 5.0"], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare the whole numbers first. 0.05 and 0.5 are smaller than 5.0. Between 0.05 and 0.5 (or 0.50), 0.05 is smaller. So the order is 0.05, 0.5, 5.0.</p>" }
+];
+
+// Quiz state
+let currentQuizQuestions = [];
+let score = 0;
+let currentQuestionIndex = 0;
+let userAnswers = [];
+
+// DOM elements
+const startScreen = document.getElementById('quiz-start-screen');
+const questionScreen = document.getElementById('quiz-question-screen');
+const resultsScreen = document.getElementById('quiz-results-screen');
+const startBtn = document.getElementById('start-quiz-btn');
+const questionCounter = document.getElementById('question-counter');
+const questionText = document.getElementById('question-text');
+const optionsGrid = document.getElementById('options-grid');
+const explanationBox = document.getElementById('explanation-box');
+const explanationText = document.getElementById('explanation-text');
+const scoreTracker = document.getElementById('score-tracker');
+const nextBtn = document.getElementById('next-question-btn');
+const finalScore = document.getElementById('final-score');
+const scoreMessage = document.getElementById('score-message');
+const resetBtn = document.getElementById('reset-quiz-btn');
+const previewBtn = document.getElementById('preview-answers-btn');
+const previewModal = document.getElementById('preview-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const previewBody = document.getElementById('preview-body');
+
+// --- Helper Functions ---
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// --- Quiz Core Functions ---
+function startQuiz() {
+    startScreen.style.display = 'none';
+    resultsScreen.style.display = 'none';
+    questionScreen.style.display = 'block';
+
+    shuffleArray(quizData);
+    currentQuizQuestions = quizData.slice(0, 5);
+    score = 0;
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    
+    displayQuestion();
+}
+
+function displayQuestion() {
+    // Reset state
+    explanationBox.style.display = 'none';
+    nextBtn.style.display = 'none';
+    optionsGrid.innerHTML = '';
+    
+    const question = currentQuizQuestions[currentQuestionIndex];
+    
+    questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuizQuestions.length}`;
+    questionText.innerHTML = question.question;
+    
+    question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = option;
+        button.onclick = () => selectAnswer(index, button);
+        optionsGrid.appendChild(button);
+    });
+    
+    updateScoreTracker();
+}
+
+function selectAnswer(selectedIndex, button) {
+    const question = currentQuizQuestions[currentQuestionIndex];
+    const isCorrect = selectedIndex === question.correctAnswer;
+    
+    userAnswers[currentQuestionIndex] = selectedIndex;
+
+    if (isCorrect) {
+        score++;
+        button.classList.add('correct');
+    } else {
+        button.classList.add('incorrect');
+        // Also highlight the correct answer
+        optionsGrid.children[question.correctAnswer].classList.add('correct');
+    }
+    
+    // Disable all buttons
+    Array.from(optionsGrid.children).forEach(btn => btn.disabled = true);
+    
+    // Show explanation
+    explanationText.innerHTML = question.explanation;
+    explanationBox.style.display = 'block';
+    
+    // Show next button
+    nextBtn.style.display = 'inline-block';
+    
+    updateScoreTracker();
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuizQuestions.length) {
+        displayQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    questionScreen.style.display = 'none';
+    resultsScreen.style.display = 'block';
+    
+    finalScore.textContent = `${score}/${currentQuizQuestions.length}`;
+    
+    const percentage = (score / currentQuizQuestions.length) * 100;
+    if (percentage === 100) {
+        scoreMessage.textContent = "Perfect Score! You are a decimal master! 🏆";
+        triggerConfetti();
+    } else if (percentage >= 80) {
+        scoreMessage.textContent = "Excellent work! You really know your stuff! 👍";
+        triggerConfetti();
+    } else if (percentage >= 60) {
+        scoreMessage.textContent = "Good job! A little more practice and you'll be an expert! 😊";
+    } else {
+        scoreMessage.textContent = "Nice try! Review the steps and try again. You can do it! 💪";
+    }
+}
+
+function updateScoreTracker() {
+    scoreTracker.textContent = `Score: ${score}/${currentQuizQuestions.length}`;
+}
+
+function triggerConfetti() {
+    const container = document.querySelector('.confetti-container');
+    container.innerHTML = '';
+    for(let i=0; i < 50; i++){
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+        const colors = ['var(--neon-pink)', 'var(--neon-cyan)', 'var(--neon-green)', 'var(--highlight-yellow)'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        container.appendChild(confetti);
+    }
+}
+
+function showPreview() {
+    previewBody.innerHTML = '';
+    currentQuizQuestions.forEach((q, index) => {
+        const userAnswerIndex = userAnswers[index];
+        const isCorrect = userAnswerIndex === q.correctAnswer;
+        
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        
+        let html = `<p><strong>Q${index+1}: ${q.question}</strong></p>`;
+        html += `<p>Your Answer: <span class="${isCorrect ? 'highlight-green' : 'highlight-red'}">${q.options[userAnswerIndex] || 'Not Answered'}</span></p>`;
+        if (!isCorrect) {
+            html += `<p>Correct Answer: <span class="highlight-green">${q.options[q.correctAnswer]}</span></p>`;
+        }
+        item.innerHTML = html;
+        previewBody.appendChild(item);
+    });
+    previewModal.style.display = 'flex';
+}
+
+// Event Listeners
+startBtn.addEventListener('click', startQuiz);
+nextBtn.addEventListener('click', nextQuestion);
+resetBtn.addEventListener('click', startQuiz);
+previewBtn.addEventListener('click', showPreview);
+closeModalBtn.addEventListener('click', () => previewModal.style.display = 'none');
+window.addEventListener('click', (e) => {
+    if (e.target === previewModal) {
+        previewModal.style.display = 'none';
+    }
+});
+
+</script>
+
+</body>
+</html>

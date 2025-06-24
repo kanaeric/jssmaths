@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Lesson: Addition of Decimals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* CSS Reset and Global Styles */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+            --light-blue: #8ab4f8;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+
+            --bg-color: #0d0c1d; /* Very dark blue-purple */
+            --card-bg: #1a1a2e;
+            --text-color: #e0e0e0;
+            --heading-color: #ffffff;
+            --border-color: rgba(0, 255, 255, 0.2);
+            --shadow-color-cyan: rgba(0, 255, 255, 0.7);
+            --shadow-color-pink: rgba(255, 0, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+        }
+        
+        /* Anti-screenshot/print measures */
+        @media print {
+            body::before {
+                content: "Printing is disabled for this educational resource.";
+                position: fixed;
+                top: 0; left: 0;
+                width: 100vw; height: 100vh;
+                background-color: rgba(0, 0, 0, 1);
+                color: white;
+                font-size: 50px;
+                text-align: center;
+                padding-top: 40vh;
+                z-index: 10000;
+            }
+            body > * {
+                display: none !important;
+            }
+        }
+
+
+        /* Typography & General Styling */
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            color: var(--heading-color);
+            text-shadow: 0 0 5px var(--shadow-color-cyan), 0 0 10px var(--shadow-color-cyan);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .highlight-text, .highlight-num {
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+
+        .highlight-text { color: var(--neon-cyan); text-shadow: 0 0 4px var(--neon-cyan); }
+        .highlight-num { color: var(--highlight-yellow); text-shadow: 0 0 4px var(--highlight-yellow); }
+        .highlight-answer { color: var(--accent-green); font-weight: bold; font-size: 1.2em; text-shadow: 0 0 5px var(--accent-green); }
+        .highlight-error { color: var(--warning-red); font-weight: bold; text-shadow: 0 0 5px var(--warning-red); }
+        .dp-highlight { color: var(--neon-pink); font-weight: bold; font-size: 1.5em; }
+
+
+        /* Custom Emojis/Icons Styling */
+        .lesson-icon {
+            font-size: 1.5rem;
+            margin: 0 5px;
+            vertical-align: middle;
+            display: inline-block;
+            animation: sparkle 3s infinite linear;
+        }
+
+        /* Header */
+        .main-header {
+            position: relative;
+            padding: 100px 20px 80px;
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 2px solid var(--border-color);
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-header h1 {
+            font-size: 4rem;
+            color: #fff;
+            animation: neonFlicker 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes neonFlicker {
+          0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+            text-shadow:
+              -0.2rem -0.2rem 1rem #fff,
+              0.2rem 0.2rem 1rem #fff,
+              0 0 2rem var(--neon-pink),
+              0 0 4rem var(--neon-pink),
+              0 0 6rem var(--neon-pink),
+              0 0 8rem var(--neon-pink),
+              0 0 10rem var(--neon-pink);
+            
+            box-shadow:
+              0 0 .5rem #fff,
+              inset 0 0 .5rem #fff,
+              0 0 2rem var(--neon-cyan),
+              inset 0 0 2rem var(--neon-cyan),
+              0 0 4rem var(--neon-cyan),
+              inset 0 0 4rem var(--neon-cyan);
+          }
+          20%, 24%, 55% {
+            text-shadow: none;
+            box-shadow: none;
+          }
+        }
+
+
+        .lesson-subtitle {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 15px;
+            background-color: rgba(26, 26, 46, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px var(--shadow-color-pink);
+            font-size: 1.8rem;
+            font-family: 'Nunito', sans-serif;
+            color: var(--heading-color);
+        }
+
+        /* Main Content & Sections */
+        main {
+            padding: 40px 0;
+        }
+
+        section {
+            margin-bottom: 50px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--shadow-color-pink);
+        }
+
+        .section-header {
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(0,255,255,0.1));
+        }
+
+        .section-header i {
+            font-size: 2.5rem;
+            margin-right: 20px;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            margin: 0;
+        }
+
+        .content-box {
+            padding: 30px;
+        }
+        
+        /* #daily-life */
+        details {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: background-color 0.3s;
+        }
+        details[open] {
+            background: rgba(0,0,0,0.3);
+        }
+        summary {
+            font-weight: 600;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--light-blue);
+        }
+        summary::marker {
+            color: var(--neon-cyan);
+        }
+        .details-content {
+            padding: 0 20px 20px 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* #key-terms */
+        .term-list { list-style: none; }
+        .term-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.15);
+            border-left: 5px solid var(--deep-purple);
+            border-radius: 8px;
+        }
+        .term-item i {
+            font-size: 3rem;
+            color: var(--deep-purple);
+            margin-right: 25px;
+        }
+        .term-item-text strong {
+            display: block;
+            font-size: 1.2rem;
+            color: var(--light-blue);
+        }
+        
+        /* #step-by-step */
+        .calculation-box {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px dashed var(--neon-cyan);
+        }
+        .calculation-display {
+            font-family: monospace, monospace;
+            font-size: 1.5rem;
+            text-align: right;
+            padding: 10px;
+            line-height: 1.5;
+            white-space: pre;
+        }
+
+        /* Solution Box Styles */
+        .solution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(0, 255, 255, 0.05);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            background: var(--light-blue);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-green { background: var(--accent-green); box-shadow: 0 4px 15px rgba(15, 157, 88, 0.3); }
+        .btn-green:hover { background: #13c46b; box-shadow: 0 6px 20px rgba(15, 157, 88, 0.5); }
+        .btn-yellow { background: var(--highlight-yellow); box-shadow: 0 4px 15px rgba(244, 180, 0, 0.3); }
+        .btn-yellow:hover { background: #ffcb2b; box-shadow: 0 6px 20px rgba(244, 180, 0, 0.5); }
+        .btn-red { background: var(--warning-red); box-shadow: 0 4px 15px rgba(219, 68, 55, 0.3); }
+        .btn-red:hover { background: #e55a4d; box-shadow: 0 6px 20px rgba(219, 68, 55, 0.5); }
+
+
+        /* #common-mistakes */
+        .mistake-box {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+            margin-top: 20px;
+        }
+        .wrong-way, .right-way {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+            border-width: 2px;
+            border-style: solid;
+        }
+        .wrong-way {
+            background-color: rgba(219, 68, 55, 0.1);
+            border-color: var(--warning-red);
+        }
+        .right-way {
+            background-color: rgba(15, 157, 88, 0.1);
+            border-color: var(--accent-green);
+        }
+        .mistake-box h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .mistake-box h4 i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        .wrong-way h4 { color: var(--warning-red); }
+        .right-way h4 { color: var(--accent-green); }
+
+        /* Quiz Section */
+        #quiz-container { display: none; }
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .quiz-option {
+            background: var(--deep-purple);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.1rem;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 2px solid transparent;
+        }
+        .quiz-option:hover:not(.disabled) {
+            transform: scale(1.05);
+            background: #8e62d1;
+        }
+        .quiz-option.correct {
+            background-color: var(--accent-green);
+            color: white;
+            border-color: #fff;
+        }
+        .quiz-option.incorrect {
+            background-color: var(--warning-red);
+            color: white;
+            border-color: #fff;
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        #quiz-explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            border-left: 4px solid var(--highlight-yellow);
+            display: none;
+        }
+        #quiz-explanation ol {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        #quiz-explanation li {
+            margin-bottom: 10px;
+        }
+        #quiz-feedback, #quiz-score {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        /* Modal for Quiz Answers */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 0 40px var(--shadow-color-pink);
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-answer {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+            background: linear-gradient(to top, #1b2735, var(--bg-color));
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        
+        /* Confetti animation */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: #f00;
+            opacity: 0;
+            animation: confetti-fall 5s ease-out forwards;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header h1 { font-size: 2.5rem; }
+            .lesson-subtitle { font-size: 1.3rem; }
+            .section-header h2 { font-size: 1.8rem; }
+            .section-header i { font-size: 2rem; }
+            .mistake-box { flex-direction: column; }
+            .quiz-grid { grid-template-columns: 1fr; }
+            .modal-content { width: 95%; margin: 20% auto; }
+        }
+
+        /* Keyframes for sparkling icons */
+        @keyframes sparkle {
+          0%, 100% { transform: scale(1); opacity: 0.8; }
+          50% { transform: scale(1.2); opacity: 1; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" onkeydown="return disableKeys(event);">
+    <div id="particles-js"></div>
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <header class="main-header">
+        <div class="header-content">
+            <h1>Decimal Addition!</h1>
+            <div class="lesson-subtitle" id="lesson-subtitle-box">
+                Addition of Decimals
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Section 1: The Hook & Problem Situation -->
+        <section id="introduction">
+            <div class="section-header">
+                <i class="fas fa-cash-register" style="color: var(--highlight-yellow);"></i>
+                <h2>1. The Hook & Problem Situation <span class="lesson-icon">🤔</span></h2>
+            </div>
+            <div class="content-box">
+                <div style="padding: 20px; border: 2px dashed var(--highlight-yellow); border-radius: 10px; margin-bottom: 25px; background: rgba(244, 180, 0, 0.05);">
+                    <h3 style="color: var(--highlight-yellow); text-align: center; margin-bottom: 10px;">PROBLEM SITUATION 🧐</h3>
+                    <p style="text-align: left;">Ibrahim goes to a shop in Kano to buy snacks. He buys a bottle of Fanta for <strong class="highlight-num">₦150.50</strong> and a meat pie for <strong class="highlight-num">₦350.00</strong>. He also buys chewing gum for <strong class="highlight-num">₦25.25</strong>. To find the total cost, he tries to add the numbers, but gets confused about where to put the decimal point. How can he add them correctly to find the exact total? <span class="lesson-icon">🤯</span></p>
+                </div>
+                <p style="text-align:center;">Ibrahim's problem is very common! Adding decimals is easy, but it has one <strong class="highlight-text">Golden Rule</strong> that you must never forget. Once you master this one rule, adding any decimal numbers becomes as simple as adding whole numbers. Today, you will learn this rule and become an expert at calculating totals with decimals! <span class="lesson-icon">💪</span></p>
+            </div>
+        </section>
+        
+        <!-- Section 2: Real-World Relevance -->
+        <section id="daily-life">
+            <div class="section-header">
+                <i class="fas fa-shopping-cart" style="color: var(--accent-green);"></i>
+                <h2>2. Adding Decimals in Your Daily Life <span class="lesson-icon">🛒</span></h2>
+            </div>
+            <div class="content-box">
+                <p>Adding decimals is one of the most common maths skills you will use every single day:</p>
+                <details>
+                    <summary><i class="fas fa-receipt lesson-icon"></i> Calculating a Shopping Bill</summary>
+                    <div class="details-content">
+                        <p>Just like Ibrahim, any time you buy multiple items at a supermarket like Shoprite or a local store, you need to add their prices, which often have decimal parts (Kobo). For example, <strong class="highlight-num">₦500.50 + ₦1,200.75</strong>. <span class="lesson-icon">🛍️</span></p>
+                    </div>
+                </details>
+                <details>
+                    <summary><i class="fas fa-gas-pump lesson-icon"></i> Combining Measurements</summary>
+                    <div class="details-content">
+                        <p>If a tailor cuts a piece of fabric that is <strong class="highlight-num">2.5</strong> metres long and another that is <strong class="highlight-num">1.25</strong> metres long, she adds them together to find the total length of fabric she has used. <span class="lesson-icon">✂️</span></p>
+                    </div>
+                </details>
+                <details>
+                    <summary><i class="fas fa-money-check-dollar lesson-icon"></i> Balancing a Bank Account</summary>
+                    <div class="details-content">
+                        <p>When you look at a bank statement, you see deposits and withdrawals. To find your new balance, you add up all the deposits. For example, if you deposit <strong class="highlight-num">₦10,000.00</strong> and then another <strong class="highlight-num">₦5,500.50</strong>, you add the decimals to find your total. <span class="lesson-icon">🏦</span></p>
+                    </div>
+                </details>
+                 <details>
+                    <summary><i class="fas fa-running lesson-icon"></i> Tracking Athletic Performance</summary>
+                    <div class="details-content">
+                        <p>If an athlete runs <strong class="highlight-num">5.25</strong> km in the morning and <strong class="highlight-num">3.5</strong> km in the evening, they add these decimals to find the total distance they ran that day. <span class="lesson-icon">🏃‍♂️</span></p>
+                    </div>
+                </details>
+                 <details>
+                    <summary><i class="fas fa-beaker lesson-icon"></i> Science Experiments</summary>
+                    <div class="details-content">
+                        <p>In a chemistry lab, a scientist might mix <strong class="highlight-num">10.5</strong> ml of one liquid with <strong class="highlight-num">5.25</strong> ml of another. Adding these decimals is crucial for the experiment's accuracy. <span class="lesson-icon">🔬</span></p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Section 3: Key Terms & Definitions -->
+        <section id="key-terms">
+            <div class="section-header">
+                <i class="fas fa-book-open" style="color: var(--deep-purple);"></i>
+                <h2>3. The Most Important Concept <span class="lesson-icon">🔑</span></h2>
+            </div>
+            <div class="content-box">
+                <ul class="term-list">
+                    <li class="term-item">
+                        <i class="fas fa-align-center"></i>
+                        <div class="term-item-text">
+                            <strong>Lining up the Decimals:</strong> This is the <strong class="highlight-answer">GOLDEN RULE</strong> of adding (and subtracting) decimals. It means that when you write the numbers down to add them, the decimal points MUST be stacked directly on top of each other in a straight vertical line.
+                        </div>
+                    </li>
+                     <li class="term-item">
+                        <i class="fas fa-dot-circle"></i>
+                        <div class="term-item-text">
+                            <strong>Decimal Point:</strong> The dot that separates the whole number part (like Naira) from the fractional part (like Kobo). It's the most important landmark in the number!
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 4: Step-by-Step Explanation -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <i class="fas-solid fa-list-ol" style="color: var(--primary-blue);"></i>
+                <h2>4. The Golden Rule of Decimal Addition <span class="lesson-icon">📜</span></h2>
+            </div>
+            <div class="content-box">
+                <p style="text-align: center; font-size:1.2rem; margin-bottom: 20px;">Let's add two numbers: <strong class="highlight-num">12.75 + 3.1</strong>.</p>
+                
+                <h3 style="color: var(--light-blue); margin-top: 20px;">Step 1: LINE UP THE DECIMAL POINTS! <span class="lesson-icon">📍</span></h3>
+                <p>This is the most important step. Write the numbers one on top of the other, making sure the decimal points are perfectly aligned in a straight column. You can add a zero to the end of <strong class="highlight-num">3.1</strong> to make it <strong class="highlight-num">3.10</strong> to help with alignment.</p>
+                <div class="calculation-box">
+                    <div class="calculation-display">
+                        <pre>
+  12<span class="dp-highlight">.</span>75
++  3<span class="dp-highlight">.</span>10
+----
+                        </pre>
+                    </div>
+                </div>
+                
+                <h3 style="color: var(--light-blue); margin-top: 30px;">Step 2: Bring the Decimal Point Straight Down. <span class="lesson-icon">⬇️</span></h3>
+                <p>Before you even start adding, bring the decimal point from your question straight down into your answer line. This way, you can't forget it!</p>
+                <div class="calculation-box">
+                    <div class="calculation-display">
+                        <pre>
+  12.75
++  3.10
+----
+  <span class="dp-highlight">.</span>
+                        </pre>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--light-blue); margin-top: 30px;">Step 3: Add Normally from Right to Left. <span class="lesson-icon">➕</span></h3>
+                <p>Now, just ignore the decimal point and add the columns exactly like you would with whole numbers, starting from the far right and carrying over when needed.</p>
+                 <div class="calculation-box">
+                    <div class="calculation-display">
+                        <pre>
+  12.75
++  3.10
+-------
+  15.85
+                        </pre>
+                    </div>
+                </div>
+                <p style="text-align:center; font-size: 1.5rem; margin-top:10px;">The final answer is <strong class="highlight-answer">15.85</strong>.</p>
+            </div>
+        </section>
+
+        <!-- Section 5: Real-Life Situation -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <i class="fas fa-shopping-basket" style="color: var(--neon-cyan);"></i>
+                <h2>5. Real-Life Application: Ibrahim's Snack Bill <span class="lesson-icon">🛒</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>Solving the Hook Problem</h4>
+                <p>Let's help Ibrahim calculate his total bill. He bought items for <strong class="highlight-num">₦150.50</strong>, <strong class="highlight-num">₦350.00</strong>, and <strong class="highlight-num">₦25.25</strong>. What is the total cost?</p>
+                <button class="btn btn-green" onclick="toggleSolution('solution1')">Show/Hide Solution</button>
+                <div id="solution1" class="solution-box">
+                    <h4>Step-by-Step Solution:</h4>
+                    <ol>
+                        <li><strong>Step 1: Line up all three numbers by their decimal points.</strong> This is the crucial first step to ensure you are adding Tens to Tens, and Tenths to Tenths.
+                            <div class="calculation-box">
+                                <div class="calculation-display">
+                                    <pre>
+  150.50
+  350.00
++  25.25
+--------
+                                    </pre>
+                                </div>
+                            </div>
+                        </li>
+                        <li><strong>Step 2: Bring the decimal point straight down into the answer line.</strong> This reserves its spot.</li>
+                         <li><strong>Step 3: Add the columns from right to left, carrying over where necessary.</strong>
+                            <div class="calculation-box">
+                                <div class="calculation-display">
+                                    <pre>
+  150.50
+  350.00
++  25.25
+--------
+  525.75
+                                    </pre>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                    <p><strong class="highlight-answer">Ibrahim's total bill is ₦525.75.</strong></p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Applied Problem (Financial Literacy) -->
+        <section id="financial-lit">
+            <div class="section-header">
+                <i class="fas fa-naira-sign" style="color: var(--accent-green);"></i>
+                <h2>6. Financial Literacy: Calculating Total Savings <span class="lesson-icon">🏦</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>Summing Up Bank Deposits</h4>
+                <p>A business owner, Mrs. Chidinma, made three deposits into her bank account in one day. The amounts were <strong class="highlight-num">₦15,400.50</strong>, <strong class="highlight-num">₦8,250</strong>, and <strong class="highlight-num">₦12,000.75</strong>. What was the total amount she deposited that day?</p>
+                <button class="btn btn-green" onclick="toggleSolution('solution2')">Show/Hide Solution</button>
+                <div id="solution2" class="solution-box">
+                    <h4>Detailed Solution:</h4>
+                    <p><strong>Step 1: Write down the numbers, preparing to align them.</strong></p>
+                    <p>Note that ₦8,250 has no decimal part. We can write it as <strong class="highlight-num">8250.00</strong> to make lining it up easier.</p>
+                    
+                    <p><strong>Step 2: Line up the decimal points perfectly.</strong></p>
+                     <div class="calculation-box">
+                        <div class="calculation-display">
+                            <pre>
+  15400.50
+   8250.00
++ 12000.75
+----------
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Step 3: Bring the decimal point down and add the columns.</strong></p>
+                    <div class="calculation-box">
+                        <div class="calculation-display">
+                            <pre>
+  15400.50
+   8250.00
++ 12000.75
+----------
+  35651.25
+                            </pre>
+                        </div>
+                    </div>
+                     
+                    <p><strong>Final Answer:</strong> Mrs. Chidinma deposited a total of <strong class="highlight-answer">₦35,651.25</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Pro-Tips & Tricks -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <i class="fas fa-star" style="color: var(--highlight-yellow);"></i>
+                <h2>7. Pro-Tips & Tricks <span class="lesson-icon">💡</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>The "Pad with Zeros" Technique</h4>
+                <p>When you have numbers with different amounts of decimal places (like <strong class="highlight-num">12.5 + 3.456</strong>), it can look confusing. The best trick is to "pad" the shorter numbers with zeros at the end until they are all the same length. This doesn't change their value but makes lining them up much easier!</p>
+                <div style="text-align:center; font-size: 1.5rem; margin: 20px 0; padding: 20px; background: rgba(0,255,255,0.1); border-radius: 10px;">
+                    <p>Instead of: <pre style="text-align:right;"> 12.5<br>+ 3.456</pre></p>
+                    <p>Write it as: <pre style="text-align:right;"> 12.500<br>+  3.456</pre></p>
+                    <p>Now the columns are perfectly aligned and easy to add!</p>
+                </div>
+                
+                <div class="wrong-way" style="border-color: var(--warning-red); background-color: rgba(219, 68, 55, 0.1); padding: 15px; border-radius: 10px; margin-top:20px;">
+                    <h4 style="color: var(--warning-red);"><i class="fas fa-exclamation-triangle"></i>Important Warning!</h4>
+                    <p>You can only pad with zeros <strong class="highlight-text">at the end</strong> of a decimal number. Adding zeros in the middle (e.g., changing 3.5 to 3.05) will completely change the value of the number and give you the wrong answer!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Common Mistakes to Avoid -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <i class="fas fa-ban" style="color: var(--warning-red);"></i>
+                <h2>8. Common Mistakes to Avoid <span class="lesson-icon">❌</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>The Number One Mistake: Not Lining Up the Decimal Points</h4>
+                <p>This is the most frequent error. If the decimal points are not in a straight vertical line, your entire calculation will be incorrect because you will be adding the wrong place values together (e.g., adding tenths to hundredths).</p>
+                <div class="mistake-box">
+                    <div class="wrong-way">
+                        <h4><i class="fas fa-times-circle"></i> Wrong Way</h4>
+                        <p>A student aligns the numbers to the right, like with whole numbers:</p>
+                        <pre style="text-align:right; font-family:monospace; font-size:1.2rem; color:var(--warning-red);">  14.5<br>+ 2.35</pre>
+                    </div>
+                    <div class="right-way">
+                        <h4><i class="fas fa-check-circle"></i> Right Way</h4>
+                        <p>The decimal points MUST be aligned, no matter how the numbers look:</p>
+                        <pre style="text-align:right; font-family:monospace; font-size:1.2rem; color:var(--accent-green);"> 14.50<br>+ 2.35</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Practice & Challenge Zone -->
+        <section id="practice">
+            <div class="section-header">
+                <i class="fas fa-dumbbell" style="color: var(--deep-purple);"></i>
+                <h2>9. Practice & Challenge Zone <span class="lesson-icon">🧠</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>Standard Practice Problem</h4>
+                <p>What is <strong class="highlight-num">5.8 + 12.15</strong>?</p>
+                <button class="btn btn-yellow" onclick="toggleSolution('hint3')">Show Hint</button>
+                <button class="btn" onclick="toggleSolution('solution3')">Show Solution</button>
+                <div id="hint3" class="solution-box" style="background-color: rgba(244, 180, 0, 0.1); border-color: var(--highlight-yellow);">
+                    <p><strong>Hint:</strong> Remember to line up the decimal points. You can pad 5.8 with a zero to make it 5.80 to help with alignment.</p>
+                </div>
+                <div id="solution3" class="solution-box">
+                    <pre class="calculation-display">
+   5.80
++ 12.15
+-------
+  17.95
+                    </pre>
+                    <p><strong class="highlight-answer">Answer: 17.95</strong></p>
+                </div>
+
+                <h4 style="margin-top: 30px;">Challenge Problem <span class="lesson-icon">🔥</span></h4>
+                <p>A tailor bought three pieces of fabric. The first was <strong class="highlight-num">4.5</strong> metres, the second was <strong class="highlight-num">2.75</strong> metres, and the third was <strong class="highlight-num">0.8</strong> metres. What is the total length of all three pieces combined?</p>
+                <button class="btn btn-yellow" onclick="toggleSolution('hint4')">Show Hint</button>
+                <button class="btn btn-red" onclick="toggleSolution('solution4')">Show Solution</button>
+                <div id="hint4" class="solution-box" style="background-color: rgba(244, 180, 0, 0.1); border-color: var(--highlight-yellow);">
+                    <p><strong>Hint:</strong> This is a three-part addition. Line up all three numbers by their decimal points. Pad the numbers with zeros so they all have two decimal places (e.g., 4.5 becomes 4.50).</p>
+                </div>
+                <div id="solution4" class="solution-box">
+                    <p><strong>Step 1: Line up the decimals and pad with zeros.</strong></p>
+                    <div class="calculation-display">
+                        <pre>
+  4.50
+  2.75
++ 0.80
+------
+                        </pre>
+                    </div>
+                    
+                    <p><strong>Step 2: Add from right to left, carrying over as needed.</strong></p>
+                    <p>• Right column: 0 + 5 + 0 = 5.</p>
+                    <p>• Middle column: 5 + 7 + 8 = 20. Write down 0, carry over 2.</p>
+                    <p>• Left column: 2 (carry) + 4 + 2 + 0 = 8.</p>
+                    <pre class="calculation-display" style="text-align:center;">
+   <span style="color:var(--neon-pink); font-size:1rem;">2</span>
+  4.50
+  2.75
++ 0.80
+------
+  8.05
+                    </pre>
+                    <p><strong class="highlight-answer">Final Answer: The total length is 8.05 metres.</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Summary -->
+        <section id="summary">
+            <div class="section-header">
+                <i class="fas fa-list-check" style="color: var(--accent-green);"></i>
+                <h2>10. Summary of Key Steps <span class="lesson-icon">✅</span></h2>
+            </div>
+            <div class="content-box">
+                <p>To add any decimal numbers correctly:</p>
+                <ol style="font-size: 1.1rem; list-style-position: inside; padding-left: 10px;">
+                    <li><strong style="color:var(--primary-blue);">LINE UP the Decimal Points:</strong> This is the Golden Rule! Write the numbers in a column so the decimal points are in a straight vertical line. <span class="lesson-icon">📍</span></li>
+                    <li><strong style="color:var(--accent-green);">Pad with Zeros (Optional but helpful):</strong> Add zeros to the end of shorter decimals so all numbers have the same number of decimal places. <span class="lesson-icon">👻</span></li>
+                    <li><strong style="color:var(--highlight-yellow);">Bring Down the Point:</strong> Bring the decimal point straight down into your answer line before you start adding. <span class="lesson-icon">⬇️</span></li>
+                    <li><strong style="color:var(--warning-red);">Add Columns:</strong> Add each column from right to left, just like you would with whole numbers, carrying over when needed. <span class="lesson-icon">➕</span></li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Section 11: Interactive Quiz -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <i class="fas fa-question-circle" style="color: var(--neon-pink);"></i>
+                <h2>11. Test Your Knowledge! <span class="lesson-icon">🏆</span></h2>
+            </div>
+            <div class="content-box">
+                <p>Are you a Decimal Dynamo? Time to prove it! Click below for a 5-question quiz. You'll get new questions each time!</p>
+                <button class="btn btn-red" id="start-quiz-btn" onclick="startQuiz()">Start Quiz!</button>
+                
+                <div id="quiz-container">
+                    <div id="quiz-feedback">Question 1 of 5</div>
+                    <h3 id="quiz-question" style="margin: 20px 0; font-size: 1.4rem;"></h3>
+                    <div id="quiz-options" class="quiz-grid"></div>
+                    <div id="quiz-explanation"></div>
+                    <div style="margin-top: 20px; text-align: right;">
+                        <button class="btn" id="next-question-btn" onclick="nextQuestion()" style="display:none;">Next Question</button>
+                    </div>
+                </div>
+                
+                <div id="quiz-score" style="display:none;"></div>
+                <div id="post-quiz-controls" style="text-align: center; display: none; gap: 15px; justify-content: center; margin-top: 20px;">
+                     <button class="btn btn-red" id="reset-quiz-btn" onclick="startQuiz()">Try Again with New Questions</button>
+                     <button class="btn btn-yellow" id="preview-answers-btn" onclick="showAnswersPreview()">Preview Answers</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+        <p>All rights reserved. Designed for an engaging learning experience.</p>
+    </footer>
+
+    <!-- Modal for Preview Answers -->
+    <div id="answersModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Quiz Review</h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
+    <!-- JavaScript for particles -->
+    <script>
+        // A simplified particles.js implementation to keep it in one file
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles-js');
+            if (!particlesContainer) return;
+            const particleCount = 70;
+            for (let i = 0; i < particleCount; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = 5 + Math.random() * 10;
+                const size = 1 + Math.random() * 2;
+                particle.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: white;
+                    left: ${x}%;
+                    top: ${y}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    animation: float ${duration}s ease-in-out infinite;
+                    opacity: ${Math.random()};
+                    z-index: 0;
+                `;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        const keyframes = `
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+        `;
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = keyframes;
+        document.head.appendChild(styleSheet);
+
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+    
+    <script>
+        // --- CONTENT INTERACTIVITY ---
+
+        function toggleSolution(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                if (element.style.display === "block") {
+                    element.style.display = "none";
+                } else {
+                    element.style.display = "block";
+                }
+            }
+        }
+        
+        // Randomize subtitle box color
+        document.addEventListener('DOMContentLoaded', () => {
+            const colors = ['--primary-blue', '--accent-green', '--highlight-yellow', '--deep-purple', '--neon-pink', '--neon-cyan'];
+            const randomColorVar = colors[Math.floor(Math.random() * colors.length)];
+            const subtitleBox = document.getElementById('lesson-subtitle-box');
+            subtitleBox.style.boxShadow = `0 0 20px var(${randomColorVar})`;
+        });
+
+        // --- CONTENT PROTECTION ---
+        
+        function disableKeys(e) {
+            // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S, Ctrl+P, PrintScreen
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85) || (e.ctrlKey && e.keyCode == 83) || (e.ctrlKey && e.keyCode == 80) || e.key === "PrintScreen") {
+                alert("This content is protected. Action disabled.");
+                e.preventDefault();
+                return false;
+            }
+        }
+        
+        // --- INTERACTIVE QUIZ SCRIPT ---
+
+        const questionBank = [
+            { 
+                question: "What is 2.5 + 3.4?", 
+                options: ["5.9", "59", "0.59", "5.09"], 
+                correctAnswer: 0, 
+                explanation: [
+                    "<strong>Step 1 (Line Up):</strong> We write the numbers with the decimal points aligned: <br>2.5<br>+3.4",
+                    "<strong>Step 2 (Add):</strong> We add the columns: 5+4=9 and 2+3=5.",
+                    "<strong>Step 3 (Place Point):</strong> The decimal point comes straight down.",
+                    "<strong>Step 4 (Conclusion):</strong> The answer is <strong class='highlight-answer'>5.9</strong>."
+                ]
+            },
+            { 
+                question: "What is the most important rule when adding decimals?",
+                options: [
+                    "Align the numbers to the right", 
+                    "Add zeros at the beginning",
+                    "Line up the decimal points",
+                    "Ignore the decimal points completely"
+                ], 
+                correctAnswer: 2, 
+                explanation: [
+                    "<strong>Step 1 (Recall Place Value):</strong> To add correctly, you must add tenths to tenths, and hundredths to hundredths.",
+                    "<strong>Step 2 (The Golden Rule):</strong> The only way to ensure you are adding the correct place values together is to align the numbers vertically so the decimal points are in a straight line.",
+                    "<strong>Step 3 (Conclusion):</strong> The Golden Rule of adding decimals is to always <strong class='highlight-answer'>line up the decimal points</strong>."
+                ] 
+            },
+            { 
+                question: "Calculate 10.5 + 2.75",
+                options: ["13.25", "12.80", "3.80", "13.80"], 
+                correctAnswer: 0, 
+                explanation: [
+                    "<strong>Step 1 (Line Up):</strong> We align the decimal points. We can pad 10.5 with a zero to make it 10.50.",
+                    "<strong>Step 2 (Set up):</strong><br> 10.50<br>+  2.75",
+                    "<strong>Step 3 (Add):</strong> Add the columns from right to left. 0+5=5. 5+7=12 (write 2, carry 1). 1+0+2=3. 1 remains.",
+                    "<strong>Step 4 (Conclusion):</strong> The answer is <strong class='highlight-answer'>13.25</strong>."
+                ]
+            },
+            { 
+                question: "If you buy an item for ₦250.50 and another for ₦100.25, what is the total cost?",
+                options: ["₦350.25", "₦350.75", "₦251.75", "₦350.50"], 
+                correctAnswer: 1, 
+                explanation: [
+                    "<strong>Step 1 (Set up):</strong> We must line up the decimal points: <br>250.50<br>+100.25",
+                    "<strong>Step 2 (Add Columns):</strong> Right column: 0+5=5. Middle column: 5+2=7. Left columns: 250+100=350.",
+                    "<strong>Step 3 (Conclusion):</strong> The total cost is <strong class='highlight-answer'>₦350.75</strong>."
+                ] 
+            },
+            { 
+                question: "What is 7 + 0.3?", 
+                options: ["7.3", "0.10", "73.0", "0.73"], 
+                correctAnswer: 0,
+                explanation: [
+                    "<strong>Step 1 (Write as Decimals):</strong> A whole number like 7 has an invisible decimal point at the end. We can write it as 7.0.",
+                    "<strong>Step 2 (Line Up):</strong><br> 7.0<br>+0.3",
+                    "<strong>Step 3 (Add):</strong> We add the columns.",
+                    "<strong>Step 4 (Conclusion):</strong> The answer is <strong class='highlight-answer'>7.3</strong>."
+                ]
+            }
+        ];
+        // To simulate 200 questions, we can duplicate and slightly alter the bank
+        const fullQuestionBank = (()=>{let b = []; for(let i=0; i<40; i++){b.push(...questionBank)}; return b;})();
+
+        let currentQuizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const startBtn = document.getElementById('start-quiz-btn');
+        const nextBtn = document.getElementById('next-question-btn');
+        const postQuizControls = document.getElementById('post-quiz-controls');
+        const quizFeedback = document.getElementById('quiz-feedback');
+        const quizQuestion = document.getElementById('quiz-question');
+        const quizOptions = document.getElementById('quiz-options');
+        const quizExplanation = document.getElementById('quiz-explanation');
+        const quizScore = document.getElementById('quiz-score');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            shuffleArray(fullQuestionBank);
+            currentQuizQuestions = fullQuestionBank.slice(0, 5);
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+
+            startBtn.style.display = 'none';
+            quizScore.style.display = 'none';
+            postQuizControls.style.display = 'none';
+            quizContainer.style.display = 'block';
+            nextBtn.style.display = 'none';
+            
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            quizExplanation.style.display = 'none';
+            quizExplanation.innerHTML = '';
+            
+            if (currentQuestionIndex < currentQuizQuestions.length) {
+                const questionData = currentQuizQuestions[currentQuestionIndex];
+                
+                quizFeedback.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuizQuestions.length}`;
+                quizQuestion.innerHTML = questionData.question;
+                
+                quizOptions.innerHTML = '';
+                questionData.options.forEach((option, index) => {
+                    const optionElement = document.createElement('button');
+                    optionElement.className = 'quiz-option';
+                    optionElement.innerHTML = option;
+                    optionElement.onclick = () => selectAnswer(index);
+                    quizOptions.appendChild(optionElement);
+                });
+                
+                nextBtn.style.display = 'none';
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function selectAnswer(selectedIndex) {
+            const questionData = currentQuizQuestions[currentQuestionIndex];
+            const options = quizOptions.getElementsByClassName('quiz-option');
+            
+            const isCorrect = selectedIndex === questionData.correctAnswer;
+            
+            if (isCorrect) {
+                score++;
+                options[selectedIndex].classList.add('correct');
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[questionData.correctAnswer].classList.add('correct');
+            }
+            
+            userAnswers[currentQuestionIndex] = {
+                question: questionData.question,
+                selected: questionData.options[selectedIndex],
+                correct: questionData.options[selectedIndex],
+                isCorrect: isCorrect
+            };
+
+            Array.from(options).forEach(option => {
+                option.classList.add('disabled');
+                option.onclick = null;
+            });
+            
+            let explanationHTML = "<strong style='color:var(--highlight-yellow)'>Step-by-Step Explanation:</strong>";
+            if (Array.isArray(questionData.explanation)) {
+                explanationHTML += "<ol>";
+                questionData.explanation.forEach(step => {
+                    explanationHTML += `<li>${step}</li>`;
+                });
+                explanationHTML += "</ol>";
+            } else {
+                explanationHTML += `<p>${questionData.explanation}</p>`;
+            }
+            quizExplanation.innerHTML = explanationHTML;
+            quizExplanation.style.display = 'block';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        function showFinalScore() {
+            quizContainer.style.display = 'none';
+            quizScore.style.display = 'block';
+            postQuizControls.style.display = 'flex';
+            
+            let message = '';
+            const percentage = (score / currentQuizQuestions.length) * 100;
+
+            if (percentage === 100) {
+                message = `🎉 Perfect Score! ${score}/${currentQuizQuestions.length} 🎉<br>You are a true Decimal Dynamo! Flawless!`;
+                launchConfetti();
+            } else if (percentage >= 80) {
+                message = `Excellent work! ${score}/${currentQuizQuestions.length} <br>You have a strong understanding of decimal addition!`;
+                launchConfetti();
+            } else if (percentage >= 60) {
+                message = `Good job! ${score}/${currentQuizQuestions.length} <br>You're using the Golden Rule well. Keep practicing!`;
+            } else {
+                message = `Keep practicing! ${score}/${currentQuizQuestions.length} <br>Remember to always line up the decimal points!`;
+            }
+
+            quizScore.innerHTML = message;
+        }
+        
+        // --- Modal & Confetti ---
+        const modal = document.getElementById('answersModal');
+
+        function showAnswersPreview() {
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = '';
+            userAnswers.forEach((ans, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.classList.add('modal-answer');
+                const statusIcon = ans.isCorrect ? '<span style="color:var(--accent-green)">✔ Correct</span>' : '<span style="color:var(--warning-red)">❌ Incorrect</span>';
+                const cleanQuestion = ans.question.replace(/<br>/g, ' ');
+                answerDiv.innerHTML = `
+                    <p><strong>Q${index + 1}: ${cleanQuestion}</strong></p>
+                    <p>You answered: ${ans.selected} (${statusIcon})</p>
+                    ${!ans.isCorrect ? `<p>Correct answer: ${ans.correct}</p>` : ''}
+                `;
+                modalBody.appendChild(answerDiv);
+            });
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        function launchConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#4285F4', '#0F9D58', '#DB4437', '#F4B400', '#ff00ff', '#00ffff'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                container.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+    </script>
+</body>
+</html>

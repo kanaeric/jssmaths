@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rounding and Approximating Numbers | Magaby Mathematics</title>
+    
+    <!-- Google Fonts: Poppins for body, Nunito for headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- CSS Reset & Core Styles --- */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+
+            /* Neon Glow Palette */
+            --bg-dark: #0d0d1a;
+            --surface-dark: #1a1a2e;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-green: #39FF14;
+            --neon-blue: #4285F4;
+            --text-light: #e0e0e0;
+            --text-dim: #a0a0b0;
+            
+            font-size: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* --- Content Protection --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard */
+            -webkit-touch-callout: none; /* iOS Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-25px) rotate(180deg); opacity: 0.7; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
+        }
+        
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px var(--neon-cyan),
+                    0 0 40px var(--neon-cyan),
+                    0 0 80px var(--neon-cyan),
+                    0 0 90px var(--neon-cyan),
+                    0 0 100px var(--neon-cyan),
+                    0 0 150px var(--neon-cyan);
+                color: #fff;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                color: #e0e0e0;
+            }
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100%) rotateZ(0deg); }
+            100% { transform: translateY(100vh) rotateZ(720deg); }
+        }
+
+        /* --- General Layout & Typography --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+        }
+        
+        section {
+            padding: 3rem 0;
+            border-bottom: 2px solid var(--surface-dark);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--surface-dark), #2a2a3e);
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        
+        .section-header i {
+            font-size: 3rem;
+            padding: 1rem;
+            border-radius: 50%;
+            background-color: var(--surface-dark);
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .section-header .emoji {
+            font-size: 2.5rem;
+            vertical-align: middle;
+        }
+        
+        .pink-glow { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
+        .cyan-glow { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
+        .green-glow { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
+        .yellow-glow { color: var(--highlight-yellow); text-shadow: 0 0 8px var(--highlight-yellow); }
+        .blue-glow { color: var(--primary-blue); text-shadow: 0 0 8px var(--primary-blue); }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        p i, p .emoji {
+            font-size: 1.3em;
+            vertical-align: -0.2em;
+            margin: 0 0.2em;
+        }
+
+        strong, .highlight {
+            font-weight: 600;
+        }
+        
+        .highlight-yellow { color: var(--highlight-yellow); font-weight: bold; font-size: 1.1em; }
+        .highlight-green { color: var(--neon-green); font-weight: bold; font-size: 1.1em; }
+        .highlight-cyan { color: var(--neon-cyan); font-weight: bold; font-size: 1.1em; }
+        .highlight-red { color: var(--warning-red); font-weight: bold; font-size: 1.1em; }
+
+        /* --- Header --- */
+        header {
+            position: relative;
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, #000 100%);
+            border-bottom: 3px solid var(--neon-cyan);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            animation: neon-flicker 5s infinite alternate;
+        }
+
+        .subtitle-box {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        header h2.subtitle {
+            font-size: 1.8rem;
+            color: var(--neon-pink);
+            font-weight: 700;
+        }
+
+        /* --- Card & Content Styling --- */
+        .card {
+            background-color: var(--surface-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--deep-purple);
+            box-shadow: 0 0 10px rgba(103, 58, 183, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(103, 58, 183, 0.6);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--deep-purple));
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5);
+        }
+        
+        .btn:disabled {
+            background: #555;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .solution-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 2px dashed var(--accent-green);
+            background-color: rgba(15, 157, 88, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .solution-box p { margin-bottom: 0.5rem; }
+
+        .number-highlight {
+            font-family: 'Nunito', monospace;
+            font-size: 1.8rem;
+            letter-spacing: 0.1em;
+        }
+        .target-digit {
+            text-decoration: underline;
+            text-decoration-color: var(--neon-cyan);
+            text-decoration-thickness: 3px;
+        }
+        .decider-digit {
+            color: var(--highlight-yellow);
+            font-weight: 900;
+        }
+        
+        /* --- Specific Section Styles --- */
+        /* #introduction */
+        .problem-box {
+            background-color: var(--surface-dark);
+            border: 2px dashed var(--highlight-yellow);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+        .problem-box h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--highlight-yellow);
+            text-shadow: 0 0 8px var(--highlight-yellow);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .problem-box .emoji {
+            font-size: 1.3rem;
+            vertical-align: baseline;
+        }
+        
+        /* #daily-life */
+        details {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--highlight-yellow);
+        }
+        details summary {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            list-style-type: '👉';
+            color: var(--highlight-yellow);
+        }
+        details summary::marker { color: var(--highlight-yellow); }
+        details div { padding: 0 1.5rem 1rem 1.5rem; }
+
+        /* #key-terms */
+        .term-card { display: flex; align-items: center; gap: 1.5rem; }
+        .term-card i { font-size: 2.5rem; color: var(--neon-pink); min-width: 50px; text-align: center; }
+        
+        /* #step-by-step */
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            background: var(--surface-dark);
+            border-left: 5px solid var(--neon-cyan);
+        }
+        .step-number { font-family: 'Nunito', sans-serif; font-size: 3rem; font-weight: 900; color: var(--neon-cyan); line-height: 1; }
+        .step-content h3 { color: var(--neon-cyan); margin-bottom: 0.5rem; }
+        .step-content .why { font-style: italic; color: var(--text-dim); border-left: 3px solid var(--deep-purple); padding-left: 1rem; margin-top: 0.5rem; }
+        
+        /* #common-mistakes */
+        .mistake-box {
+            border-radius: 10px; padding: 1.5rem; border: 2px solid var(--warning-red); background: rgba(219, 68, 55, 0.1);
+        }
+        .mistake-box h3 { color: var(--warning-red); margin-bottom: 1rem; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .wrong-way, .right-way { padding: 1rem; border-radius: 8px; }
+        .wrong-way { background-color: rgba(219, 68, 55, 0.2); }
+        .right-way { background-color: rgba(15, 157, 88, 0.2); }
+        .wrong-way h4::before { content: '❌ '; }
+        .right-way h4::before { content: '✅ '; }
+
+        /* #practice */
+        .challenge-problem { border: 2px solid var(--neon-pink); background-color: rgba(255, 0, 255, 0.05); }
+        .hint-box {
+            display: none; background-color: rgba(244, 180, 0, 0.1); border: 1px dashed var(--highlight-yellow); padding: 1rem; margin-top: 1rem; border-radius: 5px; animation: fadeIn 0.5s ease;
+        }
+
+        /* #summary */
+        .summary-list { list-style: none; padding-left: 0; }
+        .summary-list li { position: relative; padding: 1.2rem 1.2rem 1.2rem 3.5rem; margin-bottom: 1rem; background: var(--surface-dark); border-radius: 10px; border-left: 5px solid var(--neon-green); }
+        .summary-list li::before {
+            content: attr(data-step); position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--neon-green); background-color: rgba(57, 255, 20, 0.2); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+        }
+
+        /* --- Quiz Section --- */
+        #quiz-container { background-color: var(--surface-dark); padding: 2rem; border-radius: 20px; border: 1px solid var(--deep-purple); box-shadow: 0 0 20px rgba(103, 58, 183, 0.5); }
+        #quiz-start-screen h3, #quiz-results-screen h3 { font-size: 2rem; text-align: center; margin-bottom: 1.5rem; color: var(--neon-pink); }
+        #quiz-question-screen { display: none; }
+        #question-text { font-size: 1.4rem; margin-bottom: 2rem; line-height: 1.6; }
+        #options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .option-btn { width: 100%; padding: 1.2rem; font-size: 1.1rem; background-color: rgba(255,255,255,0.05); border: 2px solid var(--primary-blue); color: var(--text-light); border-radius: 10px; cursor: pointer; transition: all 0.3s ease; text-align: left; }
+        .option-btn:hover:not(:disabled) { background-color: rgba(66, 133, 244, 0.3); transform: translateY(-3px); }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background-color: rgba(15, 157, 88, 0.3); border-color: var(--neon-green); color: #fff; transform: scale(1.02); }
+        .option-btn.incorrect { background-color: rgba(219, 68, 55, 0.3); border-color: var(--warning-red); color: #fff; }
+        #explanation-box { display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: 10px; background-color: rgba(0,0,0,0.2); animation: fadeIn 0.5s ease; }
+        #explanation-text { color: var(--text-dim); line-height: 1.6; }
+        #explanation-text .step-explanation { display: block; margin-bottom: 0.75em; }
+        #quiz-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
+        #quiz-results-screen { display: none; text-align: center; position: relative; }
+        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+        .confetti { position: absolute; width: 10px; height: 20px; opacity: 0.8; animation: confetti-fall 4s linear infinite; }
+        #final-score { font-size: 5rem; font-weight: 900; color: var(--neon-green); margin: 1rem 0; text-shadow: 0 0 20px var(--neon-green); }
+        #score-message { font-size: 1.5rem; color: var(--highlight-yellow); }
+        #preview-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background: var(--surface-dark); padding: 2rem; border-radius: 15px; border: 1px solid var(--neon-cyan); width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--neon-cyan); padding-bottom: 1rem; margin-bottom: 1rem; }
+        #close-modal { font-size: 2rem; cursor: pointer; color: var(--warning-red); }
+        .preview-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #333; }
+        .preview-item p { margin-bottom: 0.5rem; }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 2rem; margin-top: 2rem; background-color: var(--surface-dark); color: var(--text-dim); border-top: 2px solid var(--deep-purple); }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            :root { font-size: 14px; }
+            .container { padding: 1rem; }
+            header h1 { font-size: 3rem; }
+            header h2.subtitle { font-size: 1.5rem; }
+            .section-header { flex-direction: column; text-align: center; }
+            .section-header h2 { font-size: 2rem; }
+            .comparison-grid, #options-grid { grid-template-columns: 1fr; }
+            .step { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;" onselectstart="return false;" onkeydown="return false;">
+    
+    <!-- Dynamic Header -->
+    <header>
+        <div class="particles"></div>
+        <div class="header-content">
+            <h1>Maths Universe</h1>
+            <div class="subtitle-box">
+                <h2 class="subtitle">Rounding and Approximating Numbers</h2>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Section 1: The Hook -->
+        <section id="introduction">
+            <div class="section-header">
+                <i class="fas fa-shopping-cart yellow-glow"></i>
+                <h2>1. The Market Budget Challenge! (Problem to Solve) 🛒</h2>
+            </div>
+            <div class="problem-box">
+                <h4>PROBLEM SITUATION <span class="emoji">😳</span></h4>
+                <p>
+                    <strong class="highlight-yellow">Chiamaka</strong> goes to the market in Onitsha with <strong class="highlight-yellow">₦2,000</strong>. She wants to buy three items: a yam for <strong class="highlight-cyan">₦480</strong>, some tomatoes for <strong class="highlight-cyan">₦730</strong>, and fish for <strong class="highlight-cyan">₦810</strong>.
+                </p>
+                <p>
+                    Without a calculator, how can she <strong class="highlight-red">quickly guess</strong> if she has enough money before getting to the cashier? 🤔
+                </p>
+            </div>
+            <p>
+                This is where the magic of <strong class="highlight-cyan">rounding</strong> and <strong class="highlight-cyan">approximation</strong> comes in! It's a maths superpower that lets you work with messy numbers by making them simpler and easier to handle in your head. Let's learn how to become expert estimators! 🚀
+            </p>
+        </section>
+
+        <!-- Section 2: Real-World Relevance -->
+        <section id="daily-life">
+            <div class="section-header">
+                <i class="fas fa-globe-africa green-glow"></i>
+                <h2>2. Rounding in Everyday Nigerian Life 🇳🇬</h2>
+            </div>
+            <p>You use rounding all the time, maybe without even realising it! It helps make life easier.</p>
+            <details>
+                <summary>Shopping and Budgeting 🛍️</summary>
+                <div>
+                    <p>Just like Chiamaka, you can round prices to the nearest 100 or 1000 to quickly add them up in your head and see if you have enough money. <strong class="highlight-yellow">₦480</strong> is "about ₦500".</p>
+                </div>
+            </details>
+            <details>
+                <summary>News and Population 📰</summary>
+                <div>
+                    <p>When the news says the population of Lagos is "over 20 million," they are rounding! The real number might be 21,453,281, but rounding makes it easier to understand the huge scale.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Telling the Time 🕒</summary>
+                <div>
+                    <p>When the time is 8:58 AM, you might say, "It's almost 9 o'clock." You are rounding the time to the nearest hour to give a quick, useful approximation.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Travel and Distance 🚗</summary>
+                <div>
+                    <p>Someone might say the distance from Ibadan to Kano is "about 1,000 kilometres." The exact distance might be 985 km, but rounding makes it easier to discuss and plan for the long journey.</p>
+                </div>
+            </details>
+             <details>
+                <summary>Cooking and Recipes 🍲</summary>
+                <div>
+                    <p>A recipe might call for 280 grams of flour. You might just estimate and say, "that's about 300 grams," rounding to the nearest hundred for easier measurement.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Section 3: Key Terms & Definitions -->
+        <section id="key-terms">
+            <div class="section-header">
+                <i class="fas fa-key cyan-glow"></i>
+                <h2>3. Your Rounding Dictionary 📖</h2>
+            </div>
+            <p>Let's define the essential words for this important skill. 🔑</p>
+            <div class="card term-card">
+                <i class="fas fa-sync-alt"></i>
+                <div>
+                    <h3>Rounding</h3>
+                    <p>The process of changing a number to a simpler, "cleaner" number that is close to the original value. We round to a specific place value (like the nearest 10, 100, or 1000).</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-bullseye"></i>
+                <div>
+                    <h3>Approximation / Estimation</h3>
+                    <p>An approximation or estimate is the "close-enough" answer you get after rounding. It's not exact, but it's useful for quick calculations.</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-search"></i>
+                <div>
+                    <h3>The "Decider" Digit</h3>
+                    <p>This is our secret weapon! It's the digit immediately to the <strong class="highlight-red">right</strong> of the place you are rounding to. This digit decides if we round up or down.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Step-by-Step Explanation -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <i class="fas fa-ruler-combined green-glow"></i>
+                <h2>4. The Golden Method: Underline and Look Next Door! 🏆</h2>
+            </div>
+            <p>This simple method works for rounding to any place value. Let's round the number <strong class="highlight-yellow">4,738</strong> to the nearest <strong class="highlight-red">hundred</strong>.</p>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Underline the Target Digit</h3>
+                    <p>Find the digit in the place you want to round to. We want the nearest <strong class="highlight-red">hundred</strong>, so we underline the digit in the hundreds place.</p>
+                    <p class="number-highlight">4,<span class="target-digit">7</span>38</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Look at the "Decider" Digit Next Door</h3>
+                    <p>Look at the digit immediately to the right of your underlined digit. This is your "Decider".</p>
+                    <p class="number-highlight">4,<span class="target-digit">7</span><span class="decider-digit">3</span>8</p>
+                    <p class="why"><strong>Why?</strong> This digit tells us if our target number is closer to 4,700 or closer to 4,800.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Apply the Rounding Rule</h3>
+                    <p>Here is the most important rule in rounding:</p>
+                    <ul>
+                        <li>If the Decider digit is <strong class="highlight-green">5 or more (5, 6, 7, 8, 9)</strong>, you <strong class="highlight-green">round up</strong> (add 1 to the underlined digit).</li>
+                        <li>If the Decider digit is <strong class="highlight-red">4 or less (4, 3, 2, 1, 0)</strong>, you <strong class="highlight-red">let it rest</strong> (the underlined digit stays the same).</li>
+                    </ul>
+                    <p>Our Decider digit is 3, which is '4 or less'. So, the underlined 7 will <strong class="highlight-red">stay the same</strong>.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Change all Digits on the Right to Zeros</h3>
+                    <p>Every digit to the right of your underlined target digit now becomes a zero.</p>
+                    <p class="number-highlight">4,<span class="target-digit">7</span><span class="decider-digit">3</span>8 becomes <strong class="highlight-green">4,700</strong></p>
+                    <p>So, 4,738 rounded to the nearest hundred is 4,700.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Real-Life Application -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <i class="fas fa-users blue-glow"></i>
+                <h2>5. Case Study: School Assembly Attendance 🏫</h2>
+            </div>
+            <div class="card">
+                <p>
+                    The principal of a secondary school in Kano, <strong class="highlight-yellow">Alhaji Musa</strong>, counts the total number of students at the morning assembly. There are <strong class="highlight-cyan">1,284</strong> students present.
+                </p>
+                <p>
+                    For the school's weekly newsletter, he doesn't need the exact number, just an approximation. He decides to round the attendance to the <strong class="highlight-red">nearest hundred</strong>. What number should he write in the newsletter?
+                </p>
+                <button class="btn" onclick="showElement('solution1', this)">Show Solution</button>
+                <div id="solution1" class="solution-box">
+                    <h4>Let's round the attendance:</h4>
+                    <p><strong>1. Target Digit:</strong> We are rounding to the nearest hundred, so we underline the 2 in 1,<strong><span class="target-digit">2</span></strong>84.</p>
+                    <p><strong>2. Decider Digit:</strong> The digit next door is 8: 1,<span class="target-digit">2</span><span class="decider-digit">8</span>4.</p>
+                    <p><strong>3. The Rule:</strong> The decider (8) is '5 or more', so we must <strong class="highlight-green">round up</strong>. We add 1 to our target digit (2 + 1 = 3).</p>
+                    <p><strong>4. Change to Zeros:</strong> The digits after the target (8 and 4) become zeros.</p>
+                    <p><strong>✅ Final Answer:</strong> Alhaji Musa should write that "about <strong class="highlight-green">1,300</strong> students" were at the assembly.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Financial Literacy -->
+        <section id="financial-lit">
+             <div class="section-header">
+                <i class="fas fa-naira-sign green-glow"></i>
+                <h2>6. Financial Focus: Monthly Budget Estimation 💰</h2>
+            </div>
+            <div class="card">
+                <p>
+                    <strong class="highlight-yellow">Mr. and Mrs. Okoro</strong> are planning their family's monthly budget. Their main expenses are:
+                </p>
+                <ul>
+                    <li>Food: <strong class="highlight-cyan">₦88,750</strong></li>
+                    <li>Rent: <strong class="highlight-cyan">₦42,300</strong></li>
+                    <li>Transport: <strong class="highlight-cyan">₦19,900</strong></li>
+                </ul>
+                <p>
+                   To make it easy, they decide to round each cost to the <strong class="highlight-red">nearest thousand Naira</strong> to estimate their total spending. What are the rounded costs?
+                </p>
+                <button class="btn" onclick="showElement('solution2', this)">Show Solution</button>
+                <div id="solution2" class="solution-box">
+                    <h4>Let's estimate the budget:</h4>
+                     <p><strong>1. Round Food (₦88,750):</strong> The target is the 8 in the thousands place. The decider is 7. We round up. It becomes <strong class="highlight-green">₦89,000</strong>.</p>
+                     <p><strong>2. Round Rent (₦42,300):</strong> The target is 2. The decider is 3. We let it rest. It becomes <strong class="highlight-green">₦42,000</strong>.</p>
+                     <p><strong>3. Round Transport (₦19,900):</strong> The target is 9. The decider is 9. We round up. 9 becomes 10, so we carry the 1 over. It becomes <strong class="highlight-green">₦20,000</strong>.</p>
+                    <p><strong>✅ Final Estimated Costs:</strong> Food is about <strong class="highlight-green">₦89,000</strong>, Rent is <strong class="highlight-green">₦42,000</strong>, and Transport is <strong class="highlight-green">₦20,000</strong>. This is much easier to add in their heads!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Pro-Tips & Tricks -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <i class="fas fa-magic-wand-sparkles yellow-glow"></i>
+                <h2>7. Maths Magic: The Rounding Rhyme! ✨</h2>
+            </div>
+            <div class="card">
+                <h3>An Easy Way to Remember the Rule</h3>
+                <p>
+                    Sometimes it's hard to remember whether to round up or let it rest. Just learn this simple rhyme!
+                </p>
+                <p style="font-size: 1.5rem; text-align: center; line-height: 1.6;">
+                    "<strong class="highlight-green">Five or more, raise the score.</strong><br>
+                     <strong class="highlight-red">Four or less, let it rest.</strong>"
+                </p>
+                <p>
+                    This rhyme reminds you to check the "decider" digit. If it's 5, 6, 7, 8, or 9, you "raise the score" of the target digit. If it's 4, 3, 2, 1, or 0, you "let it rest" and leave the target digit alone.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 8: Common Mistakes -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <i class="fas fa-user-shield warning-red"></i>
+                <h2>8. Watch Out! Common Rounding Traps! ⚠️</h2>
+            </div>
+            <div class="mistake-box">
+                <h3>Mistake: Forgetting to Change to Zeros</h3>
+                <p>After you round the target digit up or down, you MUST change all the digits to its right into zeros.</p>
+                <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>Rounding 478 to the nearest ten.</p>
+                        <p>The 7 is the target, 8 is the decider. We round the 7 up to 8. The answer is <strong class="highlight-red">488</strong>. This is wrong! 488 is not close to 478.</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Rounding 478 to the nearest ten.</p>
+                        <p>The 7 becomes an 8. The digit to the right (8) MUST become a zero. The answer is <strong class="highlight-green">480</strong>. This is correct!</p>
+                    </div>
+                </div>
+            </div>
+             <div class="mistake-box" style="margin-top: 1.5rem;">
+                <h3>Mistake: Looking at the Wrong "Decider" Digit</h3>
+                <p>Always look at the digit <strong class="highlight-red">immediately</strong> to the right of your target, not any other digit.</p>
+                 <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                         <p>Rounding 3,429 to the nearest hundred.</p>
+                         <p>The target is 4. A student might look at the last digit (9) and decide to round up, getting <strong class="highlight-red">3,500</strong>. This is wrong!</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Rounding 3,429 to the nearest hundred.</p>
+                        <p>The target is 4. The digit right next to it is <strong class="highlight-green">2</strong>. Since 2 is '4 or less', we let the 4 rest. The answer is <strong class="highlight-green">3,400</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Practice & Challenge Zone -->
+        <section id="practice">
+            <div class="section-header">
+                <i class="fas fa-pencil-alt deep-purple"></i>
+                <h2>9. Practice & Challenge Zone 🧠</h2>
+            </div>
+            
+            <div class="card">
+                <h3>Standard Practice Problem</h3>
+                <p>Round the number <strong class="highlight-cyan">7,852</strong> to the nearest <strong class="highlight-red">hundred</strong>.</p>
+                <button class="btn" onclick="showElement('hint1', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution3', this)">Show Solution</button>
+                <div id="hint1" class="hint-box">
+                    <p><strong>Hint:</strong> Underline the digit in the hundreds place. Look at the digit next door to its right. Is it 5 or more, or 4 or less?</p>
+                </div>
+                <div id="solution3" class="solution-box">
+                    <p><strong>1. Target Digit:</strong> The 8 is in the hundreds place. (7,<span class="target-digit">8</span>52)</p>
+                    <p><strong>2. Decider Digit:</strong> The digit next to it is 5. (7,<span class="target-digit">8</span><span class="decider-digit">5</span>2)</p>
+                    <p><strong>3. The Rule:</strong> 5 is '5 or more', so we round the target (8) up to 9.</p>
+                    <p><strong>✅ Final Answer:</strong> <strong class="highlight-green">7,900</strong>.</p>
+                </div>
+            </div>
+
+            <div class="card challenge-problem">
+                <h3>⭐ Challenge Problem ⭐</h3>
+                <p>
+                    Tunde's father drove <strong class="highlight-cyan">368</strong> km on Monday and <strong class="highlight-cyan">425</strong> km on Tuesday.
+                </p>
+                <p>
+                    Estimate the total distance he drove by first rounding each day's distance to the <strong class="highlight-red">nearest ten</strong>, and then adding the rounded numbers.
+                </p>
+                <button class="btn" onclick="showElement('hint2', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution4', this)">Show Solution</button>
+                <div id="hint2" class="hint-box">
+                    <p><strong>Hint:</strong> First, round 368 to the nearest ten. Then, round 425 to the nearest ten. Finally, add your two new, rounded numbers together.</p>
+                </div>
+                <div id="solution4" class="solution-box">
+                    <p><strong>1. Round Monday's distance (368):</strong></p>
+                    <p>The target is 6. The decider is 8. Round up. → <strong class="highlight-green">370</strong> km.</p>
+                    <p><strong>2. Round Tuesday's distance (425):</strong></p>
+                    <p>The target is 2. The decider is 5. Round up. → <strong class="highlight-green">430</strong> km.</p>
+                    <p><strong>3. Add the estimations:</strong></p>
+                    <p>370 + 430 = 700</p>
+                    <p><strong>✅ Final Answer:</strong> He drove approximately <strong class="highlight-green">700</strong> km in total.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Summary of Key Steps -->
+        <section id="summary">
+            <div class="section-header">
+                <i class="fas fa-list-check green-glow"></i>
+                <h2>10. Your Golden Rules for Rounding 📜</h2>
+            </div>
+            <p>Remember these four simple steps to round any number perfectly!</p>
+            <ol class="summary-list">
+                <li data-step="1"><strong>UNDERLINE:</strong> Underline the digit in the place you are rounding to (e.g., the tens, hundreds, or thousands place). ✍️</li>
+                <li data-step="2"><strong>LOOK NEXT DOOR:</strong> Look at the very next digit to the right. This is your "Decider". 🔍</li>
+                <li data-step="3"><strong>APPLY THE RULE:</strong> "Five or more, raise the score. Four or less, let it rest." 🧠</li>
+                <li data-step="4"><strong>CHANGE TO ZEROS:</strong> Change all the digits to the right of your underlined digit to zeros. 0️⃣</li>
+            </ol>
+        </section>
+        
+        <!-- Section 11: Interactive Quiz -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <i class="fas fa-vial-circle-check neon-pink"></i>
+                <h2>11. Test Your Knowledge! 🧪</h2>
+            </div>
+            <div id="quiz-container">
+                <!-- Start Screen -->
+                <div id="quiz-start-screen">
+                    <h3>Ready to show what you've learned?</h3>
+                    <p style="text-align:center; margin-bottom: 2rem;">You'll get <span class="highlight-yellow">5</span> random questions. Give it your best shot! Good luck! 👍</p>
+                    <div style="text-align:center;">
+                        <button class="btn" id="start-quiz-btn">Start Quiz Now!</button>
+                    </div>
+                </div>
+
+                <!-- Question Screen -->
+                <div id="quiz-question-screen">
+                    <p id="question-counter"></p>
+                    <p id="question-text">This is where the question will appear.</p>
+                    <div id="options-grid">
+                        <!-- Options will be generated by JS -->
+                    </div>
+                    <div id="explanation-box">
+                        <h3>Explanation:</h3>
+                        <div id="explanation-text">The reason for the answer will show up here.</div>
+                    </div>
+                    <div id="quiz-navigation">
+                        <p id="score-tracker">Score: 0/5</p>
+                        <button class="btn" id="next-question-btn" style="display:none;">Next Question</button>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div id="quiz-results-screen">
+                    <div class="confetti-container"></div>
+                    <h3>Quiz Complete! 🎉</h3>
+                    <p>Here's how you did:</p>
+                    <div id="final-score">5/5</div>
+                    <p id="score-message">Fantastic work!</p>
+                    <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                        <button class="btn" id="reset-quiz-btn">Try Another Set!</button>
+                        <button class="btn" id="preview-answers-btn">Review Answers</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview Answers Modal -->
+        <div id="preview-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Your Quiz Review</h2>
+                    <span id="close-modal">&times;</span>
+                </div>
+                <div id="preview-body">
+                    <!-- Review items will be generated by JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+        <p>All rights reserved. Designed for an engaging learning experience.</p>
+    </footer>
+
+<script>
+// --- Content Protection Script ---
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'PrintScreen' || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
+    e.preventDefault();
+  }
+});
+
+
+// --- Header Particles ---
+const particlesContainer = document.querySelector('.particles');
+const numParticles = 50;
+for (let i = 0; i < numParticles; i++) {
+    let particle = document.createElement('span');
+    particle.className = 'particle';
+    const size = Math.random() * 8 + 2;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.left = `${Math.random() * 100}%`;
+    const duration = Math.random() * 10 + 10;
+    particle.style.animationDuration = `${duration}s`;
+    const delay = Math.random() * 5;
+    particle.style.animationDelay = `${delay}s`;
+    const colors = ['var(--neon-cyan)', 'var(--neon-pink)', 'var(--neon-green)', '#fff'];
+    particle.style.background = colors[Math.floor(Math.random()*colors.length)];
+    particlesContainer.appendChild(particle);
+}
+
+// --- Show Element Function (One-way click) ---
+function showElement(elementId, buttonElement) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.display = 'block';
+    }
+    if (buttonElement) {
+        buttonElement.disabled = true;
+        if (buttonElement.textContent.includes('Hint')) {
+            buttonElement.textContent = 'Hint Shown';
+        } else {
+            buttonElement.textContent = 'Solution Shown';
+        }
+    }
+}
+
+
+// --- Quiz Logic ---
+const quizData = [
+    { question: "What is 78 rounded to the nearest 10?", options: ["70", "80", "75", "100"], correctAnswer: 1, explanation: "<p class='step-explanation'>The target is 7. The decider is 8. Since 8 is '5 or more', we round the 7 up to 8. The answer is <strong class='highlight-green'>80</strong>.</p>" },
+    { question: "Round 542 to the nearest 100.", options: ["500", "600", "540", "550"], correctAnswer: 0, explanation: "<p class='step-explanation'>The target is 5. The decider is 4. Since 4 is '4 or less', the 5 rests. The answer is <strong class='highlight-green'>500</strong>.</p>" },
+    { question: "What is 3,810 rounded to the nearest 1000?", options: ["3,000", "3,800", "4,000", "3,900"], correctAnswer: 2, explanation: "<p class='step-explanation'>The target is 3. The decider is 8. Since 8 is '5 or more', we round the 3 up to 4. The answer is <strong class='highlight-green'>4,000</strong>.</p>" },
+    { question: "When rounding 6,482 to the nearest hundred, which digit is the 'decider'?", options: ["6", "4", "8", "2"], correctAnswer: 2, explanation: "<p class='step-explanation'>The target digit is 4 (in the hundreds place). The 'decider' is the digit immediately to its right, which is <strong class='highlight-green'>8</strong>.</p>" },
+    { question: "A market seller has 147 yams. Approximately how many yams does she have, to the nearest 10?", options: ["140", "100", "150", "200"], correctAnswer: 2, explanation: "<p class='step-explanation'>We round 147 to the nearest 10. The target is 4, the decider is 7. We round up. The 4 becomes a 5. The answer is <strong class='highlight-green'>150</strong>.</p>" },
+    { question: "Round 98 to the nearest 10.", options: ["90", "95", "100", "980"], correctAnswer: 2, explanation: "<p class='step-explanation'>The target is 9, the decider is 8. We round up. The 9 becomes 10, so we write 0 and carry the 1 over. The answer is <strong class='highlight-green'>100</strong>.</p>" },
+    { question: "What is 4,499 rounded to the nearest 1000?", options: ["4,000", "5,000", "4,500", "4,400"], correctAnswer: 0, explanation: "<p class='step-explanation'>The target is 4. The decider is 4. Since 4 is '4 or less', the target rests. The answer is <strong class='highlight-green'>4,000</strong>.</p>" },
+    { question: "A trip is 251 km. To the nearest 100 km, how long is the trip?", options: ["200 km", "250 km", "300 km", "260 km"], correctAnswer: 2, explanation: "<p class='step-explanation'>We round 251 to the nearest 100. The target is 2, the decider is 5. Since it's '5 or more', we round up. The 2 becomes a 3. The answer is <strong class='highlight-green'>300 km</strong>.</p>" },
+    { question: "What is the '5 or more, raise the score' rule about?", options: ["Adding 5 to the number", "The target digit", "The decider digit", "Getting high marks in class"], correctAnswer: 2, explanation: "<p class='step-explanation'>The rhyme tells you what to do based on the value of the <strong class='highlight-green'>decider digit</strong> (the one to the right of your target).</p>" },
+    { question: "Round 8,960 to the nearest 100.", options: ["8,900", "8,000", "9,000", "8,960"], correctAnswer: 2, explanation: "<p class='step-explanation'>The target is 9. The decider is 6. We round the 9 up to 10. We write 0 and carry the 1 over to the 8, which becomes 9. The answer is <strong class='highlight-green'>9,000</strong>.</p>" },
+    { question: "What is 35 rounded to the nearest 10?", options: ["30", "35", "40", "50"], correctAnswer: 2, explanation: "<p class='step-explanation'>The target is 3. The decider is 5. The rule is '5 or more, raise the score'. We round the 3 up to 4. The answer is <strong class='highlight-green'>40</strong>.</p>" },
+    { question: "A bill is ₦1,985. What is this to the nearest 100 Naira?", options: ["₦1,900", "₦1,990", "₦1,000", "₦2,000"], correctAnswer: 3, explanation: "<p class='step-explanation'>We round 1,985 to the nearest 100. The target is 9, the decider is 8. We round the 9 up to 10. This means the hundreds place becomes 0 and we carry 1 over to the thousands place. The answer is <strong class='highlight-green'>₦2,000</strong>.</p>" },
+    { question: "When rounding 5,231 to the nearest 1000, what is the target digit?", options: ["5", "2", "3", "1"], correctAnswer: 0, explanation: "<p class='step-explanation'>We are rounding to the nearest thousand, so the target digit is the one in the thousands place, which is <strong class='highlight-green'>5</strong>.</p>" },
+    { question: "Round 9,999 to the nearest 10.", options: ["9,990", "9,900", "10,000", "9,000"], correctAnswer: 2, explanation: "<p class='step-explanation'>The target is the second 9. The decider is the last 9. We round up. This causes a chain reaction, carrying the 1 all the way to the front. The answer is <strong class='highlight-green'>10,000</strong>.</p>" },
+    { question: "What is a common mistake when rounding 284 to the nearest 10?", options: ["Getting 280", "Getting 290", "Forgetting to change the 4 to a 0", "Getting 300"], correctAnswer: 2, explanation: "<p class='step-explanation'>After rounding the target digit, all digits to the right must become zeros. A common mistake is to write 288 instead of 280. For this question, rounding 284 gives 280, but the mistake is forgetting to zero out the last digit.</p>" }
+];
+
+// Quiz state
+let currentQuizQuestions = [];
+let score = 0;
+let currentQuestionIndex = 0;
+let userAnswers = [];
+
+// DOM elements
+const startScreen = document.getElementById('quiz-start-screen');
+const questionScreen = document.getElementById('quiz-question-screen');
+const resultsScreen = document.getElementById('quiz-results-screen');
+const startBtn = document.getElementById('start-quiz-btn');
+const questionCounter = document.getElementById('question-counter');
+const questionText = document.getElementById('question-text');
+const optionsGrid = document.getElementById('options-grid');
+const explanationBox = document.getElementById('explanation-box');
+const explanationText = document.getElementById('explanation-text');
+const scoreTracker = document.getElementById('score-tracker');
+const nextBtn = document.getElementById('next-question-btn');
+const finalScore = document.getElementById('final-score');
+const scoreMessage = document.getElementById('score-message');
+const resetBtn = document.getElementById('reset-quiz-btn');
+const previewBtn = document.getElementById('preview-answers-btn');
+const previewModal = document.getElementById('preview-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const previewBody = document.getElementById('preview-body');
+
+// --- Helper Functions ---
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// --- Quiz Core Functions ---
+function startQuiz() {
+    startScreen.style.display = 'none';
+    resultsScreen.style.display = 'none';
+    questionScreen.style.display = 'block';
+
+    shuffleArray(quizData);
+    currentQuizQuestions = quizData.slice(0, 5);
+    score = 0;
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    
+    displayQuestion();
+}
+
+function displayQuestion() {
+    // Reset state
+    explanationBox.style.display = 'none';
+    nextBtn.style.display = 'none';
+    optionsGrid.innerHTML = '';
+    
+    const question = currentQuizQuestions[currentQuestionIndex];
+    
+    questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuizQuestions.length}`;
+    questionText.innerHTML = question.question;
+    
+    question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = option;
+        button.onclick = () => selectAnswer(index, button);
+        optionsGrid.appendChild(button);
+    });
+    
+    updateScoreTracker();
+}
+
+function selectAnswer(selectedIndex, button) {
+    const question = currentQuizQuestions[currentQuestionIndex];
+    const isCorrect = selectedIndex === question.correctAnswer;
+    
+    userAnswers[currentQuestionIndex] = selectedIndex;
+
+    if (isCorrect) {
+        score++;
+        button.classList.add('correct');
+    } else {
+        button.classList.add('incorrect');
+        // Also highlight the correct answer
+        optionsGrid.children[question.correctAnswer].classList.add('correct');
+    }
+    
+    // Disable all buttons
+    Array.from(optionsGrid.children).forEach(btn => btn.disabled = true);
+    
+    // Show explanation
+    explanationText.innerHTML = question.explanation;
+    explanationBox.style.display = 'block';
+    
+    // Show next button
+    nextBtn.style.display = 'inline-block';
+    
+    updateScoreTracker();
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuizQuestions.length) {
+        displayQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    questionScreen.style.display = 'none';
+    resultsScreen.style.display = 'block';
+    
+    finalScore.textContent = `${score}/${currentQuizQuestions.length}`;
+    
+    const percentage = (score / currentQuizQuestions.length) * 100;
+    if (percentage === 100) {
+        scoreMessage.textContent = "Perfect Score! You are a Rounding Master! 🏆";
+        triggerConfetti();
+    } else if (percentage >= 80) {
+        scoreMessage.textContent = "Excellent work! You really know your stuff! 👍";
+        triggerConfetti();
+    } else if (percentage >= 60) {
+        scoreMessage.textContent = "Good job! A little more practice and you'll be an expert! 😊";
+    } else {
+        scoreMessage.textContent = "Nice try! Review the steps and try again. You can do it! 💪";
+    }
+}
+
+function updateScoreTracker() {
+    scoreTracker.textContent = `Score: ${score}/${currentQuizQuestions.length}`;
+}
+
+function triggerConfetti() {
+    const container = document.querySelector('.confetti-container');
+    container.innerHTML = '';
+    for(let i=0; i < 50; i++){
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+        const colors = ['var(--neon-pink)', 'var(--neon-cyan)', 'var(--neon-green)', 'var(--highlight-yellow)'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        container.appendChild(confetti);
+    }
+}
+
+function showPreview() {
+    previewBody.innerHTML = '';
+    currentQuizQuestions.forEach((q, index) => {
+        const userAnswerIndex = userAnswers[index];
+        const isCorrect = userAnswerIndex === q.correctAnswer;
+        
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        
+        let html = `<p><strong>Q${index+1}: ${q.question}</strong></p>`;
+        html += `<p>Your Answer: <span class="${isCorrect ? 'highlight-green' : 'highlight-red'}">${q.options[userAnswerIndex] || 'Not Answered'}</span></p>`;
+        if (!isCorrect) {
+            html += `<p>Correct Answer: <span class="highlight-green">${q.options[q.correctAnswer]}</span></p>`;
+        }
+        previewBody.innerHTML += html;
+    });
+    previewModal.style.display = 'flex';
+}
+
+// Event Listeners
+startBtn.addEventListener('click', startQuiz);
+nextBtn.addEventListener('click', nextQuestion);
+resetBtn.addEventListener('click', startQuiz);
+previewBtn.addEventListener('click', showPreview);
+closeModalBtn.addEventListener('click', () => previewModal.style.display = 'none');
+window.addEventListener('click', (e) => {
+    if (e.target === previewModal) {
+        previewModal.style.display = 'none';
+    }
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Value of Decimals | Magaby Mathematics</title>
+    
+    <!-- Google Fonts: Poppins for body, Nunito for headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- CSS Reset & Core Styles --- */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+
+            /* Neon Glow Palette */
+            --bg-dark: #0d0d1a;
+            --surface-dark: #1a1a2e;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-green: #39FF14;
+            --neon-blue: #4285F4;
+            --text-light: #e0e0e0;
+            --text-dim: #a0a0b0;
+            
+            font-size: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* --- Content Protection --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard */
+            -webkit-touch-callout: none; /* iOS Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-25px) rotate(180deg); opacity: 0.7; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
+        }
+        
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px var(--neon-cyan),
+                    0 0 40px var(--neon-cyan),
+                    0 0 80px var(--neon-cyan),
+                    0 0 90px var(--neon-cyan),
+                    0 0 100px var(--neon-cyan),
+                    0 0 150px var(--neon-cyan);
+                color: #fff;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                color: #e0e0e0;
+            }
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100%) rotateZ(0deg); }
+            100% { transform: translateY(100vh) rotateZ(720deg); }
+        }
+
+        /* --- General Layout & Typography --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+        }
+        
+        section {
+            padding: 3rem 0;
+            border-bottom: 2px solid var(--surface-dark);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--surface-dark), #2a2a3e);
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        
+        .section-header i {
+            font-size: 3rem;
+            padding: 1rem;
+            border-radius: 50%;
+            background-color: var(--surface-dark);
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .section-header .emoji {
+            font-size: 2.5rem;
+            vertical-align: middle;
+        }
+        
+        .pink-glow { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
+        .cyan-glow { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
+        .green-glow { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
+        .yellow-glow { color: var(--highlight-yellow); text-shadow: 0 0 8px var(--highlight-yellow); }
+        .blue-glow { color: var(--primary-blue); text-shadow: 0 0 8px var(--primary-blue); }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        p i, p .emoji {
+            font-size: 1.3em;
+            vertical-align: -0.2em;
+            margin: 0 0.2em;
+        }
+
+        strong, .highlight {
+            font-weight: 600;
+        }
+        
+        .highlight-yellow { color: var(--highlight-yellow); font-weight: bold; font-size: 1.1em; }
+        .highlight-green { color: var(--neon-green); font-weight: bold; font-size: 1.1em; }
+        .highlight-cyan { color: var(--neon-cyan); font-weight: bold; font-size: 1.1em; }
+        .highlight-red { color: var(--warning-red); font-weight: bold; font-size: 1.1em; }
+
+        /* --- Header --- */
+        header {
+            position: relative;
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, #000 100%);
+            border-bottom: 3px solid var(--neon-cyan);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            animation: neon-flicker 5s infinite alternate;
+        }
+
+        .subtitle-box {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        header h2.subtitle {
+            font-size: 1.8rem;
+            color: var(--neon-pink);
+            font-weight: 700;
+        }
+
+        /* --- Card & Content Styling --- */
+        .card {
+            background-color: var(--surface-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--deep-purple);
+            box-shadow: 0 0 10px rgba(103, 58, 183, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(103, 58, 183, 0.6);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--deep-purple));
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5);
+        }
+        
+        .btn:disabled {
+            background: #555;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .solution-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 2px dashed var(--accent-green);
+            background-color: rgba(15, 157, 88, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .solution-box p { margin-bottom: 0.5rem; }
+
+        /* --- Specific Section Styles --- */
+        /* #introduction */
+        .problem-box {
+            background-color: var(--surface-dark);
+            border: 2px dashed var(--highlight-yellow);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+        .problem-box h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--highlight-yellow);
+            text-shadow: 0 0 8px var(--highlight-yellow);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .problem-box .emoji {
+            font-size: 1.3rem;
+            vertical-align: baseline;
+        }
+        
+        /* Place Value Chart */
+        .place-value-chart {
+            overflow-x: auto;
+            margin: 2rem auto;
+            width: fit-content;
+            max-width: 100%;
+        }
+        table.pv-table {
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .pv-table th, .pv-table td {
+            border: 1px solid var(--deep-purple);
+            padding: 0.8rem;
+        }
+        .pv-table th {
+            background-color: var(--deep-purple);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+        }
+        .pv-table th.decimal-place {
+            background-color: var(--accent-green);
+        }
+        .pv-table td {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+        }
+        .pv-table .decimal-point-col {
+            border: none;
+            font-size: 3rem;
+            vertical-align: middle;
+            padding: 0 0.5rem;
+            color: var(--neon-pink);
+        }
+
+        /* #daily-life */
+        details {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--highlight-yellow);
+        }
+        details summary {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            list-style-type: '👉';
+            color: var(--highlight-yellow);
+        }
+        details summary::marker { color: var(--highlight-yellow); }
+        details div { padding: 0 1.5rem 1rem 1.5rem; }
+
+        /* #key-terms */
+        .term-card { display: flex; align-items: center; gap: 1.5rem; }
+        .term-card i { font-size: 2.5rem; color: var(--neon-pink); min-width: 50px; text-align: center; }
+        
+        /* #step-by-step */
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            background: var(--surface-dark);
+            border-left: 5px solid var(--neon-cyan);
+        }
+        .step-number { font-family: 'Nunito', sans-serif; font-size: 3rem; font-weight: 900; color: var(--neon-cyan); line-height: 1; }
+        .step-content h3 { color: var(--neon-cyan); margin-bottom: 0.5rem; }
+        .step-content .why { font-style: italic; color: var(--text-dim); border-left: 3px solid var(--deep-purple); padding-left: 1rem; margin-top: 0.5rem; }
+        
+        /* #common-mistakes */
+        .mistake-box {
+            border-radius: 10px; padding: 1.5rem; border: 2px solid var(--warning-red); background: rgba(219, 68, 55, 0.1);
+        }
+        .mistake-box h3 { color: var(--warning-red); margin-bottom: 1rem; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .wrong-way, .right-way { padding: 1rem; border-radius: 8px; }
+        .wrong-way { background-color: rgba(219, 68, 55, 0.2); }
+        .right-way { background-color: rgba(15, 157, 88, 0.2); }
+        .wrong-way h4::before { content: '❌ '; }
+        .right-way h4::before { content: '✅ '; }
+
+        /* #practice */
+        .challenge-problem { border: 2px solid var(--neon-pink); background-color: rgba(255, 0, 255, 0.05); }
+        .hint-box {
+            display: none; background-color: rgba(244, 180, 0, 0.1); border: 1px dashed var(--highlight-yellow); padding: 1rem; margin-top: 1rem; border-radius: 5px; animation: fadeIn 0.5s ease;
+        }
+
+        /* #summary */
+        .summary-list { list-style: none; padding-left: 0; }
+        .summary-list li { position: relative; padding: 1.2rem 1.2rem 1.2rem 3.5rem; margin-bottom: 1rem; background: var(--surface-dark); border-radius: 10px; border-left: 5px solid var(--neon-green); }
+        .summary-list li::before {
+            content: attr(data-step); position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--neon-green); background-color: rgba(57, 255, 20, 0.2); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+        }
+
+        /* --- Quiz Section --- */
+        #quiz-container { background-color: var(--surface-dark); padding: 2rem; border-radius: 20px; border: 1px solid var(--deep-purple); box-shadow: 0 0 20px rgba(103, 58, 183, 0.5); }
+        #quiz-start-screen h3, #quiz-results-screen h3 { font-size: 2rem; text-align: center; margin-bottom: 1.5rem; color: var(--neon-pink); }
+        #quiz-question-screen { display: none; }
+        #question-text { font-size: 1.4rem; margin-bottom: 2rem; line-height: 1.6; }
+        #options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .option-btn { width: 100%; padding: 1.2rem; font-size: 1.1rem; background-color: rgba(255,255,255,0.05); border: 2px solid var(--primary-blue); color: var(--text-light); border-radius: 10px; cursor: pointer; transition: all 0.3s ease; text-align: left; }
+        .option-btn:hover:not(:disabled) { background-color: rgba(66, 133, 244, 0.3); transform: translateY(-3px); }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background-color: rgba(15, 157, 88, 0.3); border-color: var(--neon-green); color: #fff; transform: scale(1.02); }
+        .option-btn.incorrect { background-color: rgba(219, 68, 55, 0.3); border-color: var(--warning-red); color: #fff; }
+        #explanation-box { display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: 10px; background-color: rgba(0,0,0,0.2); animation: fadeIn 0.5s ease; }
+        #explanation-text { color: var(--text-dim); line-height: 1.6; }
+        #explanation-text .step-explanation { display: block; margin-bottom: 0.75em; }
+        #quiz-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
+        #quiz-results-screen { display: none; text-align: center; position: relative; }
+        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+        .confetti { position: absolute; width: 10px; height: 20px; opacity: 0.8; animation: confetti-fall 4s linear infinite; }
+        #final-score { font-size: 5rem; font-weight: 900; color: var(--neon-green); margin: 1rem 0; text-shadow: 0 0 20px var(--neon-green); }
+        #score-message { font-size: 1.5rem; color: var(--highlight-yellow); }
+        #preview-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background: var(--surface-dark); padding: 2rem; border-radius: 15px; border: 1px solid var(--neon-cyan); width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--neon-cyan); padding-bottom: 1rem; margin-bottom: 1rem; }
+        #close-modal { font-size: 2rem; cursor: pointer; color: var(--warning-red); }
+        .preview-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #333; }
+        .preview-item p { margin-bottom: 0.5rem; }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 2rem; margin-top: 2rem; background-color: var(--surface-dark); color: var(--text-dim); border-top: 2px solid var(--deep-purple); }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            :root { font-size: 14px; }
+            .container { padding: 1rem; }
+            header h1 { font-size: 3rem; }
+            header h2.subtitle { font-size: 1.5rem; }
+            .section-header { flex-direction: column; text-align: center; }
+            .section-header h2 { font-size: 2rem; }
+            .comparison-grid, #options-grid { grid-template-columns: 1fr; }
+            .step { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;" onselectstart="return false;" onkeydown="return false;">
+    
+    <!-- Dynamic Header -->
+    <header>
+        <div class="particles"></div>
+        <div class="header-content">
+            <h1>Maths Universe</h1>
+            <div class="subtitle-box">
+                <h2 class="subtitle">Place Value of Decimals</h2>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Section 1: The Hook -->
+        <section id="introduction">
+            <div class="section-header">
+                <i class="fas fa-flag-checkered yellow-glow"></i>
+                <h2>1. The Photo Finish! (Problem to Solve) 🏁</h2>
+            </div>
+            <div class="problem-box">
+                <h4>PROBLEM SITUATION <span class="emoji">😳</span></h4>
+                <p>
+                    Nigeria's hero, <strong class="highlight-yellow">Tobi Amusan</strong>, runs a world-record race! Her time is announced as <strong class="highlight-yellow">12.12</strong> seconds. The '1' and '2' digits appear twice!
+                </p>
+                <p>
+                    But does the first '1' mean the same thing as the second '1'? Does the first '2' have the same value as the second '2'? What makes them different? 🤔
+                </p>
+            </div>
+            <p>
+                The secret is the <strong class="highlight-cyan">decimal point</strong>! It's a tiny dot with a huge job. It separates the whole numbers from the tiny, fractional parts. Today, we will explore the amazing world to the <strong class="highlight-red">right</strong> of the decimal point and master decimal place value! 🚀
+            </p>
+        </section>
+
+        <!-- Section 2: Real-World Relevance -->
+        <section id="daily-life">
+            <div class="section-header">
+                <i class="fas fa-globe-africa green-glow"></i>
+                <h2>2. Decimals in Your Daily Nigerian Life 🇳🇬</h2>
+            </div>
+            <p>Once you understand decimal places, you'll see them everywhere, helping you be more precise.</p>
+            <details>
+                <summary>Money (Naira and Kobo) 💰</summary>
+                <div>
+                    <p>When you see a price like <strong class="highlight-yellow">₦150.75</strong>, the '.75' part is a decimal. The 7 is in the tenths place (70 kobo) and the 5 is in the hundredths place (5 kobo).</p>
+                </div>
+            </details>
+            <details>
+                <summary>Fuel Prices at the Station ⛽</summary>
+                <div>
+                    <p>The price of petrol might be <strong class="highlight-yellow">₦617.50</strong> per litre. That '.5' is in the tenths place, representing half a Naira.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Tailoring and Measurements 📏</summary>
+                <div>
+                    <p>A tailor in Aba might measure a piece of Ankara fabric as <strong class="highlight-yellow">3.5</strong> metres. The '.5' tells them it's exactly halfway to the next metre, allowing for a perfect cut.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Athletics and Sports Timing 🏃‍♀️</summary>
+                <div>
+                    <p>In sports, every fraction of a second counts! A time of <strong class="highlight-yellow">10.45</strong> seconds is faster than <strong class="highlight-yellow">10.5</strong> seconds because the '4' in the tenths place is smaller than the '5'.</p>
+                </div>
+            </details>
+             <details>
+                <summary>Scientific Measurements 🔬</summary>
+                <div>
+                    <p>In your science class, you might weigh a small amount of a chemical, like <strong class="highlight-yellow">4.25</strong> grams. The '.25' gives you the precise measurement needed for your experiment to work!</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Section 3: Key Terms & Definitions -->
+        <section id="key-terms">
+            <div class="section-header">
+                <i class="fas fa-key cyan-glow"></i>
+                <h2>3. Your Decimal Dictionary 📖</h2>
+            </div>
+            <p>Mastering these words is the key to understanding the topic! 🔑</p>
+            <div class="card term-card">
+                <i class="fas fa-circle-dot"></i>
+                <div>
+                    <h3>Decimal Point</h3>
+                    <p>The dot (<strong class="highlight-yellow">.</strong>) that separates the whole number part (on the left) from the fractional part (on the right).</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-ruler-horizontal"></i>
+                <div>
+                    <h3>Tenths</h3>
+                    <p>The <strong class="highlight-green">first</strong> place to the right of the decimal point. Its value is the digit divided by 10 (e.g., 0.7 = ⁷/₁₀).</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-th-large"></i>
+                <div>
+                    <h3>Hundredths</h3>
+                    <p>The <strong class="highlight-green">second</strong> place to the right of the decimal point. Its value is the digit divided by 100 (e.g., 0.03 = ³/₁₀₀).</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-cubes"></i>
+                <div>
+                    <h3>Thousandths</h3>
+                    <p>The <strong class="highlight-green">third</strong> place to the right of the decimal point. Its value is the digit divided by 1000 (e.g., 0.009 = ⁹/₁₀₀₀).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Step-by-Step Explanation -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <i class="fas fa-map-marked-alt green-glow"></i>
+                <h2>4. The Place Value Chart: The Full Map 🗺️</h2>
+            </div>
+            <p>The decimal point acts like a mirror. The place values on the right side are a reflection of the ones on the left, but they are <strong class="highlight-red">fractions</strong> and end with "-ths".</p>
+
+            <div class="place-value-chart">
+                <table class="pv-table">
+                    <thead>
+                        <tr>
+                            <th>Hundreds</th>
+                            <th>Tens</th>
+                            <th>Ones</th>
+                            <th class="decimal-point-col">.</th>
+                            <th class="decimal-place">Tenths</th>
+                            <th class="decimal-place">Hundredths</th>
+                            <th class="decimal-place">Thousandths</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>100</td>
+                            <td>10</td>
+                            <td>1</td>
+                            <td class="decimal-point-col">.</td>
+                            <td>¹/₁₀</td>
+                            <td>¹/₁₀₀</td>
+                            <td>¹/₁₀₀₀</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Let's find the place value of each digit in the number <strong class="highlight-yellow">27.645</strong>.</p>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Analyse the Whole Number Part</h3>
+                    <p>Look at the digits to the <strong class="highlight-cyan">left</strong> of the decimal point.</p>
+                    <ul>
+                        <li>The <strong class="highlight-green">2</strong> is in the <strong class="highlight-green">Tens</strong> place. Its value is 20.</li>
+                        <li>The <strong class="highlight-green">7</strong> is in the <strong class="highlight-green">Ones</strong> place. Its value is 7.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Analyse the Decimal Part</h3>
+                    <p>Look at the digits to the <strong class="highlight-red">right</strong> of the decimal point.</p>
+                    <ul>
+                        <li>The <strong class="highlight-green">6</strong> is in the <strong class="highlight-green">Tenths</strong> place. Its value is 0.6 or ⁶/₁₀.</li>
+                        <li>The <strong class="highlight-green">4</strong> is in the <strong class="highlight-green">Hundredths</strong> place. Its value is 0.04 or ⁴/₁₀₀.</li>
+                         <li>The <strong class="highlight-green">5</strong> is in the <strong class="highlight-green">Thousandths</strong> place. Its value is 0.005 or ⁵/₁₀₀₀.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Real-Life Application -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <i class="fas-solid fa-ruler-combined blue-glow"></i>
+                <h2>5. Case Study: The Tailor's Precision 📏</h2>
+            </div>
+            <div class="card">
+                <p>
+                    <strong class="highlight-yellow">Mr. Ade</strong>, a tailor in Lagos, is measuring fabric for a very special agbada. He measures a piece to be <strong class="highlight-cyan">4.375</strong> metres long. He needs to understand the value of each digit to ensure a perfect fit.
+                </p>
+                <p>
+                    What is the place value of the digit '7' in his measurement?
+                </p>
+                <button class="btn" onclick="showElement('solution1', this)">Show Solution</button>
+                <div id="solution1" class="solution-box">
+                    <h4>Let's analyse the measurement 4.375:</h4>
+                    <p><strong>1. Locate the decimal point.</strong></p>
+                    <p><strong>2. Look at the digits to the right:</strong></p>
+                    <ul>
+                        <li>The '3' is in the first position, the <strong class="highlight-yellow">Tenths</strong> place.</li>
+                        <li>The '7' is in the second position, the <strong class="highlight-red">Hundredths</strong> place.</li>
+                        <li>The '5' is in the third position, the <strong class="highlight-yellow">Thousandths</strong> place.</li>
+                    </ul>
+                    <p><strong>✅ Final Answer:</strong> The place of the digit '7' is the <strong class="highlight-green">Hundredths</strong> place. Its value is 0.07 metres.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Applied Problem -->
+        <section id="applied-problem">
+             <div class="section-header">
+                <i class="fas fa-naira-sign green-glow"></i>
+                <h2>6. Financial Focus: Understanding Kobo 💰</h2>
+            </div>
+            <div class="card">
+                <p>
+                    <strong class="highlight-yellow">Chiamaka</strong> looks at a receipt from a supermarket. The total is <strong class="highlight-cyan">₦2,548.75</strong>.
+                </p>
+                <p>
+                   Her teacher asks her: "What is the value of the '7' and what is the value of the '5' after the decimal point, in terms of Kobo?"
+                </p>
+                <button class="btn" onclick="showElement('solution2', this)">Show Solution</button>
+                <div id="solution2" class="solution-box">
+                    <h4>Let's break down the Kobo:</h4>
+                     <p>Remember, there are 100 Kobo in 1 Naira. This means the <strong class="highlight-yellow">Hundredths</strong> place is the Kobo place.</p>
+                     <p>• The <strong class="highlight-red">'7'</strong> is in the <strong class="highlight-red">Tenths</strong> place. A tenth of a Naira is 10 Kobo. So, the value is 7 × 10 Kobo = <strong class="highlight-green">70 Kobo</strong>.</p>
+                     <p>• The <strong class="highlight-cyan">'5'</strong> is in the <strong class="highlight-cyan">Hundredths</strong> place. A hundredth of a Naira is 1 Kobo. So, the value is 5 × 1 Kobo = <strong class="highlight-green">5 Kobo</strong>.</p>
+                     <p>Together, they make up the 75 Kobo in the price.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Pro-Tips & Tricks -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <i class="fas fa-spell-check yellow-glow"></i>
+                <h2>7. Maths Magic: The "-ths" Suffix Rule! ✨</h2>
+            </div>
+            <div class="card">
+                <h3>The Easiest Way to Name the Places</h3>
+                <p>
+                    It's easy to get confused between "tens" and "tenths" or "hundreds" and "hundredths".
+                </p>
+                <p>
+                    Just remember this simple rule:
+                </p>
+                <p style="font-size: 1.5rem; text-align: center;">
+                    <strong class="highlight-green">If the place is to the RIGHT of the dot, its name ends in "-ths" and it's a tiny piece!</strong>
+                </p>
+                <ul>
+                    <li>Ten<strong class="highlight-red">s</strong> → Whole number (big)</li>
+                    <li>Ten<strong class="highlight-green">ths</strong> → Fraction (small)</li>
+                    <li>Hundred<strong class="highlight-red">s</strong> → Whole number (very big)</li>
+                    <li>Hundred<strong class="highlight-green">ths</strong> → Fraction (very small)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 8: Common Mistakes -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <i class="fas fa-user-shield warning-red"></i>
+                <h2>8. Watch Out! Decimal Traps! ⚠️</h2>
+            </div>
+            <div class="mistake-box">
+                <h3>Mistake: Forgetting the Decimal Point is the Center</h3>
+                <p>Students sometimes start counting places from the far right of the number, ignoring the decimal point.</p>
+                <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>In 12.34, saying the '3' is in the Tens place and the '2' is in the Hundreds place. This is wrong!</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>The decimal point is the center. To the left is Ones (2), then Tens (1). To the right is <strong class="highlight-green">Tenths</strong> (3), then <strong class="highlight-green">Hundredths</strong> (4).</p>
+                    </div>
+                </div>
+            </div>
+             <div class="mistake-box" style="margin-top: 1.5rem;">
+                <h3>Mistake: The Imaginary "Oneths" Place</h3>
+                <p>There is no "oneths" place! The places to the right of the dot start immediately with Tenths.</p>
+                 <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                         <p>In 0.5, thinking the 5 is in the "oneths" place.</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>The first place to the right of the decimal is ALWAYS the <strong class="highlight-green">Tenths</strong> place. The 5 in 0.5 is in the Tenths place.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Practice & Challenge Zone -->
+        <section id="practice">
+            <div class="section-header">
+                <i class="fas fa-pencil-alt deep-purple"></i>
+                <h2>9. Practice & Challenge Zone 🧠</h2>
+            </div>
+            
+            <div class="card">
+                <h3>Standard Practice Problem</h3>
+                <p>In the number <strong class="highlight-cyan">58.194</strong>, what is the place value of the digit 9?</p>
+                <button class="btn" onclick="showElement('hint1', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution3', this)">Show Solution</button>
+                <div id="hint1" class="hint-box">
+                    <p><strong>Hint:</strong> The digit 9 is the second digit to the right of the decimal point. What is the name of that place?</p>
+                </div>
+                <div id="solution3" class="solution-box">
+                    <p><strong>1. Locate the digit:</strong> The 9 is in the second position after the decimal point.</p>
+                    <p><strong>2. Name the place:</strong> The first place is Tenths, so the second place is Hundredths.</p>
+                    <p><strong>✅ Final Answer:</strong> The place value of the 9 is <strong class="highlight-green">Hundredths</strong> (or its value is 0.09).</p>
+                </div>
+            </div>
+
+            <div class="card challenge-problem">
+                <h3>⭐ Challenge Problem ⭐</h3>
+                <p>
+                    In the number <strong class="highlight-cyan">61.283</strong>, what is the product of the face value of the digit in the <strong class="highlight-red">Tenths</strong> place and the face value of the digit in the <strong class="highlight-red">Thousandths</strong> place?
+                </p>
+                <button class="btn" onclick="showElement('hint2', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution4', this)">Show Solution</button>
+                <div id="hint2" class="hint-box">
+                    <p><strong>Hint:</strong> "Product" means multiply. First, find the digit in the tenths place. Then find the digit in the thousandths place. Finally, multiply their face values (the digits themselves).</p>
+                </div>
+                <div id="solution4" class="solution-box">
+                    <p><strong>1. Digit in the Tenths place:</strong> The first digit after the dot is <strong class="highlight-red">2</strong>. Its face value is 2.</p>
+                    <p><strong>2. Digit in the Thousandths place:</strong> The third digit after the dot is <strong class="highlight-green">3</strong>. Its face value is 3.</p>
+                    <p><strong>3. Find the Product:</strong></p>
+                    <p>2 × 3 = 6</p>
+                    <p><strong>✅ Final Answer:</strong> The product is <strong class="highlight-green">6</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Summary of Key Steps -->
+        <section id="summary">
+            <div class="section-header">
+                <i class="fas fa-list-check green-glow"></i>
+                <h2>10. Your Golden Rules for Decimal Place Value 📜</h2>
+            </div>
+            <p>Remember these simple rules to master decimal places!</p>
+            <ol class="summary-list">
+                <li data-step="1"><strong>THE DOT IS KING:</strong> The decimal point is the center of the number world. It separates wholes on the left from parts on the right. 👑</li>
+                <li data-step="2"><strong>WHOLE ON THE LEFT:</strong> To the left of the dot, the places are Ones, Tens, Hundreds, etc. (big values). ⬅️</li>
+                <li data-step="3"><strong>PARTS ON THE RIGHT:</strong> To the right of the dot, the places are Tenths, Hundredths, Thousandths, etc. (tiny values). ➡️</li>
+                <li data-step="4"><strong>REMEMBER THE "-THS":</strong> Every place value name to the right of the dot ends in "-ths". 🗣️</li>
+            </ol>
+        </section>
+        
+        <!-- Section 11: Interactive Quiz -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <i class="fas fa-vial-circle-check neon-pink"></i>
+                <h2>11. Test Your Knowledge! 🧪</h2>
+            </div>
+            <div id="quiz-container">
+                <!-- Start Screen -->
+                <div id="quiz-start-screen">
+                    <h3>Ready to show what you've learned?</h3>
+                    <p style="text-align:center; margin-bottom: 2rem;">You'll get <span class="highlight-yellow">5</span> random questions. Give it your best shot! Good luck! 👍</p>
+                    <div style="text-align:center;">
+                        <button class="btn" id="start-quiz-btn">Start Quiz Now!</button>
+                    </div>
+                </div>
+
+                <!-- Question Screen -->
+                <div id="quiz-question-screen">
+                    <p id="question-counter"></p>
+                    <p id="question-text">This is where the question will appear.</p>
+                    <div id="options-grid">
+                        <!-- Options will be generated by JS -->
+                    </div>
+                    <div id="explanation-box">
+                        <h3>Explanation:</h3>
+                        <div id="explanation-text">The reason for the answer will show up here.</div>
+                    </div>
+                    <div id="quiz-navigation">
+                        <p id="score-tracker">Score: 0/5</p>
+                        <button class="btn" id="next-question-btn" style="display:none;">Next Question</button>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div id="quiz-results-screen">
+                    <div class="confetti-container"></div>
+                    <h3>Quiz Complete! 🎉</h3>
+                    <p>Here's how you did:</p>
+                    <div id="final-score">5/5</div>
+                    <p id="score-message">Fantastic work!</p>
+                    <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                        <button class="btn" id="reset-quiz-btn">Try Another Set!</button>
+                        <button class="btn" id="preview-answers-btn">Review Answers</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview Answers Modal -->
+        <div id="preview-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Your Quiz Review</h2>
+                    <span id="close-modal">&times;</span>
+                </div>
+                <div id="preview-body">
+                    <!-- Review items will be generated by JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+        <p>All rights reserved. Designed for an engaging learning experience.</p>
+    </footer>
+
+<script>
+// --- Content Protection Script ---
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'PrintScreen' || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
+    e.preventDefault();
+  }
+});
+
+
+// --- Header Particles ---
+const particlesContainer = document.querySelector('.particles');
+const numParticles = 50;
+for (let i = 0; i < numParticles; i++) {
+    let particle = document.createElement('span');
+    particle.className = 'particle';
+    const size = Math.random() * 8 + 2;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.left = `${Math.random() * 100}%`;
+    const duration = Math.random() * 10 + 10;
+    particle.style.animationDuration = `${duration}s`;
+    const delay = Math.random() * 5;
+    particle.style.animationDelay = `${delay}s`;
+    const colors = ['var(--neon-cyan)', 'var(--neon-pink)', 'var(--neon-green)', '#fff'];
+    particle.style.background = colors[Math.floor(Math.random()*colors.length)];
+    particlesContainer.appendChild(particle);
+}
+
+// --- Show Element Function (One-way click) ---
+function showElement(elementId, buttonElement) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.display = 'block';
+    }
+    if (buttonElement) {
+        buttonElement.disabled = true;
+        if (buttonElement.textContent.includes('Hint')) {
+            buttonElement.textContent = 'Hint Shown';
+        } else {
+            buttonElement.textContent = 'Solution Shown';
+        }
+    }
+}
+
+
+// --- Quiz Logic ---
+const quizData = [
+    { question: "In the number 23.45, what is the place value of the digit 4?", options: ["Tens", "Tenths", "Hundredths", "Ones"], correctAnswer: 1, explanation: "<p class='step-explanation'>The digit 4 is in the first position to the right of the decimal point. This is the <strong class='highlight-green'>Tenths</strong> place.</p>" },
+    { question: "What is the value of the digit 7 in the number 0.07?", options: ["7", "Seventy", "Seven tenths", "Seven hundredths"], correctAnswer: 3, explanation: "<p class='step-explanation'>The digit 7 is in the second position after the decimal point. This is the <strong class='highlight-green'>Hundredths</strong> place. Its value is seven hundredths.</p>" },
+    { question: "In 1.234, which digit is in the Thousandths place?", options: ["1", "2", "3", "4"], correctAnswer: 3, explanation: "<p class='step-explanation'>The places to the right of the dot are Tenths (2), Hundredths (3), and <strong class='highlight-green'>Thousandths (4)</strong>.</p>" },
+    { question: "The price of an item is ₦50.25. The '2' represents what?", options: ["2 Kobo", "20 Kobo", "2 Naira", "20 Naira"], correctAnswer: 1, explanation: "<p class='step-explanation'>The '2' is in the tenths place. A tenth of a Naira is 10 Kobo. So, the value is 2 × 10 Kobo = <strong class='highlight-green'>20 Kobo</strong>.</p>" },
+    { question: "Which statement is true for the number 6.6?", options: ["Both 6s have the same value", "The first 6 is worth more", "The second 6 is worth more", "The number is invalid"], correctAnswer: 1, explanation: "<p class='step-explanation'>The first 6 is in the Ones place and is worth 6. The second 6 is in the Tenths place and is worth 0.6. Therefore, the <strong class='highlight-green'>first 6 is worth more</strong>.</p>" },
+    { question: "What is the name of the first place to the right of the decimal point?", options: ["Ones", "Oneths", "Tenths", "Hundredths"], correctAnswer: 2, explanation: "<p class='step-explanation'>A common mistake is to think there is a 'oneths' place. The places to the right of the decimal point begin immediately with the <strong class='highlight-green'>Tenths</strong> place.</p>" },
+    { question: "In 98.765, what is the face value of the digit in the hundredths place?", options: ["6", "60", "0.06", "Hundredths"], correctAnswer: 0, explanation: "<p class='step-explanation'>1. The digit in the hundredths place is 6.</p><p class='step-explanation'>2. The face value is simply the digit itself, which is <strong class='highlight-green'>6</strong>.</p>" },
+    { question: "A runner's time is 12.09 seconds. What is the value of the 9?", options: ["Nine tenths of a second", "Nine seconds", "Nine hundredths of a second", "Ninety seconds"], correctAnswer: 2, explanation: "<p class='step-explanation'>The 9 is in the second place after the decimal point, which is the <strong class='highlight-green'>hundredths</strong> place. So it represents nine hundredths of a second.</p>" },
+    { question: "What is the sum of the face values of the digits after the decimal in 1.83?", options: ["11", "0.83", "83", "8.3"], correctAnswer: 0, explanation: "<p class='step-explanation'>The digits after the decimal are 8 and 3. Their face values are just 8 and 3. The sum is 8 + 3 = <strong class='highlight-green'>11</strong>.</p>" },
+    { question: "Which digit is in the tenths place in the number 45.67?", options: ["4", "5", "6", "7"], correctAnswer: 2, explanation: "<p class='step-explanation'>The tenths place is the first position to the right of the decimal point. In 45.67, that digit is <strong class='highlight-green'>6</strong>.</p>" },
+    { question: "The value 0.003 is called...?", options: ["Three thousand", "Three hundredths", "Three thousandths", "Three tenths"], correctAnswer: 2, explanation: "<p class='step-explanation'>The digit 3 is in the third position after the decimal point, which is the <strong class='highlight-green'>thousandths</strong> place.</p>" },
+    { question: "In the number 2.22, which '2' has the smallest place value?", options: ["The first one", "The second one", "The third one", "They all have the same value"], correctAnswer: 2, explanation: "<p class='step-explanation'>The further right a digit is after the decimal point, the smaller its value. The third '2' is in the hundredths place (0.02), which is smaller than the tenths place (0.2) and the ones place (2).</p>" },
+    { question: "A measurement is 7.5 metres. The .5 represents...", options: ["5 metres", "50 metres", "5 centimetres", "5 tenths of a metre"], correctAnswer: 3, explanation: "<p class='step-explanation'>The 5 is in the tenths place, so it represents <strong class='highlight-green'>5 tenths of a metre</strong> (which is also 50cm or half a metre).</p>" },
+    { question: "What is the place value of the 0 in 1.05?", options: ["Ones", "Tenths", "Hundredths", "It has no place value"], correctAnswer: 1, explanation: "<p class='step-explanation'>The 0 is acting as a placeholder, but it is still occupying a position. It is in the first place after the decimal point, which is the <strong class='highlight-green'>Tenths</strong> place.</p>" },
+    { question: "In 123.456, which digit has a value of 5 hundredths?", options: ["3", "4", "5", "6"], correctAnswer: 2, explanation: "<p class='step-explanation'>The hundredths place is the second position after the decimal point. The digit in that position is <strong class='highlight-green'>5</strong>.</p>" }
+];
+
+// Quiz state
+let currentQuizQuestions = [];
+let score = 0;
+let currentQuestionIndex = 0;
+let userAnswers = [];
+
+// DOM elements
+const startScreen = document.getElementById('quiz-start-screen');
+const questionScreen = document.getElementById('quiz-question-screen');
+const resultsScreen = document.getElementById('quiz-results-screen');
+const startBtn = document.getElementById('start-quiz-btn');
+const questionCounter = document.getElementById('question-counter');
+const questionText = document.getElementById('question-text');
+const optionsGrid = document.getElementById('options-grid');
+const explanationBox = document.getElementById('explanation-box');
+const explanationText = document.getElementById('explanation-text');
+const scoreTracker = document.getElementById('score-tracker');
+const nextBtn = document.getElementById('next-question-btn');
+const finalScore = document.getElementById('final-score');
+const scoreMessage = document.getElementById('score-message');
+const resetBtn = document.getElementById('reset-quiz-btn');
+const previewBtn = document.getElementById('preview-answers-btn');
+const previewModal = document.getElementById('preview-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const previewBody = document.getElementById('preview-body');
+
+// --- Helper Functions ---
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// --- Quiz Core Functions ---
+function startQuiz() {
+    startScreen.style.display = 'none';
+    resultsScreen.style.display = 'none';
+    questionScreen.style.display = 'block';
+
+    shuffleArray(quizData);
+    currentQuizQuestions = quizData.slice(0, 5);
+    score = 0;
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    
+    displayQuestion();
+}
+
+function displayQuestion() {
+    // Reset state
+    explanationBox.style.display = 'none';
+    nextBtn.style.display = 'none';
+    optionsGrid.innerHTML = '';
+    
+    const question = currentQuizQuestions[currentQuestionIndex];
+    
+    questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuizQuestions.length}`;
+    questionText.innerHTML = question.question;
+    
+    question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = option;
+        button.onclick = () => selectAnswer(index, button);
+        optionsGrid.appendChild(button);
+    });
+    
+    updateScoreTracker();
+}
+
+function selectAnswer(selectedIndex, button) {
+    const question = currentQuizQuestions[currentQuestionIndex];
+    const isCorrect = selectedIndex === question.correctAnswer;
+    
+    userAnswers[currentQuestionIndex] = selectedIndex;
+
+    if (isCorrect) {
+        score++;
+        button.classList.add('correct');
+    } else {
+        button.classList.add('incorrect');
+        // Also highlight the correct answer
+        optionsGrid.children[question.correctAnswer].classList.add('correct');
+    }
+    
+    // Disable all buttons
+    Array.from(optionsGrid.children).forEach(btn => btn.disabled = true);
+    
+    // Show explanation
+    explanationText.innerHTML = question.explanation;
+    explanationBox.style.display = 'block';
+    
+    // Show next button
+    nextBtn.style.display = 'inline-block';
+    
+    updateScoreTracker();
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuizQuestions.length) {
+        displayQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    questionScreen.style.display = 'none';
+    resultsScreen.style.display = 'block';
+    
+    finalScore.textContent = `${score}/${currentQuizQuestions.length}`;
+    
+    const percentage = (score / currentQuizQuestions.length) * 100;
+    if (percentage === 100) {
+        scoreMessage.textContent = "Perfect Score! You are a Decimal Place Value Master! 🏆";
+        triggerConfetti();
+    } else if (percentage >= 80) {
+        scoreMessage.textContent = "Excellent work! You really know your stuff! 👍";
+        triggerConfetti();
+    } else if (percentage >= 60) {
+        scoreMessage.textContent = "Good job! A little more practice and you'll be an expert! 😊";
+    } else {
+        scoreMessage.textContent = "Nice try! Review the steps and try again. You can do it! 💪";
+    }
+}
+
+function updateScoreTracker() {
+    scoreTracker.textContent = `Score: ${score}/${currentQuizQuestions.length}`;
+}
+
+function triggerConfetti() {
+    const container = document.querySelector('.confetti-container');
+    container.innerHTML = '';
+    for(let i=0; i < 50; i++){
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+        const colors = ['var(--neon-pink)', 'var(--neon-cyan)', 'var(--neon-green)', 'var(--highlight-yellow)'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        container.appendChild(confetti);
+    }
+}
+
+function showPreview() {
+    previewBody.innerHTML = '';
+    currentQuizQuestions.forEach((q, index) => {
+        const userAnswerIndex = userAnswers[index];
+        const isCorrect = userAnswerIndex === q.correctAnswer;
+        
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        
+        let html = `<p><strong>Q${index+1}: ${q.question}</strong></p>`;
+        html += `<p>Your Answer: <span class="${isCorrect ? 'highlight-green' : 'highlight-red'}">${q.options[userAnswerIndex] || 'Not Answered'}</span></p>`;
+        if (!isCorrect) {
+            html += `<p>Correct Answer: <span class="highlight-green">${q.options[q.correctAnswer]}</span></p>`;
+        }
+        previewBody.innerHTML += html;
+    });
+    previewModal.style.display = 'flex';
+}
+
+// Event Listeners
+startBtn.addEventListener('click', startQuiz);
+nextBtn.addEventListener('click', nextQuestion);
+resetBtn.addEventListener('click', startQuiz);
+previewBtn.addEventListener('click', showPreview);
+closeModalBtn.addEventListener('click', () => previewModal.style.display = 'none');
+window.addEventListener('click', (e) => {
+    if (e.target === previewModal) {
+        previewModal.style.display = 'none';
+    }
+});
+
+</script>
+
+</body>
+</html>

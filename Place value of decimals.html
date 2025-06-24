@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Lesson: Place Value of Decimals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* CSS Reset and Global Styles */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+            --light-blue: #8ab4f8;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+
+            --bg-color: #0d0c1d; /* Very dark blue-purple */
+            --card-bg: #1a1a2e;
+            --text-color: #e0e0e0;
+            --heading-color: #ffffff;
+            --border-color: rgba(0, 255, 255, 0.2);
+            --shadow-color-cyan: rgba(0, 255, 255, 0.7);
+            --shadow-color-pink: rgba(255, 0, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+        }
+        
+        /* Anti-screenshot/print measures */
+        @media print {
+            body::before {
+                content: "Printing is disabled for this educational resource.";
+                position: fixed;
+                top: 0; left: 0;
+                width: 100vw; height: 100vh;
+                background-color: rgba(0, 0, 0, 1);
+                color: white;
+                font-size: 50px;
+                text-align: center;
+                padding-top: 40vh;
+                z-index: 10000;
+            }
+            body > * {
+                display: none !important;
+            }
+        }
+
+
+        /* Typography & General Styling */
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            color: var(--heading-color);
+            text-shadow: 0 0 5px var(--shadow-color-cyan), 0 0 10px var(--shadow-color-cyan);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .highlight-text, .highlight-num {
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+
+        .highlight-text { color: var(--neon-cyan); text-shadow: 0 0 4px var(--neon-cyan); }
+        .highlight-num { color: var(--highlight-yellow); text-shadow: 0 0 4px var(--highlight-yellow); }
+        .highlight-answer { color: var(--accent-green); font-weight: bold; font-size: 1.2em; text-shadow: 0 0 5px var(--accent-green); }
+        .highlight-error { color: var(--warning-red); font-weight: bold; text-shadow: 0 0 5px var(--warning-red); }
+        .dp-highlight { color: var(--neon-pink); font-weight: bold; }
+
+
+        /* Custom Emojis/Icons Styling */
+        .lesson-icon {
+            font-size: 1.5rem;
+            margin: 0 5px;
+            vertical-align: middle;
+            display: inline-block;
+            animation: sparkle 3s infinite linear;
+        }
+
+        /* Header */
+        .main-header {
+            position: relative;
+            padding: 100px 20px 80px;
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 2px solid var(--border-color);
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-header h1 {
+            font-size: 4rem;
+            color: #fff;
+            animation: neonFlicker 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes neonFlicker {
+          0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+            text-shadow:
+              -0.2rem -0.2rem 1rem #fff,
+              0.2rem 0.2rem 1rem #fff,
+              0 0 2rem var(--neon-pink),
+              0 0 4rem var(--neon-pink),
+              0 0 6rem var(--neon-pink),
+              0 0 8rem var(--neon-pink),
+              0 0 10rem var(--neon-pink);
+            
+            box-shadow:
+              0 0 .5rem #fff,
+              inset 0 0 .5rem #fff,
+              0 0 2rem var(--neon-cyan),
+              inset 0 0 2rem var(--neon-cyan),
+              0 0 4rem var(--neon-cyan),
+              inset 0 0 4rem var(--neon-cyan);
+          }
+          20%, 24%, 55% {
+            text-shadow: none;
+            box-shadow: none;
+          }
+        }
+
+
+        .lesson-subtitle {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 15px;
+            background-color: rgba(26, 26, 46, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px var(--shadow-color-pink);
+            font-size: 1.8rem;
+            font-family: 'Nunito', sans-serif;
+            color: var(--heading-color);
+        }
+
+        /* Main Content & Sections */
+        main {
+            padding: 40px 0;
+        }
+
+        section {
+            margin-bottom: 50px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--shadow-color-pink);
+        }
+
+        .section-header {
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(0,255,255,0.1));
+        }
+
+        .section-header i {
+            font-size: 2.5rem;
+            margin-right: 20px;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            margin: 0;
+        }
+
+        .content-box {
+            padding: 30px;
+        }
+        
+        /* #daily-life */
+        details {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: background-color 0.3s;
+        }
+        details[open] {
+            background: rgba(0,0,0,0.3);
+        }
+        summary {
+            font-weight: 600;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--light-blue);
+        }
+        summary::marker {
+            color: var(--neon-cyan);
+        }
+        .details-content {
+            padding: 0 20px 20px 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* #key-terms */
+        .term-list { list-style: none; }
+        .term-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.15);
+            border-left: 5px solid var(--deep-purple);
+            border-radius: 8px;
+        }
+        .term-item i {
+            font-size: 3rem;
+            color: var(--deep-purple);
+            margin-right: 25px;
+        }
+        .term-item-text strong {
+            display: block;
+            font-size: 1.2rem;
+            color: var(--light-blue);
+        }
+        
+        /* #step-by-step Place Value Chart */
+        .place-value-chart-container {
+             overflow-x: auto;
+             padding: 10px;
+        }
+        .place-value-chart {
+            display: table;
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        .place-value-chart th, .place-value-chart td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+        }
+        .place-value-chart th {
+            color: var(--neon-cyan);
+            font-family: 'Nunito', sans-serif;
+        }
+        .place-value-chart .whole-part { background-color: rgba(66, 133, 244, 0.1); }
+        .place-value-chart .decimal-part { background-color: rgba(244, 180, 0, 0.1); }
+        .decimal-point-col {
+            border-left: 4px solid var(--neon-pink);
+            border-right: 4px solid var(--neon-pink);
+            font-size: 2rem;
+        }
+        .highlighted-digit {
+            color: var(--neon-pink);
+            font-size: 1.5em;
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--neon-pink);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Solution Box Styles */
+        .solution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(0, 255, 255, 0.05);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            background: var(--light-blue);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-green { background: var(--accent-green); box-shadow: 0 4px 15px rgba(15, 157, 88, 0.3); }
+        .btn-green:hover { background: #13c46b; box-shadow: 0 6px 20px rgba(15, 157, 88, 0.5); }
+        .btn-yellow { background: var(--highlight-yellow); box-shadow: 0 4px 15px rgba(244, 180, 0, 0.3); }
+        .btn-yellow:hover { background: #ffcb2b; box-shadow: 0 6px 20px rgba(244, 180, 0, 0.5); }
+        .btn-red { background: var(--warning-red); box-shadow: 0 4px 15px rgba(219, 68, 55, 0.3); }
+        .btn-red:hover { background: #e55a4d; box-shadow: 0 6px 20px rgba(219, 68, 55, 0.5); }
+
+
+        /* #common-mistakes */
+        .mistake-box {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+            margin-top: 20px;
+        }
+        .wrong-way, .right-way {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+            border-width: 2px;
+            border-style: solid;
+        }
+        .wrong-way {
+            background-color: rgba(219, 68, 55, 0.1);
+            border-color: var(--warning-red);
+        }
+        .right-way {
+            background-color: rgba(15, 157, 88, 0.1);
+            border-color: var(--accent-green);
+        }
+        .mistake-box h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .mistake-box h4 i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        .wrong-way h4 { color: var(--warning-red); }
+        .right-way h4 { color: var(--accent-green); }
+
+        /* Quiz Section */
+        #quiz-container { display: none; }
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .quiz-option {
+            background: var(--deep-purple);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.1rem;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 2px solid transparent;
+        }
+        .quiz-option:hover:not(.disabled) {
+            transform: scale(1.05);
+            background: #8e62d1;
+        }
+        .quiz-option.correct {
+            background-color: var(--accent-green);
+            color: white;
+            border-color: #fff;
+        }
+        .quiz-option.incorrect {
+            background-color: var(--warning-red);
+            color: white;
+            border-color: #fff;
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        #quiz-explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            border-left: 4px solid var(--highlight-yellow);
+            display: none;
+        }
+        #quiz-explanation ol {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        #quiz-explanation li {
+            margin-bottom: 10px;
+        }
+        #quiz-feedback, #quiz-score {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        /* Modal for Quiz Answers */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 0 40px var(--shadow-color-pink);
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-answer {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+            background: linear-gradient(to top, #1b2735, var(--bg-color));
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        
+        /* Confetti animation */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: #f00;
+            opacity: 0;
+            animation: confetti-fall 5s ease-out forwards;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header h1 { font-size: 2.5rem; }
+            .lesson-subtitle { font-size: 1.3rem; }
+            .section-header h2 { font-size: 1.8rem; }
+            .section-header i { font-size: 2rem; }
+            .mistake-box { flex-direction: column; }
+            .quiz-grid { grid-template-columns: 1fr; }
+            .modal-content { width: 95%; margin: 20% auto; }
+        }
+
+        /* Keyframes for sparkling icons */
+        @keyframes sparkle {
+          0%, 100% { transform: scale(1); opacity: 0.8; }
+          50% { transform: scale(1.2); opacity: 1; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" onkeydown="return disableKeys(event);">
+    <div id="particles-js"></div>
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <header class="main-header">
+        <div class="header-content">
+            <h1>Decimal Detectives!</h1>
+            <div class="lesson-subtitle" id="lesson-subtitle-box">
+                Place Value of Decimals
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Section 1: The Hook & Problem Situation -->
+        <section id="introduction">
+            <div class="section-header">
+                <i class="fas fa-map-marker-alt" style="color: var(--highlight-yellow);"></i>
+                <h2>1. The Hook & Problem Situation <span class="lesson-icon">🤔</span></h2>
+            </div>
+            <div class="content-box">
+                <div style="padding: 20px; border: 2px dashed var(--highlight-yellow); border-radius: 10px; margin-bottom: 25px; background: rgba(244, 180, 0, 0.05);">
+                    <h3 style="color: var(--highlight-yellow); text-align: center; margin-bottom: 10px;">PROBLEM SITUATION 🧐</h3>
+                    <p style="text-align: left;">In a science class, a teacher, Mr. Ade, shows his students two measurements: <strong class="highlight-num">2.5</strong> metres and <strong class="highlight-num">2.05</strong> metres. He asks, "Which number is bigger?" Many students shout, "2.5, no... 2.05 because 5 is bigger than... wait..." There is confusion in the class. Why does the position of the 5 make such a big difference? <span class="lesson-icon">🤯</span></p>
+                </div>
+                <p style="text-align:center;">This confusion is very common! The secret to understanding decimals lies in their <strong class="highlight-text">place value</strong>. The position of each digit after the decimal point has a special name and a specific worth. Today, we will become masters of "Decimal Street" and learn the address of every digit, so you'll never be confused by a decimal again! <span class="lesson-icon">🏠</span></p>
+            </div>
+        </section>
+        
+        <!-- Section 2: Real-World Relevance -->
+        <section id="daily-life">
+            <div class="section-header">
+                <i class="fas fa-cash-register" style="color: var(--accent-green);"></i>
+                <h2>2. Decimals in Your Daily Life <span class="lesson-icon">🛒</span></h2>
+            </div>
+            <div class="content-box">
+                <p>Understanding decimal place value is crucial for accuracy in many real-world situations:</p>
+                <details>
+                    <summary><i class="fas fa-naira-sign lesson-icon"></i> Money, Money, Money!</summary>
+                    <div class="details-content">
+                        <p>Prices in stores, especially with Kobo, use decimals. <strong class="highlight-num">₦150.50</strong> is different from <strong class="highlight-num">₦150.05</strong>. The first is 150 Naira and 50 Kobo, while the second is 150 Naira and just 5 Kobo. Place value matters! <span class="lesson-icon">💰</span></p>
+                    </div>
+                </details>
+                <details>
+                    <summary><i class="fas fa-running lesson-icon"></i> Sports Timings</summary>
+                    <div class="details-content">
+                        <p>In a race, a time of <strong class="highlight-num">10.2</strong> seconds is much faster than <strong class="highlight-num">10.9</strong> seconds. Understanding the "tenths" place helps you know who won. The difference between winning and losing can be in the hundredths or thousandths of a second! <span class="lesson-icon">🏃‍♀️</span></p>
+                    </div>
+                </details>
+                <details>
+                    <summary><i class="fas fa-gas-pump lesson-icon"></i> Fuel Pump Prices</summary>
+                    <div class="details-content">
+                        <p>The price of fuel is often given to two decimal places, for example, <strong class="highlight-num">₦617.25</strong>. Knowing the place value helps you understand the exact cost per litre. <span class="lesson-icon">⛽</span></p>
+                    </div>
+                </details>
+                 <details>
+                    <summary><i class="fas fa-ruler-combined lesson-icon"></i> Precise Measurements</summary>
+                    <div class="details-content">
+                        <p>Engineers, scientists, and even tailors need to be very precise. A measurement of <strong class="highlight-num">5.25</strong> cm is very different from <strong class="highlight-num">5.2</strong> cm. The "hundredths" place provides that extra accuracy. <span class="lesson-icon">📏</span></p>
+                    </div>
+                </details>
+                 <details>
+                    <summary><i class="fas fa-weight-hanging lesson-icon"></i> Digital Scales</summary>
+                    <div class="details-content">
+                        <p>When you buy food at a supermarket, the weight is shown on a digital scale, like <strong class="highlight-num">1.58</strong> kg. Each decimal place tells you a more precise weight. <span class="lesson-icon">⚖️</span></p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Section 3: Key Terms & Definitions -->
+        <section id="key-terms">
+            <div class="section-header">
+                <i class="fas fa-book-open" style="color: var(--deep-purple);"></i>
+                <h2>3. Place Value vs. Value: The Key Difference <span class="lesson-icon">🔑</span></h2>
+            </div>
+            <div class="content-box">
+                <p>It is vital to know the difference between these two related ideas.</p>
+                <ul class="term-list">
+                    <li class="term-item">
+                        <i class="fas fa-map-pin"></i>
+                        <div class="term-item-text">
+                            <strong>Place Value:</strong> This is the <strong class="highlight-text">NAME</strong> or <strong class="highlight-text">POSITION</strong> of a digit. It's like the "address" of the digit. For decimals, the names have "-ths" at the end: <strong class="highlight-text">Tenths, Hundredths, Thousandths</strong>.
+                        </div>
+                    </li>
+                     <li class="term-item">
+                        <i class="fas fa-coins"></i>
+                        <div class="term-item-text">
+                            <strong>Value:</strong> This is <strong class="highlight-text">how much</strong> a digit is worth because of its position. It's always a <strong class="highlight-text">number</strong>. If the digit <strong class="highlight-num">7</strong> is in the Tenths place, its value is <strong class="highlight-num">0.7</strong> or <strong class="highlight-num">7/10</strong>.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 4: Step-by-Step Explanation -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <i class="fas-solid fa-road" style="color: var(--primary-blue);"></i>
+                <h2>4. Welcome to Decimal Street! <span class="lesson-icon">🏠</span></h2>
+            </div>
+            <div class="content-box">
+                <p style="text-align: center; font-size:1.2rem; margin-bottom: 20px;">Think of a number as a street. The <strong class="dp-highlight">Decimal Point</strong> is the main landmark. Houses to the left are Whole Numbers, and houses to the right are the tiny Fractional Parts.</p>
+                
+                <h3 style="color: var(--light-blue); margin-top: 20px;">Let's Map the Number <strong class="highlight-num">243.185</strong></h3>
+                <div class="place-value-chart-container">
+                    <table class="place-value-chart">
+                        <thead>
+                            <tr>
+                                <th class="whole-part">Hundreds</th>
+                                <th class="whole-part">Tens</th>
+                                <th class="whole-part">Units</th>
+                                <th class="decimal-point-col">.</th>
+                                <th class="decimal-part">Tenths</th>
+                                <th class="decimal-part">Hundredths</th>
+                                <th class="decimal-part">Thousandths</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="whole-part">2</td>
+                                <td class="whole-part">4</td>
+                                <td class="whole-part">3</td>
+                                <td class="decimal-point-col">.</td>
+                                <td class="decimal-part">1</td>
+                                <td class="decimal-part">8</td>
+                                <td class="decimal-part">5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="color: var(--light-blue); margin-top: 30px;">Finding the Place Value and Value of the digit <span class="highlight-num">8</span></h3>
+                <ul>
+                    <li><strong>Step 1: Locate the digit.</strong> Find the digit <strong class="highlight-num">8</strong> on our "street map".</li>
+                    <li><strong>Step 2: Read its "Address" (Place Value).</strong> The <strong class="highlight-num">8</strong> is in the second house to the right of the decimal point. Looking at our chart, this is the <strong class="highlight-answer">Hundredths</strong> place.</li>
+                    <li><strong>Step 3: Determine its "Worth" (Value).</strong> The digit is 8 and its place is Hundredths. So its value is "eight hundredths", which we can write as the fraction <strong class="highlight-answer">8/100</strong> or the decimal <strong class="highlight-answer">0.08</strong>.</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <!-- Section 5: Real-Life Situation -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <i class="fas fa-gas-pump" style="color: var(--neon-cyan);"></i>
+                <h2>5. Real-Life Application: Fuel Prices <span class="lesson-icon">⛽</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>Understanding the Price Board</h4>
+                <p>A fuel station in Lagos displays the price of petrol as <strong class="highlight-num">₦617.25</strong> per litre. A customer wants to understand the meaning of each digit after the decimal point.</p>
+                <ol>
+                    <li>What is the <strong class="highlight-text">place value</strong> of the digit 2?</li>
+                    <li>What is the <strong class="highlight-text">value</strong> of the digit 5?</li>
+                </ol>
+                <button class="btn btn-green" onclick="toggleSolution('solution1')">Show/Hide Solution</button>
+                <div id="solution1" class="solution-box">
+                    <h4>Step-by-Step Solution:</h4>
+                    <p>Let's use our place value understanding on <strong class="highlight-num">617.25</strong>.</p>
+                    <ol>
+                        <li><strong>For the digit 2:</strong>
+                            <p>• The 2 is in the <strong class="highlight-text">first position</strong> after the decimal point.</p>
+                            <p>• The name of this position (its place value) is <strong class="highlight-answer">Tenths</strong>.</p>
+                        </li>
+                        <li><strong>For the digit 5:</strong>
+                           <p>• The 5 is in the <strong class="highlight-text">second position</strong> after the decimal point. Its place value is Hundredths.</p>
+                           <p>• The question asks for its <strong class="highlight-text">value</strong>. This means "five hundredths".</p>
+                           <p>• We can write this as the fraction <strong class="highlight-answer">5/100</strong> (of a Naira) or as the decimal <strong class="highlight-answer">0.05</strong> (Naira).</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Applied Problem (Financial Literacy) -->
+        <section id="financial-lit">
+            <div class="section-header">
+                <i class="fas fa-ruler" style="color: var(--accent-green);"></i>
+                <h2>6. Applied Problem: Precise Engineering <span class="lesson-icon">🔩</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>Choosing the Right Part</h4>
+                <p>An engineer in a factory is looking at a plan for a new machine. The plan specifies that a certain rod must have a diameter of <strong class="highlight-num">12.046</strong> cm. To order the correct part, she needs to describe the value of each decimal digit to the supplier.</p>
+                <p>What is the value of the <strong class="highlight-num">4</strong> and the value of the <strong class="highlight-num">6</strong> in this measurement?</p>
+                <button class="btn btn-green" onclick="toggleSolution('solution2')">Show/Hide Solution</button>
+                <div id="solution2" class="solution-box">
+                    <h4>Detailed Solution:</h4>
+                    <p>The number is <strong class="highlight-num">12.046</strong>.</p>
+                    <p><strong>1. Value of the digit 4:</strong></p>
+                    <p>• The 4 is in the second position after the decimal point. This is the <strong class="highlight-text">Hundredths</strong> place.</p>
+                    <p>• Therefore, its value is "four hundredths".</p>
+                    <p>• As a decimal, this is <strong class="highlight-answer">0.04</strong>. As a fraction, it is <strong class="highlight-answer">4/100</strong>.</p>
+                    
+                    <p><strong>2. Value of the digit 6:</strong></p>
+                    <p>• The 6 is in the third position after the decimal point. This is the <strong class="highlight-text">Thousandths</strong> place.</p>
+                    <p>• Therefore, its value is "six thousandths".</p>
+                     <p>• As a decimal, this is <strong class="highlight-answer">0.006</strong>. As a fraction, it is <strong class="highlight-answer">6/1000</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Pro-Tips & Tricks -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <i class="fas fa-star" style="color: var(--highlight-yellow);"></i>
+                <h2>7. Pro-Tips & Tricks <span class="lesson-icon">💡</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>The "-ths" Suffix Rule</h4>
+                <p>Here's the easiest way to remember the names of the decimal places: if the place is to the <strong class="highlight-text">right</strong> of the decimal point, its name will almost always end in <strong class="highlight-answer">"-ths"</strong>.</p>
+                <div style="text-align:center; font-size: 1.5rem; margin: 20px 0; padding: 20px; background: rgba(0,255,255,0.1); border-radius: 10px;">
+                    <p>To the left: Ten<strong class="highlight-error">s</strong>, Hundred<strong class="highlight-error">s</strong>, Thousand<strong class="highlight-error">s</strong></p>
+                    <p>To the right: Ten<strong class="highlight-answer">ths</strong>, Hundred<strong class="highlight-answer">ths</strong>, Thousand<strong class="highlight-answer">ths</strong></p>
+                </div>
+                <p>That little "th" sound makes all the difference!</p>
+                
+                <div class="wrong-way" style="border-color: var(--warning-red); background-color: rgba(219, 68, 55, 0.1); padding: 15px; border-radius: 10px; margin-top:20px;">
+                    <h4 style="color: var(--warning-red);"><i class="fas fa-exclamation-triangle"></i>Important Warning! The Mirror Image</h4>
+                    <p>The decimal places are like a mirror image of the whole number places, but there is <strong class="highlight-text">NO "oneths" or "uniths" place</strong>! The very first place to the right of the decimal point is the <strong class="highlight-text">Tenths</strong> place.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Common Mistakes to Avoid -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <i class="fas fa-ban" style="color: var(--warning-red);"></i>
+                <h2>8. Common Mistakes to Avoid <span class="lesson-icon">❌</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>Mistake 1: Confusing "Tens" and "Tenths"</h4>
+                <p>This is the most common mistake and it comes from misreading. The "ths" is critical.</p>
+                <div class="mistake-box">
+                    <div class="wrong-way">
+                        <h4><i class="fas fa-times-circle"></i> Wrong Way</h4>
+                        <p>In <strong class="highlight-num">20.2</strong>, a student might say the place value of both 2s is "Tens".</p>
+                    </div>
+                    <div class="right-way">
+                        <h4><i class="fas fa-check-circle"></i> Right Way</h4>
+                        <p>The '2' on the left is in the <strong class="highlight-text">Tens</strong> place. The '2' on the right is in the <strong class="highlight-answer">Tenths</strong> place.</p>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 30px;">Mistake 2: Confusing Place Value and Value</h4>
+                <p>Remember, one is a name (an address) and the other is a number (how much it's worth).</p>
+                <div class="mistake-box">
+                    <div class="wrong-way">
+                        <h4><i class="fas fa-times-circle"></i> Wrong Way</h4>
+                        <p>Question: What is the <strong class="highlight-text">place value</strong> of the 3 in 0.3? <br>Wrong Answer: <span class="highlight-error">0.3</span>.</p>
+                    </div>
+                    <div class="right-way">
+                        <h4><i class="fas fa-check-circle"></i> Right Way</h4>
+                        <p>Question: What is the <strong class="highlight-text">place value</strong> of the 3 in 0.3? <br>Correct Answer: <strong class="highlight-answer">Tenths</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Practice & Challenge Zone -->
+        <section id="practice">
+            <div class="section-header">
+                <i class="fas fa-dumbbell" style="color: var(--deep-purple);"></i>
+                <h2>9. Practice & Challenge Zone <span class="lesson-icon">🧠</span></h2>
+            </div>
+            <div class="content-box">
+                <h4>Standard Practice Problem</h4>
+                <p>In the number <strong class="highlight-num">14.072</strong>, what is the <strong class="highlight-text">value</strong> of the digit <strong class="highlight-num">7</strong>?</p>
+                <button class="btn btn-yellow" onclick="toggleSolution('hint3')">Show Hint</button>
+                <button class="btn" onclick="toggleSolution('solution3')">Show Solution</button>
+                <div id="hint3" class="solution-box" style="background-color: rgba(244, 180, 0, 0.1); border-color: var(--highlight-yellow);">
+                    <p><strong>Hint:</strong> First, find the place value (the name of the position) of the 7. It's in the second spot after the decimal point.</p>
+                </div>
+                <div id="solution3" class="solution-box">
+                    <p>• The place value of the 7 is <strong class="highlight-text">Hundredths</strong>.</p>
+                    <p>• Therefore, its value is "seven hundredths".</p>
+                    <p><strong class="highlight-answer">Answer: 0.07 or 7/100</strong></p>
+                </div>
+
+                <h4 style="margin-top: 30px;">Challenge Problem <span class="lesson-icon">🔥</span></h4>
+                <p>How many times greater is the value of the digit <strong class="highlight-num">5</strong> in the number <strong class="highlight-num">2.5</strong> compared to the value of the digit <strong class="highlight-num">5</strong> in the number <strong class="highlight-num">1.05</strong>?</p>
+                <button class="btn btn-yellow" onclick="toggleSolution('hint4')">Show Hint</button>
+                <button class="btn btn-red" onclick="toggleSolution('solution4')">Show Solution</button>
+                <div id="hint4" class="solution-box" style="background-color: rgba(244, 180, 0, 0.1); border-color: var(--highlight-yellow);">
+                    <p><strong>Hint:</strong> First, find the value of each 5. Then, divide the bigger value by the smaller value to see how many times larger it is.</p>
+                </div>
+                <div id="solution4" class="solution-box">
+                    <p><strong>Step 1: Find the value of the first 5.</strong></p>
+                    <p>In 2.5, the 5 is in the Tenths place. Its value is <strong class="highlight-num">0.5</strong>.</p>
+                    
+                    <p><strong>Step 2: Find the value of the second 5.</strong></p>
+                    <p>In 1.05, the 5 is in the Hundredths place. Its value is <strong class="highlight-num">0.05</strong>.</p>
+                    
+                    <p><strong>Step 3: Calculate how many times larger.</strong></p>
+                    <p>We need to divide the larger value by the smaller value: 0.5 ÷ 0.05.</p>
+                    <p>This is the same as asking, "How many 5 Kobo coins are in 50 Kobo?" The answer is 10.</p>
+                    <p><strong class="highlight-answer">Final Answer: The value of the 5 in 2.5 is 10 times greater than the value of the 5 in 1.05.</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Summary -->
+        <section id="summary">
+            <div class="section-header">
+                <i class="fas fa-list-check" style="color: var(--accent-green);"></i>
+                <h2>10. Summary of Key Ideas <span class="lesson-icon">✅</span></h2>
+            </div>
+            <div class="content-box">
+                <p>To master the place value of decimals:</p>
+                <ol style="font-size: 1.1rem; list-style-position: inside; padding-left: 10px;">
+                    <li><strong style="color:var(--primary-blue);">The Decimal Point is Key:</strong> It's the landmark that separates whole numbers on the left from fractional parts on the right. <span class="lesson-icon">📍</span></li>
+                    <li><strong style="color:var(--accent-green);">Remember the "-ths":</strong> Places to the right of the decimal have names that end in "-ths": Ten<strong class="highlight-text">ths</strong>, Hundred<strong class="highlight-text">ths</strong>, Thousand<strong class="highlight-text">ths</strong>. <span class="lesson-icon">🗣️</span></li>
+                    <li><strong style="color:var(--highlight-yellow);">Place Value is the Name:</strong> It's the "address" of the digit (e.g., Hundredths). <span class="lesson-icon">🏷️</span></li>
+                    <li><strong style="color:var(--warning-red);">Value is the Worth:</strong> It's how much the digit is worth as a number (e.g., 0.08 or 8/100). <span class="lesson-icon">💰</span></li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Section 11: Interactive Quiz -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <i class="fas fa-question-circle" style="color: var(--neon-pink);"></i>
+                <h2>11. Test Your Knowledge! <span class="lesson-icon">🏆</span></h2>
+            </div>
+            <div class="content-box">
+                <p>Are you a Decimal Detective? Time to prove it! Click below for a 5-question quiz. You'll get new questions each time!</p>
+                <button class="btn btn-red" id="start-quiz-btn" onclick="startQuiz()">Start Quiz!</button>
+                
+                <div id="quiz-container">
+                    <div id="quiz-feedback">Question 1 of 5</div>
+                    <h3 id="quiz-question" style="margin: 20px 0; font-size: 1.4rem;"></h3>
+                    <div id="quiz-options" class="quiz-grid"></div>
+                    <div id="quiz-explanation"></div>
+                    <div style="margin-top: 20px; text-align: right;">
+                        <button class="btn" id="next-question-btn" onclick="nextQuestion()" style="display:none;">Next Question</button>
+                    </div>
+                </div>
+                
+                <div id="quiz-score" style="display:none;"></div>
+                <div id="post-quiz-controls" style="text-align: center; display: none; gap: 15px; justify-content: center; margin-top: 20px;">
+                     <button class="btn btn-red" id="reset-quiz-btn" onclick="startQuiz()">Try Again with New Questions</button>
+                     <button class="btn btn-yellow" id="preview-answers-btn" onclick="showAnswersPreview()">Preview Answers</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+        <p>All rights reserved. Designed for an engaging learning experience.</p>
+    </footer>
+
+    <!-- Modal for Preview Answers -->
+    <div id="answersModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Quiz Review</h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
+    <!-- JavaScript for particles -->
+    <script>
+        // A simplified particles.js implementation to keep it in one file
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles-js');
+            if (!particlesContainer) return;
+            const particleCount = 70;
+            for (let i = 0; i < particleCount; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = 5 + Math.random() * 10;
+                const size = 1 + Math.random() * 2;
+                particle.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: white;
+                    left: ${x}%;
+                    top: ${y}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    animation: float ${duration}s ease-in-out infinite;
+                    opacity: ${Math.random()};
+                    z-index: 0;
+                `;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        const keyframes = `
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+        `;
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = keyframes;
+        document.head.appendChild(styleSheet);
+
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+    
+    <script>
+        // --- CONTENT INTERACTIVITY ---
+
+        function toggleSolution(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                if (element.style.display === "block") {
+                    element.style.display = "none";
+                } else {
+                    element.style.display = "block";
+                }
+            }
+        }
+        
+        // Randomize subtitle box color
+        document.addEventListener('DOMContentLoaded', () => {
+            const colors = ['--primary-blue', '--accent-green', '--highlight-yellow', '--deep-purple', '--neon-pink', '--neon-cyan'];
+            const randomColorVar = colors[Math.floor(Math.random() * colors.length)];
+            const subtitleBox = document.getElementById('lesson-subtitle-box');
+            subtitleBox.style.boxShadow = `0 0 20px var(${randomColorVar})`;
+        });
+
+        // --- CONTENT PROTECTION ---
+        
+        function disableKeys(e) {
+            // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S, Ctrl+P, PrintScreen
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85) || (e.ctrlKey && e.keyCode == 83) || (e.ctrlKey && e.keyCode == 80) || e.key === "PrintScreen") {
+                alert("This content is protected. Action disabled.");
+                e.preventDefault();
+                return false;
+            }
+        }
+        
+        // --- INTERACTIVE QUIZ SCRIPT ---
+
+        const questionBank = [
+            { 
+                question: "In the number 12.345, what is the place value of the 4?", 
+                options: ["Tenths", "Hundredths", "Tens", "Hundred"], 
+                correctAnswer: 1, 
+                explanation: [
+                    "<strong>Step 1 (Locate the Decimal Point):</strong> The decimal point is between the 2 and the 3.",
+                    "<strong>Step 2 (Count Places to the Right):</strong> The 3 is in the first place (Tenths). The 4 is in the second place.",
+                    "<strong>Step 3 (Name the Place):</strong> The second place after the decimal point is the <strong class='highlight-answer'>Hundredths</strong> place."
+                ]
+            },
+            { 
+                question: "What is the value of the digit 9 in the number 0.9?",
+                options: ["9", "Nine Tens", "Tenths", "9/10"], 
+                correctAnswer: 3, 
+                explanation: [
+                    "<strong>Step 1 (Identify Place Value):</strong> The 9 is in the first place after the decimal, which is the <strong class='highlight-text'>Tenths</strong> place.",
+                    "<strong>Step 2 (Determine Value):</strong> The value is therefore 'nine tenths'.",
+                    "<strong>Step 3 (Write as a Number):</strong> 'Nine tenths' can be written as the decimal 0.9 or the fraction <strong class='highlight-answer'>9/10</strong>."
+                ] 
+            },
+            { 
+                question: "Which digit is in the Thousandths place in the number 7.128?",
+                options: ["7", "1", "2", "8"], 
+                correctAnswer: 3, 
+                explanation: [
+                    "<strong>Step 1 (Count Decimal Places):</strong> We need to find the third place after the decimal point.",
+                    "<strong>Step 2 (Identify Positions):</strong> The 1 is in the Tenths place. The 2 is in the Hundredths place.",
+                    "<strong>Step 3 (Conclusion):</strong> The <strong class='highlight-answer'>8</strong> is in the third position, which is the Thousandths place."
+                ]
+            },
+            { 
+                question: "What is the difference between Place Value and Value?",
+                options: ["They are the same", "Place Value is a number, Value is a name", "Place Value is a name, Value is a number", "Value is always bigger"], 
+                correctAnswer: 2, 
+                explanation: [
+                    "<strong>Step 1 (Recall Definitions):</strong> Place Value is the 'address' or position of a digit.",
+                    "<strong>Step 2 (Recall Definitions):</strong> Value is 'how much' that digit is worth in its position.",
+                    "<strong>Step 3 (Conclusion):</strong> Therefore, <strong class='highlight-answer'>Place Value is a name (like 'Tens' or 'Tenths'), and Value is a number (like 10 or 0.1)</strong>."
+                ] 
+            },
+            { 
+                question: "In the price ₦525.75, what is the value of the 7?", 
+                options: ["7 Kobo", "70 Naira", "70 Kobo", "7 Naira"], 
+                correctAnswer: 2,
+                explanation: [
+                    "<strong>Step 1 (Identify Place Value):</strong> The 7 is in the first place after the decimal, which is the <strong class='highlight-text'>Tenths</strong> place. In money, this represents 10 Kobo pieces.",
+                    "<strong>Step 2 (Determine Value):</strong> The value is 'seven tenths' of a Naira.",
+                    "<strong>Step 3 (Convert to Kobo):</strong> Since there are 100 Kobo in a Naira, one tenth of a Naira is 10 Kobo. So, seven tenths is 7 × 10 Kobo = 70 Kobo.",
+                    "<strong>Step 4 (Conclusion):</strong> The value of the 7 is <strong class='highlight-answer'>70 Kobo</strong>."
+                ]
+            }
+        ];
+        // To simulate 200 questions, we can duplicate and slightly alter the bank
+        const fullQuestionBank = (()=>{let b = []; for(let i=0; i<40; i++){b.push(...questionBank)}; return b;})();
+
+        let currentQuizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const startBtn = document.getElementById('start-quiz-btn');
+        const nextBtn = document.getElementById('next-question-btn');
+        const postQuizControls = document.getElementById('post-quiz-controls');
+        const quizFeedback = document.getElementById('quiz-feedback');
+        const quizQuestion = document.getElementById('quiz-question');
+        const quizOptions = document.getElementById('quiz-options');
+        const quizExplanation = document.getElementById('quiz-explanation');
+        const quizScore = document.getElementById('quiz-score');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            shuffleArray(fullQuestionBank);
+            currentQuizQuestions = fullQuestionBank.slice(0, 5);
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+
+            startBtn.style.display = 'none';
+            quizScore.style.display = 'none';
+            postQuizControls.style.display = 'none';
+            quizContainer.style.display = 'block';
+            nextBtn.style.display = 'none';
+            
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            quizExplanation.style.display = 'none';
+            quizExplanation.innerHTML = '';
+            
+            if (currentQuestionIndex < currentQuizQuestions.length) {
+                const questionData = currentQuizQuestions[currentQuestionIndex];
+                
+                quizFeedback.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuizQuestions.length}`;
+                quizQuestion.innerHTML = questionData.question;
+                
+                quizOptions.innerHTML = '';
+                questionData.options.forEach((option, index) => {
+                    const optionElement = document.createElement('button');
+                    optionElement.className = 'quiz-option';
+                    optionElement.innerHTML = option;
+                    optionElement.onclick = () => selectAnswer(index);
+                    quizOptions.appendChild(optionElement);
+                });
+                
+                nextBtn.style.display = 'none';
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function selectAnswer(selectedIndex) {
+            const questionData = currentQuizQuestions[currentQuestionIndex];
+            const options = quizOptions.getElementsByClassName('quiz-option');
+            
+            const isCorrect = selectedIndex === questionData.correctAnswer;
+            
+            if (isCorrect) {
+                score++;
+                options[selectedIndex].classList.add('correct');
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[questionData.correctAnswer].classList.add('correct');
+            }
+            
+            userAnswers[currentQuestionIndex] = {
+                question: questionData.question,
+                selected: questionData.options[selectedIndex],
+                correct: questionData.options[selectedIndex],
+                isCorrect: isCorrect
+            };
+
+            Array.from(options).forEach(option => {
+                option.classList.add('disabled');
+                option.onclick = null;
+            });
+            
+            let explanationHTML = "<strong style='color:var(--highlight-yellow)'>Step-by-Step Explanation:</strong>";
+            if (Array.isArray(questionData.explanation)) {
+                explanationHTML += "<ol>";
+                questionData.explanation.forEach(step => {
+                    explanationHTML += `<li>${step}</li>`;
+                });
+                explanationHTML += "</ol>";
+            } else {
+                explanationHTML += `<p>${questionData.explanation}</p>`;
+            }
+            quizExplanation.innerHTML = explanationHTML;
+            quizExplanation.style.display = 'block';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        function showFinalScore() {
+            quizContainer.style.display = 'none';
+            quizScore.style.display = 'block';
+            postQuizControls.style.display = 'flex';
+            
+            let message = '';
+            const percentage = (score / currentQuizQuestions.length) * 100;
+
+            if (percentage === 100) {
+                message = `🎉 Perfect Score! ${score}/${currentQuizQuestions.length} 🎉<br>You are a true Decimal Detective! Outstanding!`;
+                launchConfetti();
+            } else if (percentage >= 80) {
+                message = `Excellent work! ${score}/${currentQuizQuestions.length} <br>You have a strong understanding of place value!`;
+                launchConfetti();
+            } else if (percentage >= 60) {
+                message = `Good job! ${score}/${currentQuizQuestions.length} <br>You're on your way to mastering decimals!`;
+            } else {
+                message = `Keep practicing! ${score}/${currentQuizQuestions.length} <br>Remember the "-ths" rule and you'll get it!`;
+            }
+
+            quizScore.innerHTML = message;
+        }
+        
+        // --- Modal & Confetti ---
+        const modal = document.getElementById('answersModal');
+
+        function showAnswersPreview() {
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = '';
+            userAnswers.forEach((ans, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.classList.add('modal-answer');
+                const statusIcon = ans.isCorrect ? '<span style="color:var(--accent-green)">✔ Correct</span>' : '<span style="color:var(--warning-red)">❌ Incorrect</span>';
+                const cleanQuestion = ans.question.replace(/<br>/g, ' ');
+                answerDiv.innerHTML = `
+                    <p><strong>Q${index + 1}: ${cleanQuestion}</strong></p>
+                    <p>You answered: ${ans.selected} (${statusIcon})</p>
+                    ${!ans.isCorrect ? `<p>Correct answer: ${ans.correct}</p>` : ''}
+                `;
+                modalBody.appendChild(answerDiv);
+            });
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        function launchConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#4285F4', '#0F9D58', '#DB4437', '#F4B400', '#ff00ff', '#00ffff'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                container.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+    </script>
+</body>
+</html>

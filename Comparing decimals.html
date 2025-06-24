@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparing Decimals | Magaby Mathematics</title>
+    
+    <!-- Google Fonts: Poppins for body, Nunito for headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- CSS Reset & Core Styles --- */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+
+            /* Neon Glow Palette */
+            --bg-dark: #0d0d1a;
+            --surface-dark: #1a1a2e;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-green: #39FF14;
+            --neon-blue: #4285F4;
+            --text-light: #e0e0e0;
+            --text-dim: #a0a0b0;
+            
+            font-size: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* --- Content Protection --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard */
+            -webkit-touch-callout: none; /* iOS Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-25px) rotate(180deg); opacity: 0.7; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
+        }
+        
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px var(--neon-cyan),
+                    0 0 40px var(--neon-cyan),
+                    0 0 80px var(--neon-cyan),
+                    0 0 90px var(--neon-cyan),
+                    0 0 100px var(--neon-cyan),
+                    0 0 150px var(--neon-cyan);
+                color: #fff;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                color: #e0e0e0;
+            }
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100%) rotateZ(0deg); }
+            100% { transform: translateY(100vh) rotateZ(720deg); }
+        }
+
+        /* --- General Layout & Typography --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+        }
+        
+        section {
+            padding: 3rem 0;
+            border-bottom: 2px solid var(--surface-dark);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--surface-dark), #2a2a3e);
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        
+        .section-header i {
+            font-size: 3rem;
+            padding: 1rem;
+            border-radius: 50%;
+            background-color: var(--surface-dark);
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .section-header .emoji {
+            font-size: 2.5rem;
+            vertical-align: middle;
+        }
+        
+        .pink-glow { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
+        .cyan-glow { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
+        .green-glow { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
+        .yellow-glow { color: var(--highlight-yellow); text-shadow: 0 0 8px var(--highlight-yellow); }
+        .blue-glow { color: var(--primary-blue); text-shadow: 0 0 8px var(--primary-blue); }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        p i, p .emoji {
+            font-size: 1.3em;
+            vertical-align: -0.2em;
+            margin: 0 0.2em;
+        }
+
+        strong, .highlight {
+            font-weight: 600;
+        }
+        
+        .highlight-yellow { color: var(--highlight-yellow); font-weight: bold; font-size: 1.1em; }
+        .highlight-green { color: var(--neon-green); font-weight: bold; font-size: 1.1em; }
+        .highlight-cyan { color: var(--neon-cyan); font-weight: bold; font-size: 1.1em; }
+        .highlight-red { color: var(--warning-red); font-weight: bold; font-size: 1.1em; }
+
+        /* --- Header --- */
+        header {
+            position: relative;
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, var(--bg-dark) 0%, #000 100%);
+            border-bottom: 3px solid var(--neon-cyan);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            animation: neon-flicker 5s infinite alternate;
+        }
+
+        .subtitle-box {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        header h2.subtitle {
+            font-size: 2rem;
+            color: var(--neon-pink);
+            font-weight: 700;
+        }
+
+        /* --- Card & Content Styling --- */
+        .card {
+            background-color: var(--surface-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--deep-purple);
+            box-shadow: 0 0 10px rgba(103, 58, 183, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(103, 58, 183, 0.6);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--deep-purple));
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5);
+        }
+        
+        .btn:disabled {
+            background: #555;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .solution-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 2px dashed var(--accent-green);
+            background-color: rgba(15, 157, 88, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .solution-box p { margin-bottom: 0.5rem; }
+
+        /* --- Specific Section Styles --- */
+        /* #introduction */
+        .problem-box {
+            background-color: var(--surface-dark);
+            border: 2px dashed var(--highlight-yellow);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+        .problem-box h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--highlight-yellow);
+            text-shadow: 0 0 8px var(--highlight-yellow);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .problem-box .emoji {
+            font-size: 1.3rem;
+            vertical-align: baseline;
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            text-align: right;
+            line-height: 1.5;
+            background: rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            width: fit-content;
+            margin: 1.5rem auto;
+            color: var(--neon-cyan);
+        }
+        .comparison-table .placeholder {
+            color: var(--warning-red);
+        }
+        .comparison-table .highlighted-digit {
+            color: var(--neon-green);
+            background-color: rgba(57, 255, 20, 0.2);
+            border-radius: 5px;
+            padding: 0 0.2rem;
+            font-weight: bold;
+        }
+
+
+        /* #daily-life */
+        details {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--highlight-yellow);
+        }
+        details summary {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            list-style-type: '👉';
+            color: var(--highlight-yellow);
+        }
+        details summary::marker { color: var(--highlight-yellow); }
+        details div { padding: 0 1.5rem 1rem 1.5rem; }
+
+        /* #key-terms */
+        .term-card { display: flex; align-items: center; gap: 1.5rem; }
+        .term-card i { font-size: 2.5rem; color: var(--neon-pink); min-width: 50px; text-align: center; }
+        
+        /* #step-by-step */
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            background: var(--surface-dark);
+            border-left: 5px solid var(--neon-cyan);
+        }
+        .step-number { font-family: 'Nunito', sans-serif; font-size: 3rem; font-weight: 900; color: var(--neon-cyan); line-height: 1; }
+        .step-content h3 { color: var(--neon-cyan); margin-bottom: 0.5rem; }
+        .step-content .why { font-style: italic; color: var(--text-dim); border-left: 3px solid var(--deep-purple); padding-left: 1rem; margin-top: 0.5rem; }
+        
+        /* #common-mistakes */
+        .mistake-box {
+            border-radius: 10px; padding: 1.5rem; border: 2px solid var(--warning-red); background: rgba(219, 68, 55, 0.1);
+        }
+        .mistake-box h3 { color: var(--warning-red); margin-bottom: 1rem; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .wrong-way, .right-way { padding: 1rem; border-radius: 8px; }
+        .wrong-way { background-color: rgba(219, 68, 55, 0.2); }
+        .right-way { background-color: rgba(15, 157, 88, 0.2); }
+        .wrong-way h4::before { content: '❌ '; }
+        .right-way h4::before { content: '✅ '; }
+
+        /* #practice */
+        .challenge-problem { border: 2px solid var(--neon-pink); background-color: rgba(255, 0, 255, 0.05); }
+        .hint-box {
+            display: none; background-color: rgba(244, 180, 0, 0.1); border: 1px dashed var(--highlight-yellow); padding: 1rem; margin-top: 1rem; border-radius: 5px; animation: fadeIn 0.5s ease;
+        }
+
+        /* #summary */
+        .summary-list { list-style: none; padding-left: 0; }
+        .summary-list li { position: relative; padding: 1.2rem 1.2rem 1.2rem 3.5rem; margin-bottom: 1rem; background: var(--surface-dark); border-radius: 10px; border-left: 5px solid var(--neon-green); }
+        .summary-list li::before {
+            content: attr(data-step); position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--neon-green); background-color: rgba(57, 255, 20, 0.2); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+        }
+
+        /* --- Quiz Section --- */
+        #quiz-container { background-color: var(--surface-dark); padding: 2rem; border-radius: 20px; border: 1px solid var(--deep-purple); box-shadow: 0 0 20px rgba(103, 58, 183, 0.5); }
+        #quiz-start-screen h3, #quiz-results-screen h3 { font-size: 2rem; text-align: center; margin-bottom: 1.5rem; color: var(--neon-pink); }
+        #quiz-question-screen { display: none; }
+        #question-text { font-size: 1.4rem; margin-bottom: 2rem; line-height: 1.6; }
+        #options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .option-btn { width: 100%; padding: 1.2rem; font-size: 1.1rem; background-color: rgba(255,255,255,0.05); border: 2px solid var(--primary-blue); color: var(--text-light); border-radius: 10px; cursor: pointer; transition: all 0.3s ease; text-align: left; }
+        .option-btn:hover:not(:disabled) { background-color: rgba(66, 133, 244, 0.3); transform: translateY(-3px); }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background-color: rgba(15, 157, 88, 0.3); border-color: var(--neon-green); color: #fff; transform: scale(1.02); }
+        .option-btn.incorrect { background-color: rgba(219, 68, 55, 0.3); border-color: var(--warning-red); color: #fff; }
+        #explanation-box { display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: 10px; background-color: rgba(0,0,0,0.2); animation: fadeIn 0.5s ease; }
+        #explanation-text { color: var(--text-dim); line-height: 1.6; }
+        #explanation-text .step-explanation { display: block; margin-bottom: 0.75em; }
+        #quiz-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
+        #quiz-results-screen { display: none; text-align: center; position: relative; }
+        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+        .confetti { position: absolute; width: 10px; height: 20px; opacity: 0.8; animation: confetti-fall 4s linear infinite; }
+        #final-score { font-size: 5rem; font-weight: 900; color: var(--neon-green); margin: 1rem 0; text-shadow: 0 0 20px var(--neon-green); }
+        #score-message { font-size: 1.5rem; color: var(--highlight-yellow); }
+        #preview-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background: var(--surface-dark); padding: 2rem; border-radius: 15px; border: 1px solid var(--neon-cyan); width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--neon-cyan); padding-bottom: 1rem; margin-bottom: 1rem; }
+        #close-modal { font-size: 2rem; cursor: pointer; color: var(--warning-red); }
+        .preview-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #333; }
+        .preview-item p { margin-bottom: 0.5rem; }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 2rem; margin-top: 2rem; background-color: var(--surface-dark); color: var(--text-dim); border-top: 2px solid var(--deep-purple); }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            :root { font-size: 14px; }
+            .container { padding: 1rem; }
+            header h1 { font-size: 3rem; }
+            header h2.subtitle { font-size: 1.5rem; }
+            .section-header { flex-direction: column; text-align: center; }
+            .section-header h2 { font-size: 2rem; }
+            .comparison-grid, #options-grid { grid-template-columns: 1fr; }
+            .step { flex-direction: column; align-items: center; text-align: center; }
+            .comparison-table { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;" onselectstart="return false;" onkeydown="return false;">
+    
+    <!-- Dynamic Header -->
+    <header>
+        <div class="particles"></div>
+        <div class="header-content">
+            <h1>Maths Universe</h1>
+            <div class="subtitle-box">
+                <h2 class="subtitle">Comparing Decimals</h2>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Section 1: The Hook -->
+        <section id="introduction">
+            <div class="section-header">
+                <i class="fas fa-balance-scale yellow-glow"></i>
+                <h2>1. The Savings Showdown! (Problem to Solve) 💰</h2>
+            </div>
+            <div class="problem-box">
+                <h4>PROBLEM SITUATION <span class="emoji">😳</span></h4>
+                <p>
+                    <strong class="highlight-yellow">Tunde</strong> and <strong class="highlight-yellow">Sade</strong> are saving money in their piggy banks. Tunde proudly opens his and counts <strong class="highlight-yellow">₦150.75</strong>. Sade counts hers and finds she has <strong class="highlight-yellow">₦150.8</strong>. Tunde thinks he has more because 75 is a bigger number than 8. Is he correct? <strong class="highlight-red">Who actually has more money?</strong> 🤔
+                </p>
+            </div>
+            <p>
+                This is a very common mix-up! Comparing numbers with decimal points isn't always what it seems. Today, you will learn the foolproof method to compare any two decimal numbers and always find the correct answer. Let the showdown begin! 🚀
+            </p>
+        </section>
+
+        <!-- Section 2: Real-World Relevance -->
+        <section id="daily-life">
+            <div class="section-header">
+                <i class="fas fa-globe-africa green-glow"></i>
+                <h2>2. Comparing Decimals in Nigeria 🇳🇬</h2>
+            </div>
+            <p>Knowing which decimal is bigger is a super important skill you use all the time!</p>
+            <details>
+                <summary>Shopping for the Best Price 🛒</summary>
+                <div>
+                    <p>One pack of Indomie is <strong class="highlight-yellow">₦120.50</strong> at Shop A, and <strong class="highlight-yellow">₦120.75</strong> at Shop B. Comparing decimals helps you know that Shop A has the cheaper price.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Athletics Race Results 🏃‍♂️</summary>
+                <div>
+                    <p>In a race, Emeka finishes in <strong class="highlight-yellow">11.3</strong> seconds and Bolu finishes in <strong class="highlight-yellow">11.25</strong> seconds. By comparing, you know Bolu was faster because his time is the smaller number.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Baking Ingredients 🍰</summary>
+                <div>
+                    <p>A recipe needs <strong class="highlight-yellow">0.5</strong> kg of sugar, but you only have <strong class="highlight-yellow">0.45</strong> kg. Comparing these tells you that you don't have enough sugar for the recipe.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Comparing Phone Specs 📱</summary>
+                <div>
+                    <p>One phone has a <strong class="highlight-yellow">2.4</strong> GHz processor and another has a <strong class="highlight-yellow">2.35</strong> GHz processor. The first phone is slightly faster because 2.4 is greater than 2.35.</p>
+                </div>
+            </details>
+            <details>
+                <summary>Checking Fuel Efficiency 🚗</summary>
+                <div>
+                    <p>Car A travels <strong class="highlight-yellow">12.5</strong> km per litre, while Car B travels <strong class="highlight-yellow">12.45</strong> km per litre. Car A is more fuel-efficient because 12.5 is greater than 12.45.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Section 3: Key Terms & Definitions -->
+        <section id="key-terms">
+            <div class="section-header">
+                <i class="fas fa-key cyan-glow"></i>
+                <h2>3. Your Comparison Dictionary 📖</h2>
+            </div>
+            <p>Let's get our key terms and symbols right before we start comparing. 🔑</p>
+            <div class="card term-card">
+                <i class="fas fa-greater-than"></i>
+                <div>
+                    <h3>Greater Than (>)</h3>
+                    <p>This symbol means the number on the left is <strong class="highlight-green">bigger</strong> than the number on the right. Think of it as an alligator's mouth wanting to eat the bigger number! Example: <strong class="highlight-cyan">5 > 3</strong>.</p>
+                </div>
+            </div>
+            <div class="card term-card">
+                <i class="fas fa-less-than"></i>
+                <div>
+                    <h3>Less Than (<)</h3>
+                    <p>This symbol means the number on the left is <strong class="highlight-red">smaller</strong> than the number on the right. The alligator is facing the other way! Example: <strong class="highlight-cyan">3 < 5</strong>.</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-equals"></i>
+                <div>
+                    <h3>Equal To (=)</h3>
+                    <p>This means both numbers have the <strong class="highlight-yellow">exact same value</strong>, even if they look a little different. Example: <strong class="highlight-cyan">0.5 = 0.50</strong>.</p>
+                </div>
+            </div>
+             <div class="card term-card">
+                <i class="fas fa-map-location-dot"></i>
+                <div>
+                    <h3>Place Value</h3>
+                    <p>The value of a digit based on its position. When comparing, we check the digits in the <strong class="highlight-green">same place value</strong> against each other (Ones vs Ones, Tenths vs Tenths, etc.).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Step-by-Step Explanation -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <i class="fas fa-align-center green-glow"></i>
+                <h2>4. The Golden Method: Line Up & Compare! 🏆</h2>
+            </div>
+            <p>Let's solve Tunde's and Sade's problem from the start: Which is greater, <strong class="highlight-yellow">150.75</strong> or <strong class="highlight-yellow">150.8</strong>? This method works every single time!</p>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Line Up the Decimal Points</h3>
+                    <p>Write the numbers one on top of the other, making sure the decimal points are perfectly aligned. This is the most important step!</p>
+                    <div class="comparison-table">
+                        <pre>150.75</pre>
+                        <pre>150.8</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Pad with Zeros (If Needed)</h3>
+                    <p>Add zeros to the end of any shorter decimal so that both numbers have the same number of decimal places. This makes them easier to compare visually.</p>
+                    <div class="comparison-table">
+                        <pre>150.75</pre>
+                        <pre>150.8<span class="placeholder">0</span></pre>
+                    </div>
+                    <p class="why"><strong>Why?</strong> Adding a zero to the end of a decimal doesn't change its value (just like ₦150.8 is the same as ₦150.80). But it helps avoid the mistake of comparing 75 to 8!</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Compare from Left to Right</h3>
+                    <p>Start from the leftmost digit and compare the numbers in each place value column, one by one, until you find a difference.</p>
+                    <div class="comparison-table">
+                        <pre>150.<span class="highlighted-digit">7</span>5</pre>
+                        <pre>150.<span class="highlighted-digit">8</span>0</pre>
+                    </div>
+                    <ul>
+                        <li><strong class="highlight-yellow">Hundreds place:</strong> 1 vs 1 (Same)</li>
+                        <li><strong class="highlight-yellow">Tens place:</strong> 5 vs 5 (Same)</li>
+                        <li><strong class="highlight-yellow">Ones place:</strong> 0 vs 0 (Same)</li>
+                        <li><strong class="highlight-cyan">Tenths place:</strong> 7 vs 8 (Different!)</li>
+                    </ul>
+                    <p>We found a difference! <strong class="highlight-green">8 is greater than 7</strong>. We can stop here. The second number is bigger.</p>
+                    <p>So, <strong class="highlight-green">150.80 is greater than 150.75</strong>. Sade has more money!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Real-Life Application -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <i class="fas-solid fa-person-running blue-glow"></i>
+                <h2>5. Case Study: The 100-Metre Dash 🏃‍♀️</h2>
+            </div>
+            <div class="card">
+                <p>
+                    At the All-Nigeria Athletics Championship, two star athletes, <strong class="highlight-yellow">Favour</strong> and <strong class="highlight-yellow">Grace</strong>, are competing in the 100m final.
+                </p>
+                <ul>
+                    <li>Favour's time: <strong class="highlight-cyan">11.09</strong> seconds</li>
+                    <li>Grace's time: <strong class="highlight-cyan">11.1</strong> seconds</li>
+                </ul>
+                <p>
+                    Who won the race? (Remember: in a race, the <strong class="highlight-red">smaller</strong> time is the faster time!)
+                </p>
+                <button class="btn" onclick="showElement('solution1', this)">Show Solution</button>
+                <div id="solution1" class="solution-box">
+                    <h4>Let's compare their times:</h4>
+                    <p><strong>Step 1: Line Up the Dots.</strong></p>
+                    <div class="comparison-table">
+                        <pre>11.09</pre>
+                        <pre>11.1</pre>
+                    </div>
+                    <p><strong>Step 2: Pad with Zeros.</strong></p>
+                    <div class="comparison-table">
+                        <pre>11.09</pre>
+                        <pre>11.1<span class="placeholder">0</span></pre>
+                    </div>
+                    <p><strong>Step 3: Compare Left to Right.</strong></p>
+                    <div class="comparison-table">
+                        <pre>11.<span class="highlighted-digit">0</span>9</pre>
+                        <pre>11.<span class="highlighted-digit">1</span>0</pre>
+                    </div>
+                    <p>The Tens and Ones places are the same. In the <strong class="highlight-cyan">Tenths</strong> place, <strong class="highlight-red">0 is less than 1</strong>. This means 11.09 is the smaller number.</p>
+                    <p><strong>✅ Final Answer:</strong> <strong class="highlight-green">Favour</strong> won the race with the faster time of 11.09 seconds!</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Financial Literacy -->
+        <section id="financial-lit">
+             <div class="section-header">
+                <i class="fas fa-naira-sign green-glow"></i>
+                <h2>6. Financial Focus: Finding the Best Deal 🛒</h2>
+            </div>
+            <div class="card">
+                <p>
+                    <strong class="highlight-yellow">Mr. Eze</strong> wants to buy a 5kg bag of rice. He checks two supermarkets:
+                </p>
+                <ul>
+                    <li>Shop A sells it for <strong class="highlight-cyan">₦8550.5</strong></li>
+                    <li>Shop B sells it for <strong class="highlight-cyan">₦8550.25</strong></li>
+                </ul>
+                <p>
+                   Which shop offers the better, cheaper price for the rice?
+                </p>
+                <button class="btn" onclick="showElement('solution2', this)">Show Solution</button>
+                <div id="solution2" class="solution-box">
+                    <h4>Let's find the cheaper price:</h4>
+                     <p><strong>1. Line up the numbers and pad with a zero:</strong></p>
+                     <div class="comparison-table">
+                        <pre>8550.5<span class="placeholder">0</span></pre>
+                        <pre>8550.25</pre>
+                    </div>
+                     <p><strong>2. Compare from left to right:</strong> The whole number parts (8550) are the same.</p>
+                     <p><strong>3. Compare the Tenths place:</strong></p>
+                     <div class="comparison-table">
+                        <pre>8550.<span class="highlighted-digit">5</span>0</pre>
+                        <pre>8550.<span class="highlighted-digit">2</span>5</pre>
+                    </div>
+                     <p>We see that <strong class="highlight-red">2 is less than 5</strong>. This means 8550.25 is the smaller, cheaper price.</p>
+                    <p><strong>✅ Final Answer:</strong> <strong class="highlight-green">Shop B</strong> has the better deal. Mr. Eze should buy his rice there!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Pro-Tips & Tricks -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <i class="fas fa-bolt yellow-glow"></i>
+                <h2>7. Maths Magic: The "Add Zeros" Trick! ✨</h2>
+            </div>
+            <div class="card">
+                <h3>Make Them Look Alike!</h3>
+                <p>
+                    The fastest way to avoid mistakes is to make the decimal parts the <strong class="highlight-green">same length</strong> by adding zeros.
+                </p>
+                <p>
+                    Let's compare <strong class="highlight-cyan">0.9</strong> and <strong class="highlight-cyan">0.89</strong>.
+                </p>
+                <p>
+                    The decimal part of 0.9 has one digit. The decimal part of 0.89 has two digits.
+                </p>
+                <p>
+                    Add a zero to 0.9 to make it <strong class="highlight-yellow">0.90</strong>.
+                </p>
+                 <p>
+                    Now, which is bigger: <strong class="highlight-yellow">90</strong> or <strong class="highlight-yellow">89</strong>? It's easy! 90 is bigger. So, <strong class="highlight-green">0.9 is greater than 0.89</strong>.
+                </p>
+                <div class="mistake-box" style="margin-top: 2rem; border-color: var(--warning-red);">
+                    <h4 style="color: var(--warning-red);"><i class="fas fa-exclamation-triangle"></i> Quick Warning!</h4>
+                    <p>This trick only works <strong class="highlight-red">after the decimal point</strong>! You can add zeros to the end of a decimal (0.9 = 0.90 = 0.900) but you <strong class="highlight-red">cannot</strong> add zeros at the beginning (0.9 is NOT the same as 0.09)!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Common Mistakes -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <i class="fas fa-user-shield warning-red"></i>
+                <h2>8. Watch Out! The "Longer is Bigger" Trap! ⚠️</h2>
+            </div>
+            <div class="mistake-box">
+                <h3>Mistake: Thinking More Digits Means a Bigger Number</h3>
+                <p>This is the most common trap in comparing decimals. Let's go back to Tunde's problem: <strong class="highlight-cyan">150.75</strong> vs <strong class="highlight-cyan">150.8</strong>.</p>
+                <div class="comparison-grid">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>Ignoring the decimal point and thinking "75 is bigger than 8, so 150.75 must be bigger." This is incorrect!</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Line them up: <br>150.75<br>150.80</p>
+                        <p>Now compare the tenths place: 7 vs 8. <strong class="highlight-green">8 is bigger</strong>. Therefore, <strong class="highlight-green">150.8 is greater than 150.75</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Practice & Challenge Zone -->
+        <section id="practice">
+            <div class="section-header">
+                <i class="fas fa-pencil-alt deep-purple"></i>
+                <h2>9. Practice & Challenge Zone 🧠</h2>
+            </div>
+            
+            <div class="card">
+                <h3>Standard Practice Problem</h3>
+                <p>Which symbol (<, >, or =) should go in the blank? <br> <strong class="highlight-cyan">4.5 ___ 4.49</strong></p>
+                <button class="btn" onclick="showElement('hint1', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution3', this)">Show Solution</button>
+                <div id="hint1" class="hint-box">
+                    <p><strong>Hint:</strong> Use the "Add Zeros" trick. Change 4.5 to 4.50. Now, which is bigger, 4.50 or 4.49?</p>
+                </div>
+                <div id="solution3" class="solution-box">
+                    <p><strong>1. Line Up & Pad:</strong><br>4.5<span class="placeholder">0</span><br>4.49</p>
+                    <p><strong>2. Compare:</strong> The Ones place is the same (4). In the Tenths place, <strong class="highlight-green">5 is greater than 4</strong>.</p>
+                    <p><strong>✅ Final Answer:</strong> 4.5 > 4.49</p>
+                </div>
+            </div>
+
+            <div class="card challenge-problem">
+                <h3>⭐ Challenge Problem ⭐</h3>
+                <p>
+                    Arrange these lengths from <strong class="highlight-red">least to greatest</strong>:
+                </p>
+                <p>
+                    <strong class="highlight-cyan">1.05 m, 1.5 m, 1.055 m, 1.505 m</strong>
+                </p>
+                <button class="btn" onclick="showElement('hint2', this)">Show Hint</button>
+                <button class="btn" onclick="showElement('solution4', this)">Show Solution</button>
+                <div id="hint2" class="hint-box">
+                    <p><strong>Hint:</strong> Line all four numbers up by their decimal points. Pad all of them with zeros until they all have three decimal places (e.g., 1.5 becomes 1.500). Then compare them row by row.</p>
+                </div>
+                <div id="solution4" class="solution-box">
+                    <p><strong>1. Line Up & Pad with Zeros:</strong></p>
+                    <div class="comparison-table">
+                        <pre>1.050</pre>
+                        <pre>1.500</pre>
+                        <pre>1.055</pre>
+                        <pre>1.505</pre>
+                    </div>
+                    <p><strong>2. Compare and Order:</strong></p>
+                    <ul>
+                        <li>The smallest numbers are the ones with 0 in the tenths place. Between 1.050 and 1.055, <strong class="highlight-green">1.050</strong> is smaller.</li>
+                        <li>Next is <strong class="highlight-green">1.055</strong>.</li>
+                        <li>Now look at the numbers with 5 in the tenths place. Between 1.500 and 1.505, <strong class="highlight-green">1.500</strong> (or 1.5) is smaller.</li>
+                        <li>The largest is <strong class="highlight-green">1.505</strong>.</li>
+                    </ul>
+                    <p><strong>✅ Final Answer (Least to Greatest):</strong> <strong class="highlight-green">1.05 m, 1.055 m, 1.5 m, 1.505 m</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Summary of Key Steps -->
+        <section id="summary">
+            <div class="section-header">
+                <i class="fas fa-list-check green-glow"></i>
+                <h2>10. Your Golden Rules for Comparing Decimals 📜</h2>
+            </div>
+            <p>Always remember these three foolproof steps!</p>
+            <ol class="summary-list">
+                <li data-step="1"><strong>LINE UP:</strong> Write the numbers vertically, lining up the decimal points perfectly. 📍</li>
+                <li data-step="2"><strong>PAD:</strong> Add zeros to the end of shorter decimals so all numbers have the same length after the point. ✍️</li>
+                <li data-step="3"><strong>COMPARE:</strong> Start from the left and compare the digits in each place value column until you find a difference. The first difference decides which is bigger! 🔍</li>
+            </ol>
+        </section>
+        
+        <!-- Section 11: Interactive Quiz -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <i class="fas fa-vial-circle-check neon-pink"></i>
+                <h2>11. Test Your Knowledge! 🧪</h2>
+            </div>
+            <div id="quiz-container">
+                <!-- Start Screen -->
+                <div id="quiz-start-screen">
+                    <h3>Ready to show what you've learned?</h3>
+                    <p style="text-align:center; margin-bottom: 2rem;">You'll get <span class="highlight-yellow">5</span> random questions. Give it your best shot! Good luck! 👍</p>
+                    <div style="text-align:center;">
+                        <button class="btn" id="start-quiz-btn">Start Quiz Now!</button>
+                    </div>
+                </div>
+
+                <!-- Question Screen -->
+                <div id="quiz-question-screen">
+                    <p id="question-counter"></p>
+                    <p id="question-text">This is where the question will appear.</p>
+                    <div id="options-grid">
+                        <!-- Options will be generated by JS -->
+                    </div>
+                    <div id="explanation-box">
+                        <h3>Explanation:</h3>
+                        <div id="explanation-text">The reason for the answer will show up here.</div>
+                    </div>
+                    <div id="quiz-navigation">
+                        <p id="score-tracker">Score: 0/5</p>
+                        <button class="btn" id="next-question-btn" style="display:none;">Next Question</button>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div id="quiz-results-screen">
+                    <div class="confetti-container"></div>
+                    <h3>Quiz Complete! 🎉</h3>
+                    <p>Here's how you did:</p>
+                    <div id="final-score">5/5</div>
+                    <p id="score-message">Fantastic work!</p>
+                    <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                        <button class="btn" id="reset-quiz-btn">Try Another Set!</button>
+                        <button class="btn" id="preview-answers-btn">Review Answers</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview Answers Modal -->
+        <div id="preview-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Your Quiz Review</h2>
+                    <span id="close-modal">&times;</span>
+                </div>
+                <div id="preview-body">
+                    <!-- Review items will be generated by JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+        <p>All rights reserved. Designed for an engaging learning experience.</p>
+    </footer>
+
+<script>
+// --- Content Protection Script ---
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'PrintScreen' || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
+    e.preventDefault();
+  }
+});
+
+
+// --- Header Particles ---
+const particlesContainer = document.querySelector('.particles');
+const numParticles = 50;
+for (let i = 0; i < numParticles; i++) {
+    let particle = document.createElement('span');
+    particle.className = 'particle';
+    const size = Math.random() * 8 + 2;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.left = `${Math.random() * 100}%`;
+    const duration = Math.random() * 10 + 10;
+    particle.style.animationDuration = `${duration}s`;
+    const delay = Math.random() * 5;
+    particle.style.animationDelay = `${delay}s`;
+    const colors = ['var(--neon-cyan)', 'var(--neon-pink)', 'var(--neon-green)', '#fff'];
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    particlesContainer.appendChild(particle);
+}
+
+// --- Show Element Function (One-way click) ---
+function showElement(elementId, buttonElement) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.display = 'block';
+    }
+    if (buttonElement) {
+        buttonElement.disabled = true;
+        if (buttonElement.textContent.includes('Hint')) {
+            buttonElement.textContent = 'Hint Shown';
+        } else {
+            buttonElement.textContent = 'Solution Shown';
+        }
+    }
+}
+
+
+// --- Quiz Logic ---
+const quizData = [
+    { question: "Which symbol makes the statement true? 0.7 ___ 0.65", options: [">", "<", "="], correctAnswer: 0, explanation: "<p class='step-explanation'>1. Line up and pad: 0.70 vs 0.65</p><p class='step-explanation'>2. Compare the tenths place: <span class='highlight-green'>7</span> is greater than <span class='highlight-red'>6</span>.</p><p class='step-explanation'>Therefore, 0.7 > 0.65.</p>" },
+    { question: "Akin is 1.52 m tall. His friend, Bolu, is 1.6 m tall. Who is taller?", options: ["Akin", "Bolu", "They are the same height"], correctAnswer: 1, explanation: "<p class='step-explanation'>1. Compare 1.52 and 1.6.</p><p class='step-explanation'>2. Line up and pad: 1.52 vs 1.60.</p><p class='step-explanation'>3. The tenths place decides it: <span class='highlight-red'>5</span> is less than <span class='highlight-green'>6</span>. So, 1.6 is the greater height.</p><p class='step-explanation'><strong class='highlight-green'>Bolu</strong> is taller.</p>" },
+    { question: "Which of these decimals is the smallest?", options: ["0.1", "0.01", "0.11", "1.0"], correctAnswer: 1, explanation: "<p class='step-explanation'>1. Line them up and pad: 0.10, 0.01, 0.11, 1.00</p><p class='step-explanation'>2. 1.00 is the largest. Of the others, <span class='highlight-green'>0.01</span> is smallest because it has a 0 in the tenths place while the others have a 1.</p>" },
+    { question: "Which statement is TRUE?", options: ["2.5 < 2.45", "0.8 = 0.08", "7.2 > 7.19", "3.1 = 3.01"], correctAnswer: 2, explanation: "<p class='step-explanation'>Let's check 7.2 > 7.19.</p><p class='step-explanation'>1. Pad with a zero: 7.20 > 7.19.</p><p class'step-explanation'>2. In the tenths place, <span class='highlight-green'>2</span> is greater than <span class='highlight-red'>1</span>.</p><p class'step-explanation'>This statement is true. The others are false.</p>" },
+    { question: "Order from greatest to least: 0.9, 0.89, 0.91", options: ["0.9, 0.91, 0.89", "0.89, 0.9, 0.91", "0.91, 0.9, 0.89"], correctAnswer: 2, explanation: "<p class='step-explanation'>1. Pad with zeros: 0.90, 0.89, 0.91.</p><p class='step-explanation'>2. Now it's easy to see the order. The largest is <span class='highlight-green'>0.91</span>, then <span class='highlight-green'>0.90</span> (which is 0.9), and the smallest is <span class='highlight-green'>0.89</span>.</p>" },
+    { question: "Which is greater: 4.05 or 4.5?", options: ["4.05", "4.5", "They are equal"], correctAnswer: 1, explanation: "<p class='step-explanation'>1. Line up and pad: 4.05 vs 4.50.</p><p class='step-explanation'>2. Compare the tenths place: <span class='highlight-red'>0</span> is less than <span class='highlight-green'>5</span>.</p><p class='step-explanation'>Therefore, <strong class='highlight-green'>4.5</strong> is greater.</p>" },
+    { question: "A bag of garri weighs 2.5 kg. A bag of semo weighs 2.45 kg. Which is heavier?", options: ["Garri", "Semo", "They weigh the same"], correctAnswer: 0, explanation: "<p class='step-explanation'>We need to find the greater number between 2.5 and 2.45.</p><p class='step-explanation'>1. Pad with zero: 2.50 vs 2.45.</p><p class='step-explanation'>2. In the tenths place, <span class='highlight-green'>5</span> is greater than <span class='highlight-red'>4</span>.</p><p class='step-explanation'>The <strong class='highlight-green'>Garri</strong> is heavier.</p>" },
+    { question: "Which symbol makes this true? 3.12 ___ 3.120", options: ["<", ">", "="], correctAnswer: 2, explanation: "<p class='step-explanation'>Adding a zero to the end of a decimal does not change its value.</p><p class='step-explanation'>3.12 is the exact same value as 3.120.</p><p class='step-explanation'>The correct symbol is <strong class='highlight-green'>=</strong>.</p>" },
+    { question: "Which of the following is the largest number?", options: ["10.1", "10.09", "10.11", "10.01"], correctAnswer: 2, explanation: "<p class='step-explanation'>1. Line them all up.</p><p class='step-explanation'>2. They all have 10 as the whole part.</p><p class='step-explanation'>3. Compare the decimal parts: .10, .09, .11, .01. The largest of these is <span class='highlight-green'>.11</span>.</p><p class='step-explanation'>So, <strong class='highlight-green'>10.11</strong> is the largest.</p>" },
+    { question: "In a race, the fastest time is the smallest number. Who is fastest: Sade (12.3s) or Chika (12.29s)?", options: ["Sade", "Chika", "It's a tie"], correctAnswer: 1, explanation: "<p class='step-explanation'>We need to find the smaller number: 12.3 or 12.29.</p><p class='step-explanation'>1. Pad with zero: 12.30 vs 12.29.</p><p class='step-explanation'>2. In the tenths place, <span class='highlight-green'>2</span> is smaller than <span class='highlight-red'>3</span>. So 12.29 is the smaller, faster time.</p><p class='step-explanation'><strong class='highlight-green'>Chika</strong> is fastest.</p>" },
+    // 40 more questions
+    { question: "What symbol completes this: 5.0 ___ 5.00?", options: [">", "<", "="], correctAnswer: 2, explanation: "<p class='step-explanation'>Adding zeros after the last digit of a decimal does not change its value. They are equal.</p>" },
+    { question: "Which is smaller: 0.2 or 0.19?", options: ["0.2", "0.19", "They are equal"], correctAnswer: 1, explanation: "<p class='step-explanation'>1. Pad with a zero: 0.20 vs 0.19.</p><p class='step-explanation'>2. Now compare 20 and 19. 19 is smaller.</p><p class='step-explanation'>So, <strong class='highlight-green'>0.19</strong> is smaller.</p>" },
+    { question: "Which list is in order from least to greatest?", options: ["0.4, 0.45, 0.5", "0.5, 0.4, 0.45", "0.45, 0.5, 0.4"], correctAnswer: 0, explanation: "<p class='step-explanation'>1. Make them all the same length: 0.40, 0.45, 0.50.</p><p class='step-explanation'>2. The correct order is 40, then 45, then 50. This matches the first option.</p>" },
+    { question: "A phone costs ₦89,990.50. Another costs ₦89,990.75. Which is more expensive?", options: ["The first phone", "The second phone", "They cost the same"], correctAnswer: 1, explanation: "<p class='step-explanation'>Compare 89990.50 and 89990.75. The whole parts are the same. In the tenths place, <span class='highlight-red'>5</span> is less than <span class='highlight-green'>7</span>. The second phone is more expensive.</p>" },
+    { question: "Is the statement 6.7 > 6.70 true or false?", options: ["True", "False"], correctAnswer: 1, explanation: "<p class='step-explanation'>The statement is false because 6.7 is exactly equal to 6.70. One is not greater than the other.</p>" },
+    { question: "Which is greater: 1.0 or 0.99?", options: ["1.0", "0.99", "They are equal"], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare the whole number part first. <span class='highlight-green'>1</span> is greater than <span class='highlight-red'>0</span>. We don't even need to look at the decimal part. <strong class='highlight-green'>1.0</strong> is greater.</p>" },
+    { question: "Order from greatest to least: 3.3, 3.03, 3.33", options: ["3.33, 3.3, 3.03", "3.03, 3.3, 3.33", "3.3, 3.33, 3.03"], correctAnswer: 0, explanation: "<p class='step-explanation'>1. Pad them: 3.30, 3.03, 3.33.</p><p class='step-explanation'>2. The largest is <span class='highlight-green'>3.33</span>, followed by <span class='highlight-green'>3.30</span> (3.3), and the smallest is <span class='highlight-green'>3.03</span>.</p>" },
+    { question: "A bottle holds 0.75 litres. A cup holds 0.8 litres. Which holds more?", options: ["The bottle", "The cup", "They hold the same"], correctAnswer: 1, explanation: "<p class='step-explanation'>Compare 0.75 and 0.8. Pad with a zero: 0.75 vs 0.80. In the tenths place, <span class='highlight-red'>7</span> is less than <span class='highlight-green'>8</span>. The cup holds more.</p>" },
+    { question: "Which is the smallest value? 2.1, 1.2, 2.01, 1.02", options: ["2.1", "1.2", "2.01", "1.02"], correctAnswer: 3, explanation: "<p class='step-explanation'>First, compare the whole numbers. We have two numbers starting with 1 (1.2 and 1.02). Between these two, 1.02 is smaller because its tenths digit (0) is smaller than 1.2's tenths digit (2). So, <strong class='highlight-green'>1.02</strong> is the smallest overall.</p>" },
+    { question: "Which statement is FALSE?", options: ["5.2 = 5.20", "0.6 > 0.59", "1.9 < 1.91", "4.3 < 4.03"], correctAnswer: 3, explanation: "<p class='step-explanation'>Let's check 4.3 < 4.03. We pad 4.3 to 4.30. In the tenths place, <span class='highlight-green'>3</span> is greater than <span class='highlight-red'>0</span>. So 4.3 is actually greater than 4.03. This statement is false.</p>" },
+    { question: "Which is greater: 9.9 or 9.09?", options: ["9.9", "9.09", "They are equal"], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare 9.90 and 9.09. In the tenths place, <span class='highlight-green'>9</span> is greater than <span class='highlight-red'>0</span>. So <strong class='highlight-green'>9.9</strong> is greater.</p>" },
+    { question: "Choose the correct symbol: 12.34 ___ 12.4", options: ["<", ">", "="], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare 12.34 and 12.40. In the tenths place, <span class='highlight-red'>3</span> is less than <span class='highlight-green'>4</span>. So 12.34 < 12.4.</p>" },
+    { question: "Which is the heaviest weight: 5.5 kg, 5.55 kg, 5.05 kg?", options: ["5.5 kg", "5.55 kg", "5.05 kg"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 5.50 kg, 5.55 kg, 5.05 kg. Comparing the numbers after the dot (50, 55, 05), the largest is 55. So <strong class='highlight-green'>5.55 kg</strong> is the heaviest.</p>" },
+    { question: "Is 0.05 greater than 0.5?", options: ["Yes", "No"], correctAnswer: 1, explanation: "<p class='step-explanation'>No. Let's compare 0.05 and 0.50. In the tenths place, <span class='highlight-red'>0</span> is less than <span class='highlight-green'>5</span>. So 0.05 is smaller than 0.5.</p>" },
+    { question: "Order from smallest to largest: 7.8, 8.7, 7.08", options: ["7.8, 7.08, 8.7", "8.7, 7.8, 7.08", "7.08, 7.8, 8.7"], correctAnswer: 2, explanation: "<p class='step-explanation'>Pad them: 7.80, 8.70, 7.08. The largest is 8.70. Between 7.80 and 7.08, the smallest is <span class='highlight-green'>7.08</span>. So the order is 7.08, 7.8, 8.7.</p>" },
+    { question: "Which is longer: a rope of 10.2 metres or 10.19 metres?", options: ["10.2 m", "10.19 m", "They are the same"], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare 10.20 and 10.19. In the tenths place, <span class='highlight-green'>2</span> is greater than <span class='highlight-red'>1</span>. So <strong class='highlight-green'>10.2 m</strong> is longer.</p>" },
+    { question: "What symbol makes this true? 6.09 ___ 6.90", options: ["<", ">", "="], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare the tenths place. <span class='highlight-red'>0</span> is less than <span class='highlight-green'>9</span>. So 6.09 < 6.90.</p>" },
+    { question: "Which is the smallest number? 0.3, 0.33, 0.03, 0.303", options: ["0.3", "0.33", "0.03", "0.303"], correctAnswer: 2, explanation: "<p class='step-explanation'>Pad them all to three places: 0.300, 0.330, 0.030, 0.303. The only one with a 0 in the tenths place is <span class='highlight-green'>0.030</span> (0.03), making it the smallest.</p>" },
+    { question: "Is it true that 1.1 > 1.11?", options: ["Yes", "No"], correctAnswer: 1, explanation: "<p class='step-explanation'>No. Let's compare 1.10 and 1.11. In the hundredths place, <span class='highlight-red'>0</span> is less than <span class='highlight-green'>1</span>. So 1.1 is smaller than 1.11.</p>" },
+    { question: "Who has less money? Tola with ₦25.50 or Femi with ₦25.05?", options: ["Tola", "Femi", "They have the same"], correctAnswer: 1, explanation: "<p class='step-explanation'>Compare 25.50 and 25.05. In the tenths place, <span class='highlight-red'>0</span> is less than <span class='highlight-green'>5</span>. So <strong class='highlight-green'>Femi</strong> has less money.</p>" },
+    { question: "Which is the largest? 0.7, 0.77, 0.077, 0.707", options: ["0.7", "0.77", "0.077", "0.707"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 0.700, 0.770, 0.077, 0.707. The one with 0 in the tenths place (0.077) is smallest. Of the others, 0.770 is the largest. So <strong class='highlight-green'>0.77</strong> is largest.</p>" },
+    { question: "Choose the correct comparison: 2.02 ___ 2.2", options: ["<", ">", "="], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare 2.02 and 2.20. In the tenths place, <span class='highlight-red'>0</span> is less than <span class='highlight-green'>2</span>. So 2.02 < 2.2.</p>" },
+    { question: "Is the number 8.1 bigger or smaller than 8.10?", options: ["Bigger", "Smaller", "Neither, they are equal"], correctAnswer: 2, explanation: "<p class='step-explanation'>Adding a zero to the end of a decimal does not change its value. They are equal.</p>" },
+    { question: "Arrange from largest to smallest: 1.5, 1.49, 1.51", options: ["1.5, 1.49, 1.51", "1.51, 1.5, 1.49", "1.49, 1.5, 1.51"], correctAnswer: 1, explanation: "<p class='step-explanation'>Pad them: 1.50, 1.49, 1.51. The largest is <span class='highlight-green'>1.51</span>, then <span class='highlight-green'>1.50</span> (1.5), then <span class='highlight-green'>1.49</span>.</p>" },
+    { question: "Which is the warmer temperature: 37.5°C or 37.49°C?", options: ["37.5°C", "37.49°C", "They are the same"], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare 37.50 and 37.49. In the tenths place, <span class='highlight-green'>5</span> is greater than <span class='highlight-red'>4</span>. So <strong class='highlight-green'>37.5°C</strong> is warmer.</p>" },
+    { question: "Which statement is true? 0.09 > 0.1", options: ["True", "False"], correctAnswer: 1, explanation: "<p class='step-explanation'>False. Compare 0.09 and 0.10. In the tenths place, <span class='highlight-red'>0</span> is less than <span class='highlight-green'>1</span>. So 0.09 is smaller.</p>" },
+    { question: "Which decimal is between 0.5 and 0.6?", options: ["0.49", "0.55", "0.61", "0.05"], correctAnswer: 1, explanation: "<p class='step-explanation'>Think of them as 0.50 and 0.60. The number that falls between 50 and 60 is 55. So <strong class='highlight-green'>0.55</strong> is between them.</p>" },
+    { question: "What symbol completes this: 4.8 ___ 4.81?", options: ["<", ">", "="], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare 4.80 and 4.81. In the hundredths place, <span class='highlight-red'>0</span> is less than <span class='highlight-green'>1</span>. So 4.8 < 4.81.</p>" },
+    { question: "Which is the smallest? 9.9, 9.99, 10.0, 9.09", options: ["9.9", "9.99", "10.0", "9.09"], correctAnswer: 3, explanation: "<p class='step-explanation'>First, 10.0 is the largest. Now compare 9.90, 9.99, and 9.09. The one with the smallest tenths digit is <strong class='highlight-green'>9.09</strong>, making it the smallest overall.</p>" },
+    { question: "A plant grew 3.2 cm one week and 3.15 cm the next. In which week did it grow more?", options: ["The first week", "The second week", "It grew the same"], correctAnswer: 0, explanation: "<p class='step-explanation'>Compare 3.2 and 3.15. Pad to 3.20. In the tenths place, <span class='highlight-green'>2</span> is greater than <span class='highlight-red'>1</span>. It grew more in the <strong class='highlight-green'>first week</strong>.</p>" }
+];
+
+// Quiz state
+let currentQuizQuestions = [];
+let score = 0;
+let currentQuestionIndex = 0;
+let userAnswers = [];
+
+// DOM elements
+const startScreen = document.getElementById('quiz-start-screen');
+const questionScreen = document.getElementById('quiz-question-screen');
+const resultsScreen = document.getElementById('quiz-results-screen');
+const startBtn = document.getElementById('start-quiz-btn');
+const questionCounter = document.getElementById('question-counter');
+const questionText = document.getElementById('question-text');
+const optionsGrid = document.getElementById('options-grid');
+const explanationBox = document.getElementById('explanation-box');
+const explanationText = document.getElementById('explanation-text');
+const scoreTracker = document.getElementById('score-tracker');
+const nextBtn = document.getElementById('next-question-btn');
+const finalScore = document.getElementById('final-score');
+const scoreMessage = document.getElementById('score-message');
+const resetBtn = document.getElementById('reset-quiz-btn');
+const previewBtn = document.getElementById('preview-answers-btn');
+const previewModal = document.getElementById('preview-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const previewBody = document.getElementById('preview-body');
+
+// --- Helper Functions ---
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// --- Quiz Core Functions ---
+function startQuiz() {
+    startScreen.style.display = 'none';
+    resultsScreen.style.display = 'none';
+    questionScreen.style.display = 'block';
+
+    shuffleArray(quizData);
+    currentQuizQuestions = quizData.slice(0, 5);
+    score = 0;
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    
+    displayQuestion();
+}
+
+function displayQuestion() {
+    // Reset state
+    explanationBox.style.display = 'none';
+    nextBtn.style.display = 'none';
+    optionsGrid.innerHTML = '';
+    
+    const question = currentQuizQuestions[currentQuestionIndex];
+    
+    questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuizQuestions.length}`;
+    questionText.innerHTML = question.question;
+    
+    question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = option;
+        button.onclick = () => selectAnswer(index, button);
+        optionsGrid.appendChild(button);
+    });
+    
+    updateScoreTracker();
+}
+
+function selectAnswer(selectedIndex, button) {
+    const question = currentQuizQuestions[currentQuestionIndex];
+    const isCorrect = selectedIndex === question.correctAnswer;
+    
+    userAnswers[currentQuestionIndex] = selectedIndex;
+
+    if (isCorrect) {
+        score++;
+        button.classList.add('correct');
+    } else {
+        button.classList.add('incorrect');
+        // Also highlight the correct answer
+        optionsGrid.children[question.correctAnswer].classList.add('correct');
+    }
+    
+    // Disable all buttons
+    Array.from(optionsGrid.children).forEach(btn => btn.disabled = true);
+    
+    // Show explanation
+    explanationText.innerHTML = question.explanation;
+    explanationBox.style.display = 'block';
+    
+    // Show next button
+    nextBtn.style.display = 'inline-block';
+    
+    updateScoreTracker();
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < currentQuizQuestions.length) {
+        displayQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    questionScreen.style.display = 'none';
+    resultsScreen.style.display = 'block';
+    
+    finalScore.textContent = `${score}/${currentQuizQuestions.length}`;
+    
+    const percentage = (score / currentQuizQuestions.length) * 100;
+    if (percentage === 100) {
+        scoreMessage.textContent = "Perfect Score! You are a decimal master! 🏆";
+        triggerConfetti();
+    } else if (percentage >= 80) {
+        scoreMessage.textContent = "Excellent work! You really know your stuff! 👍";
+        triggerConfetti();
+    } else if (percentage >= 60) {
+        scoreMessage.textContent = "Good job! A little more practice and you'll be an expert! 😊";
+    } else {
+        scoreMessage.textContent = "Nice try! Review the steps and try again. You can do it! 💪";
+    }
+}
+
+function updateScoreTracker() {
+    scoreTracker.textContent = `Score: ${score}/${currentQuizQuestions.length}`;
+}
+
+function triggerConfetti() {
+    const container = document.querySelector('.confetti-container');
+    container.innerHTML = '';
+    for(let i=0; i < 50; i++){
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+        const colors = ['var(--neon-pink)', 'var(--neon-cyan)', 'var(--neon-green)', 'var(--highlight-yellow)'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        container.appendChild(confetti);
+    }
+}
+
+function showPreview() {
+    previewBody.innerHTML = '';
+    currentQuizQuestions.forEach((q, index) => {
+        const userAnswerIndex = userAnswers[index];
+        const isCorrect = userAnswerIndex === q.correctAnswer;
+        
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        
+        let html = `<p><strong>Q${index+1}: ${q.question}</strong></p>`;
+        html += `<p>Your Answer: <span class="${isCorrect ? 'highlight-green' : 'highlight-red'}">${q.options[userAnswerIndex] || 'Not Answered'}</span></p>`;
+        if (!isCorrect) {
+            html += `<p>Correct Answer: <span class="highlight-green">${q.options[q.correctAnswer]}</span></p>`;
+        }
+        item.innerHTML = html;
+        previewBody.appendChild(item);
+    });
+    previewModal.style.display = 'flex';
+}
+
+// Event Listeners
+startBtn.addEventListener('click', startQuiz);
+nextBtn.addEventListener('click', nextQuestion);
+resetBtn.addEventListener('click', startQuiz);
+previewBtn.addEventListener('click', showPreview);
+closeModalBtn.addEventListener('click', () => previewModal.style.display = 'none');
+window.addEventListener('click', (e) => {
+    if (e.target === previewModal) {
+        previewModal.style.display = 'none';
+    }
+});
+
+</script>
+
+</body>
+</html>
